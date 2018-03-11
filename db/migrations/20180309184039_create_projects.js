@@ -9,9 +9,13 @@ exports.up = async function(knex, Promise) {
     table.string('city').notNullable();
     table.string('province').notNullable();
     table.integer('size').notNullable();
+    table.integer('project_type_id').unsigned();
+    table.integer('owner_type_id').unsigned();
+    table.integer('certification_level_id').unsigned();
+    table.integer('rating_system_id').unsigned();
     table.foreign('project_type_id').references('project_types.id');
-    table.foregin('owner_type_id').references('owner_types.id');
-    table.foreign('certification_level_id').notNullable().references('certification_levels.id');
+    table.foreign('owner_type_id').references('owner_types.id');
+    table.foreign('certification_level_id').references('certification_levels.id');
     table.foreign('rating_system_id').references('rating_systems.id');
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
     table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
