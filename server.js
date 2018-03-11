@@ -28,8 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Home page
 app.get('/api', (req, res) => {
-  console.log('hello world');
-  res.json({ time: "today" });
+  console.log('hello LEED');
+  res.json({ brand: "LEED" });
 });
 
 app.listen(PORT, () => {

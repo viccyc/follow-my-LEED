@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -18,20 +17,24 @@ class App extends Component {
     .then(result => this.setState({ result }, () => console.log('Results fetched...', result)))
 
   }
-  
+
   render() {
-    const hello = this.state.response;
+    const hello = this.state.result.brand;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>hello{hello}</p>
+      <div className="jumbotron">
+        <h1 className="display-4">Hello, {hello}!</h1>
+        <div className="input-group input-group-lg">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="inputGroup-sizing-lg">Location</span>
+          </div>
+          <input type="text" className="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
+        </div>
+        <hr className="my-4" />
+          <p className="lead">
+            <a className="btn btn-primary btn-lg" href="#" role="button">Go!</a>
+          </p>
       </div>
+
     );
   }
 }
