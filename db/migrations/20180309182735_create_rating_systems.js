@@ -1,5 +1,4 @@
 exports.up = async function(knex, Promise) {
-  await knex.raw('create extension if not exists "uuid-ossp"');
   return knex.schema.createTable("rating_systems", function(table) {
     table.increments();
     table.string('rating_system').notNullable();
