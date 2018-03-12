@@ -30,10 +30,10 @@ class Nav extends Component {
       return (
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <a className="nav-link" href="/find_score">Find Score</a>
+            <a className="nav-link" href="/find_score" onClick={this.props.clickHandler}>Find Score</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/projects">Show LEEDS</a>
+            <a className="nav-link" href="/projects" onClick={this.props.clickHandler}>Show LEEDS</a>
           </li>
           {form}
         </ul>
