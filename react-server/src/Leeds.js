@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Nav from './Nav';
+
 
 class Leeds extends Component {
 
@@ -19,12 +21,15 @@ class Leeds extends Component {
 
   render() {
     return (
-      <div className="jumbotron">
-        <h1 className="display-4">Hello, show-leeds page!</h1>
-        <hr className="my-4" />
-        <p className="lead">
-          <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-        </p>
+      <div>
+        <Nav form={true}/>
+        <div className="jumbotron">
+          <h1 className="display-4">Hello, show-leeds page!</h1>
+          <hr className="my-4" />
+          <p className="lead">
+            <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+          </p>
+        </div>
       </div>
 
     );

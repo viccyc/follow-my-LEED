@@ -9,17 +9,17 @@ import registerServiceWorker from './registerServiceWorker';
 //Since the create-react-app only allows for single entry point,
 //use JQuery to get the url params and render accordingly
 function getUrlParam() {
-  var url = window.location.href.slice(window.location.href.indexOf('?') + 1);
+  var url = window.location.href;
   var urlParams = url.split('3000/');
   return urlParams[1];
 }
 
 switch (getUrlParam()) {
-  case "score":
+  case "find_score":
     ReactDOM.render(<Score />, document.getElementById('root'));
     break;
 
-  case "leeds":
+  case "projects":
     ReactDOM.render(<Leeds />, document.getElementById('root'));
     break;
 
