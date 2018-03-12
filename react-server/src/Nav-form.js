@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+import ReactDOM from 'react-dom';
+import Score from './Score';
+import Leeds from './Leeds';
 
 
 class Form extends Component {
@@ -34,7 +36,7 @@ class Form extends Component {
     e.preventDefault();
     const url = this.props.action;
     const data = {location: this.state.location, radius: this.state.radius};
-    
+
 
     fetch(url, {
       method: 'POST',
