@@ -4,25 +4,21 @@ import Nav from './Nav';
 
 class Score extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      result: []
+      data: this.props.data,
     };
   }
 
   componentDidMount() {
-
-    fetch('/api')
-      .then(res => res.json())
-      .then(result => this.setState({ result }, () => console.log('Results fetched...', result)))
 
   }
 
   render() {
     return (
       <div>
-        <Nav form={true}/>
+        <Nav form={true} />
         <div className="jumbotron">
           <h1 className="display-4">Hello, find-score page!</h1>
           <hr className="my-4" />

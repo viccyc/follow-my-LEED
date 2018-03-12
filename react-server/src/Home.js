@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Nav from './Nav';
+import Score from './Score';
+import Leeds from './Leeds';
+import './index.css';
+
 
 import './Home.css';
 

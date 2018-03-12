@@ -4,19 +4,14 @@ import Nav from './Nav';
 
 class Leeds extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      result: []
+      data: this.props.data,
     };
   }
 
   componentDidMount() {
-
-    fetch('/api')
-      .then(res => res.json())
-      .then(result => this.setState({ result }, () => console.log('Results fetched...', result)))
-
   }
 
   render() {
