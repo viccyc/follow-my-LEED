@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import Score from './Score';
-import Leeds from './Leeds';
+
 
 
 class Form extends Component {
@@ -19,6 +17,7 @@ class Form extends Component {
   }
 
   componentDidMount() {
+    //TODO: fetch backend /api to get all leed buildings
 
   }
 
@@ -37,22 +36,8 @@ class Form extends Component {
     const url = this.props.action;
     const data = {location: this.state.location, radius: this.state.radius};
 
+    //TODO:redirect to target page, could be same page with new location, could be...
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(data => {
-        if (url === 'find_score') {
-          ReactDOM.render(<Score data={data} />, document.getElementById('root'));
-        } else {
-          ReactDOM.render(<Leeds data={data} />, document.getElementById('root'));
-        }
-      });
   }
 
 

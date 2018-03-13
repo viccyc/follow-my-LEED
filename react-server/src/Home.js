@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import {Redirect} from 'react-router-dom'
+
 import Nav from './Nav';
-import Score from './Score';
-import Leeds from './Leeds';
 import './index.css';
-
-
 import './Home.css';
 
 class Home extends Component {
@@ -13,14 +10,11 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: [],
       location: null,
       action: '/find_score'
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
-    this.redirect = this.redirect.bind(this);
-
   }
 
   componentDidMount() {
@@ -31,7 +25,7 @@ class Home extends Component {
     e.preventDefault();
     const location = this.input.value;
     console.log(`clicked GO in Home page, location is ${location}`);
-    this.setState({location: location});
+    this.setState({ location: location });
   }
 
   clickHandler(e){
@@ -41,35 +35,18 @@ class Home extends Component {
     this.setState({action: action});
   }
 
-  //when and where to trigger redirection? click GO?
-  redirect(){
-    const url = this.state.action;
-    const data = this.state.location;
-
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(data => {
-        if (url === 'find_score'){
-          ReactDOM.render(<Score data={data}/>, document.getElementById('root'));
-        } else {
-          ReactDOM.render(<Leeds data={data}/>, document.getElementById('root'));
-        }
-      });
-  }
-
   render() {
-    const hello = this.state.result.brand;
+    if (this.state.location){
+      return <Redirect to={{
+        pathname: this.state.action,
+        state: { data: this.state.location }
+      }} />
+    }
     return (
       <div>
         <Nav form={false} clickHandler={this.clickHandler}/>
         <div className="jumbotron">
-          <h1 className="display-4">Hello, {hello}!</h1>
+          <h1 className="display-4">Hello!</h1>
           <form onSubmit={this.handleSubmit}>
             <div className="input-group input-group-lg">
               <div className="input-group-prepend">

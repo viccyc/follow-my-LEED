@@ -10,7 +10,6 @@ class Nav extends Component {
   constructor() {
     super();
     this.state = {
-      result: [],
       action: null
     };
     this.clickHandler = this.clickHandler.bind(this);
@@ -42,7 +41,7 @@ class Nav extends Component {
             <a className="nav-link" href="/find_score" onClick={this.props.clickHandler || this.clickHandler}>Find Score</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/projects" onClick={this.props.clickHandler || this.clickHandler}>Show LEEDS</a>
+            <a className="nav-link" href="/projects" onClick={this.props.clickHandler || this.clickHandler}>Show Projects</a>
           </li>
           {form}
         </ul>

@@ -7,12 +7,12 @@ class Score extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props.data,
+      location: this.props.location.state ? this.props.location.state.data : null
     };
   }
 
   componentDidMount() {
-
+    //create map using this.state.location
   }
 
   render() {
