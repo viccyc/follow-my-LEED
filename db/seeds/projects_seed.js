@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-const seeder  = require('knex-csv-seeder');
-// import seeder from 'knex-csv-seeder';
-
-exports.seed = seeder.default({
-  table: 'projects',
-  file: 'db/csv_files/projects.csv',
-  // recordsPerQuery: 100,
-  // encoding: 'utf8' default encoding
-  parser: {
-    delimiter: '\n',
-  //   quote: '"',
-  // //   escape: '\\'
-  }
-});
-=======
 const knexConfig  = require('../../knexfile');
 const knex        = require('knex')(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
@@ -70,4 +54,3 @@ exports.seed = function(knex, Promise) {
         });
     });
 };
->>>>>>> upstream/master
