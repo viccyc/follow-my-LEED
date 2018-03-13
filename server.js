@@ -10,6 +10,7 @@ const knexConfig  = require('./knexfile');
 const knex        = require('knex')(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const seeder = require('knex-csv-seeder');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -54,6 +55,7 @@ knex('projects')
 
 // Return some details of all projects
 app.get('/api', (req, res) => {
+
   console.log('Trying to get /api');
 
     knex('projects')
@@ -85,16 +87,16 @@ app.post('/api', (req, res) => {
     const id = result[0];
     if (newProject.reg_date) { knex('projects').insert({ reg_date: newProject.reg_date }).where('id', id) };
     if (newProject.reg_date) { knex('projects').insert({ reg_date: newProject.reg_date }).where('id', id) };
-    if (newProject.project_type) { 
+    if (newProject.project_type) {
       const project_type_id = knex('project_types').select('id').where('type', newProject.project_type);
       knex('projects').insert({ project_type_id: project_type_id[0] }).where('id', id);}
-    if (newProject.owner_type) { 
+    if (newProject.owner_type) {
       const owner_type_id = knex('owner_types').select('id').where('type', newProject.owner_type);
       knex('projects').insert({ owner_type_id: owner_type_id[0] }).where('id', id);}
-    if (newProject.certification_level) { 
+    if (newProject.certification_level) {
       const certification_level_id = knex('certification-levels').select('id').where('level', newProject.certification_level);
       knex('projects').insert({ certification_level_id: certification_level_id[0] }).where('id', id);}
-    if (newProject.rating_system && newProject.version) { 
+    if (newProject.rating_system && newProject.version) {
       const rating_system_id = knex('rating_systems').select('id').where({ rating_system: newProject.rating_system, version: newProject.version });
       knex('projects').insert({ project_type_id: project_type_id[0] }).where('id', id);}
     return id;
@@ -117,6 +119,7 @@ app.get('/api/:id', (req, res) => {
   .where('projects.id', id)
   .returning()
   .then(result => res.json({ result }));
+
 });
 
 app.listen(PORT, () => {
