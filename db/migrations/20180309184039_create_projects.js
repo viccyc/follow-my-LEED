@@ -7,9 +7,9 @@ exports.up = async function(knex, Promise) {
     table.date('cert_date');
     table.string('address').notNullable();
     table.string('city').notNullable();
+    table.string('province').notNullable();
     table.float('lat');
     table.float('lng');
-    table.string('province').notNullable();
     table.integer('size').notNullable();
     table.integer('project_type_id').unsigned();
     table.integer('owner_type_id').unsigned();

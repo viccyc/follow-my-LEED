@@ -1,2 +1,208 @@
-"id","number","name","address","city","province","reg_date","cert_date","certification_level_id","rating_system_id","size","project_type_id","owner_type_id"
-"1","13415","Carrefour St-David Est - Batiment D","3505-3507,  Clemenceau","Quebec (Beauport)","Quebec","2010-06-15","2014-02-25","2","21","763","1","1"
+id,number,name,address,city,province,reg_date,cert_date,certification_level_id,rating_system_id,size,project_type_id,owner_type_id
+204,17395,University of Calgary-The Owerko Centre at the Alberta Children's Hospital Research Institute,3820 24 Avenue NW,Calgary,Alberta,2015-03-30,2016-11-10,3,20,785,18,9
+205,15757,University of Calgary - Administration Building Executive Suite,539 Campus Place NW,Calgary,Alberta,2012-08-29,2015-03-31,3,20,2694,21,9
+1,11107,TD Bank - McKenzie Towne,49 McKenzie Towne Ave.,Calgary,Alberta,2008-04-29,2015-03-24,1,25,557,2,1
+206,10187,University of Calgary - Child Development Centre,University of Calgary,Calgary,Alberta,2005-07-08,2007-10-15,4,25,11780,21,9
+107,14660,Cardel Place (previously Nose Creek Recreation & Library Facility),250 Country Village Way NE,Calgary,Alberta,2007-09-11,2005-05-02,3,11,17930,4,3
+141,14658,Crowfoot Library,8665 Nose Hill Drive NW,Calgary,Alberta,2007-09-11,2005-02-03,1,11,2623,15,5
+126,14661,Country-Hills Multi-Services Centre,Country Village Link NE,Calgary,Alberta,2007-09-11,2005-10-27,2,11,4002,23,3
+86,14559,North Hill Home Depot,1818 16 Ave. NW,Calgary,Alberta,2004-01-21,2006-03-27,1,11,9048,25,1
+87,16406,Target - 3772: Calgary Chinook,6455 Macleod Trail SW.,Calgary,Alberta,2013-02-13,2013-08-22,1,15,10240,25,1
+88,16370,Starbucks Market Mall SC West,3625 Shaganappi Trail NW - D002,Calgary,Alberta,2013-05-29,2013-08-09,1,16,137,25,1
+113,15454,"City of Calgary, Municipal Building, 12th Floor",800 Macleod Trail SE,Calgary,Alberta,2012-04-16,2015-05-05,1,20,2658,21,3
+114,16168,Calgary Municipal Building 8th Floor,"Floor 8, 800 Macleod Trail SE",Calgary,Alberta,2013-04-05,2017-12-13,2,20,4545,21,3
+115,16266,Georgina Thomson Building,772 Northmount Drive NW,Calgary,Alberta,2013-06-06,2017-05-04,2,20,541,21,3
+116,16099,Spring Gardens Building D,"928-32 Ave, NE, Building D",Calgary,Alberta,2013-02-28,2016-10-13,2,20,1138,21,3
+117,15453,Municipal Building 9th Floor,"9th Fl., 800 Macleod Trail SE",Calgary,Alberta,2012-04-16,2015-04-09,2,20,3510,21,3
+118,13167,Calgary Police Service - Westwinds Campus East Building,5111 47th Street NE,Calgary,Alberta,2010-02-09,2014-10-07,2,20,40607,21,3
+119,12098,Ad Valorem Place,2924 - 11 Street NE,Calgary,Alberta,2009-04-21,2010-11-05,2,20,7689,21,3
+120,16162,Calgary Public Building Levels 3 - 6,201 8th Avenue South-West,Calgary,Alberta,2013-04-18,2017-05-11,3,20,14127,21,3
+121,15959,Andrew Davison Office Levels 3 and 4,"133 6th Avenue SE, 3rd and 4th Flrs.",Calgary,Alberta,2013-05-21,2016-03-24,3,20,2166,21,3
+138,12450,Calgary Public Building - Floors 7 & 8,205 8 Ave SE,Calgary,Alberta,2009-08-11,2012-10-31,4,20,2929,21,4
+152,15951,EllisDon Calgary Office - Suite 450,"450, 7220 Fisher Street SE",Calgary,Alberta,2012-11-27,2015-03-11,1,20,258,21,6
+153,15850,Gibbs Gage Architects Interior Space,"140 - 10th Avenue S.E Calgary, Alberta",Calgary,Alberta,2012-10-02,2013-10-31,1,20,1434,21,6
+154,15510,Sheldon Kennedy Child Advocacy Centre,4th floor - 3820 24th Avenue NW,Calgary,Alberta,2012-05-02,2014-03-21,3,20,2655,21,6
+158,11532,"Common Areas, The CORE Shopping Centre",324 - 8th Avenue,Calgary,Alberta,2009-02-03,2014-12-07,3,20,40000,25,6
+159,15336,Nexen Wellness Centre,"801  7 Ave. SW, 10th Floor",Calgary,Alberta,2012-01-26,2014-10-23,2,20,1849,28,6
+14,16528,XL Catlin Calgary Office,"Suite 1500, 324 8th Ave. N.W.",Calgary,Alberta,2014-09-23,2015-12-07,1,20,452,21,1
+15,15310,SNC-Lavalin Transmission & Distribution Calgary Office,640-5th Ave. S.W.,Calgary,Alberta,2012-02-27,2014-03-17,1,20,8318,21,1
+16,11315,First Calgary Financial Contact Center,"5th Floor, 1212 31 Avenue NE",Calgary,Alberta,2008-05-05,2012-08-25,1,20,418,21,1
+17,10606,Bell Westwinds Campus - 3699 63rd Ave NE,3699 - 63rd Avenue NE,Calgary,Alberta,2007-03-02,2012-03-05,1,20,14857,21,1
+18,11145,FT Services - Corporate Office,715 - 5th Avenue S.W.,Calgary,Alberta,2008-02-12,2011-02-09,1,20,1543,21,1
+19,10974,Livingston Place 8th floor,"301, 240 4th Ave SW",Calgary,Alberta,2007-11-02,2009-07-09,1,20,1791,21,1
+24,15950,Enbridge Project ONE,420 2nd Street SW,Calgary,Alberta,2012-12-11,2016-08-16,2,20,32132,21,1
+25,15210,Kasian Calgary Office,"450, 1101 - 9 Ave SE",Calgary,Alberta,2011-10-25,2015-04-02,2,20,2128,21,1
+26,15536,FCR Mount Royal Village Office,"880 16th Avenue SW, 4th Floor",Calgary,Alberta,2012-05-23,2015-03-31,2,20,853,21,1
+27,16301,Calgary Connect Shell Centre 31st floor,400 4th Avenue SW,Calgary,Alberta,2013-07-03,2014-10-01,2,20,1846,21,1
+28,15017,"Citi - Suite 4000, 525 8th Ave. S.W.",4000 - 525 8th Avenue SW,Calgary,Alberta,2011-07-05,2013-08-19,2,20,788,21,1
+29,13913,"Shell Center Floors 27-30 Calgary, Alberta",400 - 4th Avenue S.W.,Calgary,Alberta,2010-12-21,2013-08-02,2,20,7508,21,1
+30,12204,Halsall Calgary Office,"MacLeod Place II - 5940 Macleod Trail, #900",Calgary,Alberta,2009-05-12,2013-05-22,2,20,589,21,1
+31,12018,Borden Ladner Gervais LLP – Calgary Office,520 - 3rd Avenue SW,Calgary,Alberta,2009-03-10,2013-04-09,2,20,8490,21,1
+32,13888,Deloitte Calgary Office Relocation,850 2nd Street SW,Calgary,Alberta,2011-01-21,2013-03-05,2,20,9011,21,1
+33,11313,First Calgary Financial Training Centre,"Suite 210, 1212 31 Avenue NE",Calgary,Alberta,2008-05-05,2012-08-25,2,20,306,21,1
+34,11705,ARC Resources Ltd.,"308 4th Ave SW, Suite1200",Calgary,Alberta,2009-01-23,2011-05-27,2,20,16565,21,1
+45,12812,Vermilion Energy Office At Centennial Place,"3rd Avenue, S.W",Calgary,Alberta,2009-11-30,2012-02-09,3,20,10550,21,1
+46,13187,Enermodal Engineering Calgary 3,601-2303 4th Street S.W.,Calgary,Alberta,2010-03-16,2012-02-07,3,20,69,21,1
+47,12534,Bayer Commitment to Sustainability in Canada,160 Quarry Park Boulevard SE,Calgary,Alberta,2009-09-03,2011-04-01,3,20,2608,21,1
+48,12438,LoyaltyOne Calgary Office,1331 Macleod Trail S,Calgary,Alberta,2009-08-07,2011-02-14,3,20,702,21,1
+49,11162,IHS Calgary Office,1331 MacLeod Trail SE,Calgary,Alberta,2008-02-19,2010-03-16,3,20,5674,21,1
+78,11426,Enermodal Engineering Ltd - Calgary Office Suite 603,Suite 603 2303 4th Street SW,Calgary,Alberta,2008-06-20,2011-03-13,4,20,60,21,1
+79,10526,Enermodal Engineering Ltd. - Calgary Office,602 - 2303 4 St. SW,Calgary,Alberta,2007-01-10,2007-10-05,4,20,114,21,1
+101,13196,Bow Valley Square Redevelopment,205 5 Ave SW,Calgary,Alberta,2010-03-16,2013-04-25,3,20,7537,25,1
+105,16922,DJD Dance Centre,109 - 12th Ave SE,Calgary,Alberta,2014-06-03,2017-09-14,3,20,3610,28,1
+151,13730,Stoney Industrial Centre - Building #4,11900 - 18 Street NE,Calgary,Alberta,2010-07-07,2013-03-20,2,21,40525,11,6
+50,10477,Centennial Place,"555 2 Avenue, S.W",Calgary,Alberta,2006-11-23,2011-08-03,3,21,130585,21,1
+51,10906,Quarry Park West,"200 Quarry Park Blvd, SE",Calgary,Alberta,2007-10-02,2011-07-15,3,21,8320,21,1
+83,12611,University of Calgary - Downtown Campus,906 8th Avenue SW,Calgary,Alberta,2009-09-25,2012-12-21,2,21,13620,21,1
+89,12088,Deer Valley Market Place - Buildings A & B,1221 Canyon Meadows Drive SE,Calgary,Alberta,2009-03-23,2013-12-02,1,21,2100,25,1
+90,11361,2010 Chinook Centre Expansion,6455 Macleod Trail SW,Calgary,Alberta,2008-05-22,2012-06-20,1,21,65432,25,1
+97,13505,McKenzie Towne Park - Site G,"35 McKenzie Towne Avenue, SE",Calgary,Alberta,2010-05-13,2014-09-15,2,21,663,25,1
+2,15107,McKenzie Towne Park - Site I,142 Mckenzie Towne Link SE,Calgary,Alberta,2011-08-23,2015-02-11,2,22,1210,2,1
+122,13251,Westbrook Centre,1417C - 33 Street SW,Calgary,Alberta,2010-04-16,2014-12-05,3,22,8920,21,3
+5,15711,"Hopewell Airport Park Phase II, Building E",10720 25th Street,Calgary,Alberta,2012-08-03,2014-10-21,1,22,8930,11,1
+6,17073,Stonegate Landing Buildings A & E,2626 Country Hills Blvd,Calgary,Alberta,2014-09-03,2017-06-28,2,22,45525,11,1
+7,16882,Great Plains IV - Building 3,5840 76 Ave SE,Calgary,Alberta,2014-06-24,2017-02-13,2,22,35763,11,1
+8,15457,Great Plains IV Buildings 1 & 2,7785 62nd Street SE,Calgary,Alberta,2012-04-11,2015-07-28,2,22,64570,11,1
+9,15459,Stoney Warehouse 6,12290 - 18 Street NE,Calgary,Alberta,2012-04-11,2015-01-03,2,22,38686,11,1
+10,15458,Stoney Warehouse 5,12285 18th Street NE,Calgary,Alberta,2012-04-11,2014-10-13,2,22,27853,11,1
+12,15891,Airport Crossing,10221 15th St NE and 112 Freeport Crescent NE,Calgary,Alberta,2012-12-05,2016-05-23,2,22,27090,18,1
+20,14949,Parkside A & B,49 & 37 Quarry Park Blvd. SE,Calgary,Alberta,2011-07-05,2014-01-09,1,22,18020,21,1
+21,14950,Quarry Park Central,100 Quarry Park Rd SE,Calgary,Alberta,2011-07-05,2013-06-17,1,22,15462,21,1
+35,16488,Quarry Crossing A & B,50 Quarry Park Blvd SE,Calgary,Alberta,2013-07-25,2017-08-28,2,22,29454,21,1
+36,15370,WestMount 4820,4820 Richard Road SW,Calgary,Alberta,2012-03-12,2014-10-16,2,22,17552,21,1
+37,13871,640 5th Avenue,640 5th Ave,Calgary,Alberta,2010-11-12,2013-06-27,2,22,29041,21,1
+52,17811,707 Fifth - Manulife Place,707 5th Street SW,Calgary,Alberta,2015-11-05,2017-10-12,3,22,57600,21,1
+53,11966,11th Avenue  Place,214 11th Avenue SW,Calgary,Alberta,2009-02-05,2017-04-18,3,22,19437,21,1
+54,15799,Britannia Crossing,5119 Elbow Dr. SW,Calgary,Alberta,2012-08-31,2016-04-20,3,22,6257,21,1
+80,11715,Eau Claire Tower,"600 3rd Avenue, S.W",Calgary,Alberta,2008-11-14,2017-08-30,4,22,59828,21,1
+81,15101,"Calgary City Centre, Phase 1",215 2nd St SW,Calgary,Alberta,2011-08-31,2016-10-03,4,22,86874,21,1
+91,17491,Auburn Bay Station,100 Auburn Meadows Drive SE,Calgary,Alberta,2015-04-14,2018-01-31,1,22,7853,25,1
+92,15559,Gateway Retail District,"#201, 19489 Seton Crescent SE",Calgary,Alberta,2012-05-28,2015-04-10,1,22,11850,25,1
+4,16842,Seton Professional Centre,3883 Front Street SE,Calgary,Alberta,2014-02-25,2017-12-08,2,22,9225,9,1
+38,17946,Golder Building,2535 3rd Ave SE,Calgary,Alberta,2016-02-18,2017-01-25,2,23,21696,21,1
+39,14098,Jacobs Building,205 Quarry Park Drive,Calgary,Alberta,2010-11-12,2016-08-08,2,23,34364,21,1
+40,15110,Heritage Square,8500 MacLeod Trail SE,Calgary,Alberta,2011-10-27,2015-06-03,2,23,39812,21,1
+41,15173,Deerfoot Atria,6715 - 8th Street NE,Calgary,Alberta,2011-12-20,2014-05-20,2,23,37575,21,1
+42,14026,Sun Life Plaza,"112, 140 and 144 4th Ave. SW",Calgary,Alberta,2010-10-18,2013-10-04,2,23,124946,21,1
+55,18233,Centrium Place,332 - 6 Avenue SW,Calgary,Alberta,2016-08-08,2017-05-12,3,23,24138,21,1
+56,17780,Palliser South,140 10th Ave SE,Calgary,Alberta,2015-09-29,2017-04-21,3,23,30278,21,1
+57,17198,First Tower Calgary,411 1 St. SE,Calgary,Alberta,2014-10-02,2016-07-12,3,23,70688,21,1
+58,17271,520 5th Ave SW,520 5th Ave SW,Calgary,Alberta,2014-10-16,2016-02-19,3,23,20837,21,1
+59,17272,Emerson Building and Bayer Building,110 and 160 Quarry Park Blvd SE,Calgary,Alberta,2014-10-16,2016-02-19,3,23,17028,21,1
+60,14095,Shell Centre,400-4th Avenue SW,Calgary,Alberta,2010-11-12,2015-07-23,3,23,74109,21,1
+61,17030,Keynote Office Tower 1,1100 1st Street SE,Calgary,Alberta,2014-06-13,2015-07-22,3,23,25890,21,1
+62,14083,Gulf Canada Square,401 9 Avenue Southwest,Calgary,Alberta,2010-11-12,2015-04-02,3,23,126610,21,1
+63,17104,Stampede Station,1331 MacLeod Trail SE,Calgary,Alberta,2014-08-08,2014-12-15,3,23,16147,21,1
+64,17106,Quarry Park Professional,109 Quarry Park Blvd. SE,Calgary,Alberta,2014-08-08,2014-12-15,3,23,8807,21,1
+65,17107,800 5th Ave,800 5th Avenue SW,Calgary,Alberta,2014-08-08,2014-12-15,3,23,28586,21,1
+66,14088,"Bow Valley Square, Calgary, AB",202 - 6th Avenue SW,Calgary,Alberta,2010-11-12,2014-07-24,3,23,209304,21,1
+67,14034,Ernst & Young Tower,440 - 2nd Avenue SW,Calgary,Alberta,2010-11-08,2013-09-30,3,23,48404,21,1
+68,14001,Intact Place,311 & 321 6th Avenue SW,Calgary,Alberta,2010-07-06,2013-03-22,3,23,56092,21,1
+69,14000,BP Centre,240 4th Avenue SW,Calgary,Alberta,2010-07-06,2013-02-12,3,23,80352,21,1
+70,13966,Suncor Energy Centre,111 5th Avenue SW,Calgary,Alberta,2010-02-04,2012-11-26,3,23,168157,21,1
+71,13987,Bankers Hall,335 - 8th Avenue SW,Calgary,Alberta,2010-03-22,2012-11-22,3,23,208458,21,1
+72,13998,Livingston Place,222 3rd Avenue SW,Calgary,Alberta,2010-06-30,2012-10-05,3,23,96433,21,1
+73,13967,Fifth Avenue Place,420 2nd Street NW,Calgary,Alberta,2010-02-04,2012-09-21,3,23,137961,21,1
+82,16233,"Centennial Place, Calgary, AB",520 3rd Ave SW,Calgary,Alberta,2014-01-31,2015-01-27,4,23,136564,21,1
+149,12792,Canada's Sports Hall Of Fame,169 Canada Olympic Road SW,Calgary,Alberta,2009-11-11,2016-09-13,2,25,4475,1,6
+3,11447,9630 MacLeod Trail S - BMO,9630 macLeod Trail SE,Calgary,Alberta,2008-07-10,2012-12-17,2,25,628,2,1
+150,11706,The Genesis Centre of Community Wellness,7556 Falconridge Blvd. NE,Calgary,Alberta,2009-01-23,2014-06-10,3,25,21793,4,6
+108,11693,Ralph Klein Park - Environmental Education Centre,12350 84 St SE,Calgary,Alberta,2008-09-30,2017-05-29,4,25,1933,5,3
+162,12356,Robert Thirsk High School,"8777 Nose Hill Dr NW,",Calgary,Alberta,2009-06-29,2015-11-20,2,25,15700,7,8
+163,12112,Ernest Manning High School,20 Springborough Boulevard,Calgary,Alberta,2009-04-02,2013-05-14,2,25,14685,7,8
+164,11183,Connaught School Modernization,1121 12 Ave SW,Calgary,Alberta,2008-02-29,2012-07-30,2,25,4645,7,8
+140,11692,Louise Station Affordable Housing,898 4th Ave SW,Calgary,Alberta,2008-09-30,2016-11-02,2,25,7152,8,5
+160,10223,Peter Lougheed Centre East Tower,3500 26th Ave NE,Calgary,Alberta,2005-10-12,2015-07-02,2,25,38000,9,7
+161,11347,Alberta Health Services South Health Campus,4448 Front Street SE,Calgary,Alberta,2008-06-30,2014-06-23,2,25,160828,9,7
+109,10076,Glenmore Filtered Water Pump Station Renovation,1646-56 Avenue SW,Calgary,Alberta,2004-11-23,2007-04-11,1,25,958,11,3
+166,10553,Samuel W. Shaw School,115 Shannon Drive SW,Calgary,Alberta,2007-01-17,2015-02-18,2,25,6406,12,8
+167,12311,St. Isabella Catholic School,"855 Copperfield Blvd, SE",Calgary,Alberta,2009-06-18,2013-09-05,2,25,7658,12,8
+170,11689,McKenzie Towne School,679 Prestwick Circle SE,Calgary,Alberta,2008-09-30,2017-06-06,3,25,4635,12,8
+171,12312,Mother Margaret Mary Catholic School,135 Covepark Square NE,Calgary,Alberta,2009-06-18,2014-12-16,3,25,7000,12,8
+172,12309,Ted Harrison School,"750 Taradale Drive, NE",Calgary,Alberta,2009-06-18,2013-09-17,3,25,8557,12,8
+173,12308,Captain Nichola Goddard School,"405 Panatella Blvd, NW",Calgary,Alberta,2009-06-18,2013-09-04,3,25,8351,12,8
+189,11459,University of Calgary - Energy Environment Experiential Learning Building,750 Campus Drive NW,Calgary,Alberta,2008-07-04,2013-05-06,4,25,21490,13,9
+175,11639,Saddle Ridge School,368 Saddlecrest Boulevard NE,Calgary,Alberta,2008-09-22,2014-01-02,2,25,3972,14,8
+176,11640,Our Lady of the Evergreens School,322 Everridge Drive SW,Calgary,Alberta,2008-09-22,2014-01-02,2,25,4086,14,8
+177,11650,Light of Christ School,6270 Saddlehorn Drive NE,Calgary,Alberta,2008-09-22,2014-01-02,2,25,6700,14,8
+178,11651,Christ the King School,333 Cranston Way SE,Calgary,Alberta,2008-09-22,2014-01-02,2,25,6700,14,8
+179,11636,Royal Oak School,9100 Royal Birch Boulevard NW,Calgary,Alberta,2008-09-22,2014-01-02,2,25,3972,14,8
+180,11637,West Springs School,8999 Wentworth Avenue SW,Calgary,Alberta,2008-09-22,2014-01-02,2,25,3972,14,8
+181,11635,Evergreen School,Everstone Drive SW,Calgary,Alberta,2008-09-22,2013-12-23,2,25,3972,14,8
+182,11638,Cranston School,205 Cranston Drive SE,Calgary,Alberta,2008-09-22,2013-02-13,3,25,4509,14,8
+190,10374,"Bow Valley College, North Campus",332 - 6 Avenue SE,Calgary,Alberta,2006-07-27,2015-03-20,1,25,28340,14,9
+191,12132,Science and Technology Wing Expansion,4825 Mount Royal Gate SW,Calgary,Alberta,2010-02-01,2014-10-15,2,25,4353,14,9
+194,12135,Roderick Mah Centre for Continuous Learning Addition,30 Mount Royal Circle S.W.,Calgary,Alberta,2009-06-10,2015-02-20,3,25,6279,14,9
+195,10376,University of Calgary - Clinical Skills Building,11877 85 St NW,Calgary,Alberta,2006-07-27,2010-11-10,3,25,8182,14,9
+196,10189,Mount Royal College Centre for Continuous Learning,30 Mount Royal Circle,Calgary,Alberta,2005-06-07,2007-04-13,3,25,4829,14,9
+111,12843,Signal Hill Library Expansion & Renovation,5994 Signal Hill Centre SW,Calgary,Alberta,2009-12-09,2012-09-25,3,25,1712,15,3
+200,12243,University of Calgary - High Density Library,11711 85 Street NW,Calgary,Alberta,2009-08-19,2016-08-08,3,25,2945,15,9
+201,10605,University of Calgary - Taylor Family Digital Library,2500 University Dr NW,Calgary,Alberta,2007-03-02,2014-06-11,3,25,24514,15,9
+202,12535,University of Calgary - Yamnuska Hall,3348-24 Ave NW,Calgary,Alberta,2009-09-03,2013-09-18,1,25,21793,17,9
+112,10174,Pine Creek Operations and Maintenance Building,3131 - 210 Avenue SE,Calgary,Alberta,2005-04-29,2009-02-09,3,25,3220,18,3
+123,10084,The Water Centre,621 25th Avenue,Calgary,Alberta,2004-12-14,2009-11-18,3,25,15352,21,3
+183,11160,Calgary Board of Education Centre - Safran South,930 13 Avenue SW,Calgary,Alberta,2008-03-03,2013-01-18,2,25,3550,21,8
+184,11159,Calgary Board of Education Centre - Safran North,930 13 Avenue SW,Calgary,Alberta,2008-03-03,2013-01-18,3,25,2135,21,8
+125,10417,Oliver Bowen LRV Maintenance Facility,3910 - 54th Avenue NE,Calgary,Alberta,2007-02-17,2012-04-06,3,25,19421,22,3
+139,10145,Calgary Courts Centre,705  5th Street S.W.,Calgary,Alberta,2005-03-14,2013-11-26,1,25,101871,22,4
+142,10373,Ronald McDonald House Calgary,111 West Campus Place NW,Calgary,Alberta,2006-07-27,2017-07-07,2,25,3400,22,5
+143,10405,Manchester Central Stores,651 - 25th Avenue SE,Calgary,Alberta,2006-09-12,2013-05-21,2,25,5120,22,5
+144,13046,International Terminal Building,"Calgary Airport Authority, 2000 Airport Road N.E.",Calgary,Alberta,2010-01-06,2017-08-29,3,25,174693,22,5
+145,12626,Penguin Plunge Complex,"Calgary Zoo, 1300 Zoo Road N.E.",Calgary,Alberta,2009-10-14,2015-02-19,3,25,2135,22,5
+146,12029,TELUS Spark,"220 St. Georges Drive, NE",Calgary,Alberta,2009-03-05,2014-04-22,3,25,14236,22,5
+155,11164,ENMAX Downtown District Energy Centre,"407, 9 Avenue SW",Calgary,Alberta,2008-02-29,2013-09-20,2,25,2225,22,6
+185,11517,Bridlewood School,207 Bridleridge Way SW,Calgary,Alberta,2008-09-22,2013-12-23,2,25,3972,22,8
+186,12310,Twelve Mile Coulee School,"150 Tuscany Way, NW",Calgary,Alberta,2009-06-18,2013-09-04,3,25,8557,22,8
+187,12307,Nose Creek School,"12056 Coventry Hills Way, NE",Calgary,Alberta,2009-06-18,2013-09-04,3,25,8557,22,8
+127,11520,Calgary Police Service Forensic Centre,1010 26 Avenue SE,Calgary,Alberta,2008-08-01,2014-10-07,2,25,2023,23,3
+128,10955,Saddleridge Multi-Services Centre,"800 Saddle Towne Circle, NE",Calgary,Alberta,2007-10-18,2013-02-15,2,25,4843,23,3
+129,10213,Signal Hill Fire Station #33,3800 69th Street SW,Calgary,Alberta,2005-09-01,2010-07-22,2,25,1566,23,3
+130,11691,Louise Station Fire Hall #6,898 4th Ave SW,Calgary,Alberta,2008-09-30,2017-05-12,3,25,1300,23,3
+131,13569,Fire Station #40 - Symons Valley,12920 Symons Valley Road NW,Calgary,Alberta,2010-05-27,2015-05-08,3,25,1487,23,3
+132,13570,Douglas Glen Fire station 39,"4199, 114th Avenue SE",Calgary,Alberta,2010-05-27,2015-04-06,3,25,1798,23,3
+133,13568,South Calgary Fire Station #5,3192 - 14th Street SW,Calgary,Alberta,2010-05-27,2014-01-03,3,25,1431,23,3
+134,10819,Emergency Apparatus Repair Facility,1755 - 18th Avenue NE,Calgary,Alberta,2007-07-23,2013-10-10,3,25,6118,23,3
+135,10818,CFD Fire Station #35 Valley Ridge,11280 Valley Ridge blvd. NW,Calgary,Alberta,2007-07-23,2012-03-23,3,25,1500,23,3
+136,13308,SFCRA Facility Expansion Project,333 Shawville Blvd SE suite 100,Calgary,Alberta,2010-03-29,2013-11-22,1,25,9267,28,3
+147,11759,Winsport - Markin MacPhail Centre,88 Canada Olympic Road SW,Calgary,Alberta,2009-04-21,2015-11-25,2,25,48800,28,5
+148,11460,Westside Recreation Centre Expansion,2000 69th Street SW,Calgary,Alberta,2008-07-04,2013-10-01,2,25,4763,28,5
+13,10153,Vento Residences,204 7A St NE,Calgary,Alberta,2005-12-06,2007-10-31,4,25,2710,18,1
+74,11158,Calgary Board of Education Centre,930 13 Avenue SW,Calgary,Alberta,2008-03-03,2013-01-18,3,25,28706,21,1
+75,10737,WestJet Campus Corporate Office Centre Phase 1,22 Aerial Place NE,Calgary,Alberta,2007-06-04,2011-09-28,3,25,29311,21,1
+76,10540,SMART Technologies Headquarters,3636 Research Road NW,Calgary,Alberta,2007-01-08,2011-07-12,3,25,19600,21,1
+84,11157,Enmax Conservatory,1300 Zoo Road NE,Calgary,Alberta,2008-03-03,2012-03-22,3,25,3150,22,1
+103,12390,"The Red Arena and the MRU Rooms,   Flames Community Arenas",2390 - 47th Avenue SW,Calgary,Alberta,2009-07-17,2013-08-27,1,25,3561,28,1
+104,11707,Trico Centre Arena Expansion Project,11150 Bonaventure Drive SE,Calgary,Alberta,2009-01-23,2011-07-11,1,25,3303,28,1
+165,16995,Nelson Mandela High School,45 Saddletowne Circle NE,Calgary,Alberta,2014-06-27,2017-07-26,3,26,13961,7,8
+188,16761,University of Calgary - Crowsnest Hall,250 Collegiate Boulevard NW,Calgary,Alberta,2014-02-18,2017-01-31,2,26,18188,8,9
+110,17874,The City of Calgary Fleet Maintenance Building,6685 114 Avenue SW,Calgary,Alberta,2015-11-20,2017-09-15,1,26,2358,11,3
+168,17631,École du Nouveau-Monde,220 Scenic Acres Drive NW,Calgary,Alberta,2015-06-12,2018-01-19,2,26,3621,12,8
+169,17274,Kenneth D. Taylor School,216 Evanston View NW,Calgary,Alberta,2014-12-04,2017-05-04,2,26,4897,12,8
+174,17632,École de la Mosaïque,199 Martindale Boulevard NE,Calgary,Alberta,2015-06-12,2018-02-07,3,26,3022,12,8
+192,11574,"Bow Valley College, South Campus",345 - 6 Avenue SE,Calgary,Alberta,2008-08-28,2015-03-20,2,26,38000,14,9
+193,13155,SAIT Polytechnic Trades and Technology Complex: Cenovus Energy Centre (South Wing),1301 16th Ave NW,Calgary,Alberta,2010-02-01,2013-09-30,2,26,3875,14,9
+197,17000,University of Calgary - Taylor Institute for Teaching and Learning,434 Collegiate Boulevard NW,Calgary,Alberta,2014-10-24,2017-01-12,3,26,4503,14,9
+198,13153,SAIT Polytechnic Trades and Technology Complex:  Aldred Centre (Centre Wing),1301 16th Ave NW,Calgary,Alberta,2010-02-01,2013-09-30,3,26,48183,14,9
+199,13154,SAIT Polytechnic Trades and Technology Complex: Johnson Cobbe Energy Centre (West Wing),1301 16th Ave NW,Calgary,Alberta,2010-02-01,2013-09-30,3,26,25941,14,9
+203,16760,University of Calgary - Aurora Hall,3272 24 Avenue NW,Calgary,Alberta,2014-02-18,2017-01-31,2,26,12464,17,9
+124,16879,Calgary Parking Authority Impound Lot Administrative Building,400   39th Avenue SE,Calgary,Alberta,2014-03-14,2018-01-10,3,26,1533,21,3
+137,16571,Genesis Centre of Community Wellness - Field House,7556 Falconridge Blvd. NE,Calgary,Alberta,2013-09-09,2016-07-06,2,26,3182,28,3
+77,17719,Rangewinds Office Building,2213 - 50th Avenue SE,Calgary,Alberta,2015-08-14,2017-10-31,3,26,3014,21,1
+22,15156,GE Calgary,525 8th Avenue SW,Calgary,Alberta,2011-09-01,2014-01-06,1,27,5727,21,1
+23,14607,Shell Centre,400 4th Ave SW,Calgary,Alberta,2006-11-20,2007-09-25,1,28,1858,21,1
+43,14576,Cohos Evamy - Integrated Design,134 11th Ave SE,Calgary,Alberta,2005-09-02,2007-10-02,2,28,4171,21,1
+11,14728,McKenzie Towne Centre Phase 2,11 McKenzie Towne Avenue SE,Calgary,Alberta,2008-06-19,2015-06-30,2,3,2427,18,1
+44,14594,Bankers Court,850 - 2 St. SW,Calgary,Alberta,2006-08-08,2009-07-30,3,3,29993,21,1
+85,14605,McKenzie Towne Plaza,18 McKenzie Towne Gate SE,Calgary,Alberta,2006-11-10,2010-06-21,1,3,2764,25,1
+96,14758,Atlantic Avenue Art Block,1005 - 1019 9th Avenue SE,Calgary,Alberta,2008-10-01,2014-12-10,2,3,16999,25,1
+102,14614,Eighth Avenue Place - Phase I,513 - 8th Avenue S.W,Calgary,Alberta,2007-04-06,2012-10-23,4,3,111484,25,1
+156,16991,Starbucks Gates of Walden,151 Walden Gate SE - 210,Calgary,Alberta,2014-03-06,2014-03-06,1,32,126,25,6
+93,19467,Starbucks 8th Avenue Place,585 - 8th Avenue SW,Calgary,Alberta,2016-11-02,2016-11-29,1,32,60,25,1
+98,18594,Starbucks Jamieson Place SW,"308, 4th Ave SW",Calgary,Alberta,2016-08-30,2016-09-30,2,32,33,25,1
+99,17887,Starbucks Bankview,2509 14 Street SW,Calgary,Alberta,2015-11-02,2016-07-25,2,32,111,25,1
+100,17802,Starbucks Bowfort Road,83 Bowridge Drive NW,Calgary,Alberta,2015-09-18,2016-01-11,2,32,111,25,1
+157,17229,Starbucks Silverado Marketplace,19369 Sheriff King Street SW,Calgary,Alberta,2014-09-22,2014-09-24,1,33,153,25,6
+94,16810,Starbucks Royal Oak Place - Country Hill,8750 Country Hills Blvd NW,Calgary,Alberta,2014-01-09,2014-01-09,1,33,139,25,1
+95,16368,Starbucks Deer Valley Marketplace - Calg,1221 Canyon Meadows Drive SE,Calgary,Alberta,2013-04-18,2013-08-09,1,33,130,25,1
+106,14644,Currie Barracks,3951 Trasimene Crescent S. W.,Calgary,Alberta,2007-06-27,2008-09-21,3,42,613160,18,2
+>>>>>>> upstream/master

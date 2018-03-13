@@ -1,29 +1,31 @@
-type
-Assembly
-Bank / Credit union
-Church / Temple
-Community Centre
-Conservation Centre
-Daycare
-High School
-High-rise multi-unit residential (>10 storeys)
-Hospital / Clinic
-Hotel / motel
-Industrial / Manufacturing
-K-9 School
-Laboratory
-Lecture Hall / Classroom
-Library
-Low-rise multi-unit residential (<=3 storeys)
-Mid-rise multi-unit residential (>3<10 storeys)
-Mixed-use
-Multifamily Low-rise Building (1-3 stories)
-Nursing home/Extended care facility
-Office building
-Other
-Public Safety (firehall, police station)
-Public transport passenger station
-Retail
-Single Family Home (Attached)
-Single Family Home (Detached)
-Sports Facility
+
+"id","type"
+"1","Assembly"
+"2","Bank / Credit union"
+"3","Church / Temple"
+"4","Community Centre"
+"5","Conservation Centre"
+"6","Daycare"
+"7","High School"
+"8","High-rise multi-unit residential (>10 storeys)"
+"9","Hospital / Clinic"
+"10","Hotel / motel"
+"11","Industrial / Manufacturing"
+"12","K-9 School"
+"13","Laboratory"
+"14","Lecture Hall / Classroom"
+"15","Library"
+"16","Low-rise multi-unit residential (<=3 storeys)"
+"17","Mid-rise multi-unit residential (>3<10 storeys)"
+"18","Mixed-use"
+"19","Multifamily Low-rise Building (1-3 stories)"
+"20","Nursing home/Extended care facility"
+"21","Office building"
+"22","Other"
+"23","Public Safety (firehall, police station)"
+"24","Public transport passenger station"
+"25","Retail"
+"26","Single Family Home (Attached)"
+"27","Single Family Home (Detached)"
+"28","Sports Facility"
+>>>>>>> upstream/master

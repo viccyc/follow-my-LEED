@@ -1,44 +1,45 @@
-rating_system,version
-LEED BC-NC,1
-LEED BD+C: Core and Shell,1
-LEED BD+C: Core and Shell,2
-LEED BD+C: Core and Shell,2009
-LEED BD+C: Core and Shell,v4
-LEED BD+C: Healthcare,2009
-LEED BD+C: Healthcare,v4
-LEED BD+C: Homes and Multifamily Low-rise,v4
-LEED BD+C: Multifamily Midrise,v4
-LEED BD+C: New Construction,2
-LEED BD+C: New Construction,2.1
-LEED BD+C: New Construction,2.2
-LEED BD+C: New Construction,2009
-LEED BD+C: New Construction,v4
-LEED BD+C: Retail,2009
-LEED BD+C: Retail,pilot
-LEED BD+C: Schools,2009
-LEED BD+C: Schools,v4
-LEED BD+C: Warehouses and Distribution Centers,v4
-LEED Canada for Commercial Interiors,1
-LEED Canada for Core and Shell Development,1
-LEED Canada for Core and Shell Development,2009
-LEED Canada for Existing Buildings: Operations and Maintenance,2009
-LEED Canada for Homes,2009
-LEED Canada for New Construction and Major Renovations,1
-LEED Canada for New Construction and Major Renovations,2009
-LEED ID+C: Commercial Interiors,1
-LEED ID+C: Commercial Interiors,2
-LEED ID+C: Commercial Interiors,2009
-LEED ID+C: Commercial Interiors,pilot
-LEED ID+C: Commercial Interiors,v4
-LEED ID+C: Retail,2009
-LEED ID+C: Retail,pilot
-LEED ID+C: Retail,v4
-LEED O+M: Existing Buildings,1
-LEED O+M: Existing Buildings,2009
-LEED O+M: Existing Buildings,v4
-LEED O+M: Existing Buildings-Performance Score,v4
-LEED-EB,2
-LEED-EB,2009
-LEED-ND,2009
-LEED-ND,pilot
-ZCB-Design,N/A
+"id","rating_system","version"
+"1","LEED BC-NC","1"
+"2","LEED BD+C: Core and Shell","1"
+"3","LEED BD+C: Core and Shell","2"
+"4","LEED BD+C: Core and Shell","2009"
+"5","LEED BD+C: Core and Shell","v4"
+"6","LEED BD+C: Healthcare","2009"
+"7","LEED BD+C: Healthcare","v4"
+"8","LEED BD+C: Homes and Multifamily Low-rise","v4"
+"9","LEED BD+C: Multifamily Midrise","v4"
+"10","LEED BD+C: New Construction","2"
+"11","LEED BD+C: New Construction","2.1"
+"12","LEED BD+C: New Construction","2.2"
+"13","LEED BD+C: New Construction","2009"
+"14","LEED BD+C: New Construction","v4"
+"15","LEED BD+C: Retail","2009"
+"16","LEED BD+C: Retail","pilot"
+"17","LEED BD+C: Schools","2009"
+"18","LEED BD+C: Schools","v4"
+"19","LEED BD+C: Warehouses and Distribution Centers","v4"
+"20","LEED Canada for Commercial Interiors","1"
+"21","LEED Canada for Core and Shell Development","1"
+"22","LEED Canada for Core and Shell Development","2009"
+"23","LEED Canada for Existing Buildings: Operations and Maintenance","2009"
+"24","LEED Canada for Homes","2009"
+"25","LEED Canada for New Construction and Major Renovations","1"
+"26","LEED Canada for New Construction and Major Renovations","2009"
+"27","LEED ID+C: Commercial Interiors","1"
+"28","LEED ID+C: Commercial Interiors","2"
+"29","LEED ID+C: Commercial Interiors","2009"
+"30","LEED ID+C: Commercial Interiors","pilot"
+"31","LEED ID+C: Commercial Interiors","v4"
+"32","LEED ID+C: Retail","2009"
+"33","LEED ID+C: Retail","pilot"
+"34","LEED ID+C: Retail","v4"
+"35","LEED O+M: Existing Buildings","1"
+"36","LEED O+M: Existing Buildings","2009"
+"37","LEED O+M: Existing Buildings","v4"
+"38","LEED O+M: Existing Buildings, Performance Score","v4"
+"39","LEED-EB","2"
+"40","LEED-EB","2009"
+"41","LEED-ND","2009"
+"42","LEED-ND","pilot"
+"43","ZCB-Design","N/A"
+>>>>>>> upstream/master
