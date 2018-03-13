@@ -5,27 +5,65 @@ import Nav from './Nav';
 import './index.css';
 import './Home.css';
 
+const google = window.google;
+// const $ = window.$;
+
 class Home extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      location: null,
-      action: '/find_score'
+      location: {
+        address: null,
+        longitude: null,
+        latitude: null
+      },
+      action: '/find_score',
+      autocomplete: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
   }
 
   componentDidMount() {
+    function geolocate() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var geolocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          var circle = new google.maps.Circle({
+            center: geolocation,
+            radius: position.coords.accuracy
+          });
+          autocomplete.setBounds(circle.getBounds());
+        });
+      }
+    }
 
+    const input = document.getElementById('searchTextField');
+
+    const autocomplete = new google.maps.places.Autocomplete(input);
+    geolocate();
+
+    this.setState({ autocomplete: autocomplete});
+
+    // const place = autocomplete.getPlace();
   }
 
   handleSubmit(e){
     e.preventDefault();
-    const location = this.input.value;
-    console.log(`clicked GO in Home page, location is ${location}`);
-    this.setState({ location: location });
+    const place = this.state.autocomplete.getPlace();
+    const address = place.formatted_address;
+    const longitude = place.geometry.location.lng();
+    const latitude = place.geometry.location.lat();
+    console.log(`clicked GO in Home page,`, address, longitude, latitude);
+    this.setState({ location: {
+      address: address,
+      longitude: longitude,
+      latitude: latitude
+    }});
   }
 
   clickHandler(e){
@@ -37,7 +75,7 @@ class Home extends Component {
 
   render() {
     //when submit is clicked and state is reset, trigger rerender the page and redirect to target page
-    if (this.state.location){
+    if (this.state.location.address){
       return <Redirect to={{
         pathname: this.state.action,
         state: {
@@ -59,6 +97,7 @@ class Home extends Component {
               </div>
               <input name="location"
                     ref={(input) => this.input = input}
+                    id="searchTextField"
                     type="text"
                     className="form-control"
                     aria-label="Large"
