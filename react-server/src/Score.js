@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Nav from './Nav';
-
+import MapContainer from './MapContainer';
 
 class Score extends Component {
 
@@ -30,6 +30,7 @@ class Score extends Component {
               <a className="btn btn-primary btn-lg" role="button">Learn more</a>
             </p>
         </div>
+        <MapContainer />
       </div>
 
     );
