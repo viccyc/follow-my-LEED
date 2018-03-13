@@ -1,4 +1,4 @@
-// const knexSeeder  = require('knex-csv-seeder');
+// const seeder  = require('knex-csv-seeder');
 import seeder from 'knex-csv-seeder';
 
 exports.seed = seeder({
