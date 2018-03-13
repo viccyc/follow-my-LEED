@@ -7,7 +7,9 @@ class Score extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: this.props.location.state ? this.props.location.state.data : null
+      location: this.props.location.state ? this.props.location.state.data.location : null,
+      radius: this.props.location.state ? this.props.location.state.data.radius : null
+
     };
   }
 

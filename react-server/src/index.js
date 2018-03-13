@@ -13,9 +13,8 @@ import Projects from './Projects';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
-//TODO: need to use react-router
-//TODO: projects not leeds
-
+//render different component according to the url(that user type directly into address bar)
+//TODO: support queryString/:param so users can share a link or reload page
 ReactDOM.render((
   <BrowserRouter>
     <Switch>

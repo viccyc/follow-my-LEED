@@ -7,13 +7,19 @@ class Projects extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: this.props.location.state ? this.props.location.state.data : null
+      location: this.props.location.state ? this.props.location.state.data.location : null,
+      radius: this.props.location.state ? this.props.location.state.data.radius : null
+
     };
   }
 
-  //TODO: fetch backend with location data
-  //with res, use api to display and uodate the map
+
   componentDidMount() {
+    //TODO: fetch backend with location data
+    //need to provide location and radius
+    //with res, use other apis to display and update the map & popups
+
+    //TODO: test google map&popups api
     // //create map using this.state.location
     // let map;
     // let service;
@@ -47,8 +53,6 @@ class Projects extends Component {
     // }
 
   }
-
-
 
   render() {
     return (
