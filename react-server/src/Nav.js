@@ -10,7 +10,7 @@ class Nav extends Component {
   constructor() {
     super();
     this.state = {
-      action: null
+      action: 'find_score'
     };
     this.clickHandler = this.clickHandler.bind(this);
 
