@@ -27,31 +27,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Insert into 'projects' table
 const API_KEY = 'AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98';
 const axios = require('axios');
-knex('projects')
-  .select('id', 'address', 'city', 'province')
-  .returning()
-  .then(data => {
-    data.forEach(project => {
-      console.log(project);
-      console.log(project.id);
-      let address = (`${project.address}, ${project.city}, ${project.province}`).split(' ').join('+');
-      // console.log(address);
-      axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`)
-        .then(response => {
-          let lat = response.data.results[0].geometry.location.lat;
-          let lng = response.data.results[0].geometry.location.lng;
-          console.log(lat, lng, project.id);
-          knex('projects')
-            .where('id', project.id)
-            .update({ lat: lat, lng: lng })
-            .returning('*')
-            .then(data => console.log(data));
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    });
-  });
 
 // Return some details of all projects
 app.get('/api', (req, res) => {
