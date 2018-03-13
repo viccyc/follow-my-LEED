@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
 
 
 
 class Form extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      result: [],
+      redirectReady: false,
       location: null,
       radius: '800'
     };
@@ -33,18 +34,29 @@ class Form extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    const url = this.props.action;
-    const data = {location: this.state.location, radius: this.state.radius};
-
-    //TODO:redirect to target page, could be same page with new location, could be...
-
+    //change state to triger redirect to target page with data input
+    if (this.state.location) {
+      this.setState({ redirectReady: true});
+    }
   }
 
 
   render() {
+    //when clicking submit, render redirect with data
+    if (this.state.redirectReady){
+      return <Redirect to={{
+        pathname: this.props.action,
+        state: {
+          data: {
+          location: this.state.location,
+          radius: this.state.radius
+          }
+        }
+      }} />
+    }
     return (
       <li className="nav-item right-aligned">
-        <form action={this.props.action} method="POST" >
+        <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>Location</label>
             <input name="location"

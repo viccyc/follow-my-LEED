@@ -36,10 +36,15 @@ class Home extends Component {
   }
 
   render() {
+    //when submit is clicked and state is reset, trigger rerender the page and redirect to target page
     if (this.state.location){
       return <Redirect to={{
         pathname: this.state.action,
-        state: { data: this.state.location }
+        state: {
+          data: {
+          location: this.state.location
+          }
+        }
       }} />
     }
     return (
