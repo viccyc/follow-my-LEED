@@ -30,7 +30,7 @@ class Score extends Component {
               <a className="btn btn-primary btn-lg" role="button">Learn more</a>
             </p>
         </div>
-        <MapContainer />
+        <MapContainer search={this.state} />
       </div>
 
     );
