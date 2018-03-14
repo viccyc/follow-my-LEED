@@ -30,11 +30,7 @@ class Score extends Component {
               <a className="btn btn-primary btn-lg" role="button">Learn more</a>
             </p>
         </div>
-        <MapContainer
-          containerElement={<div style={{ height: `400px` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-          search={this.state}
-        />
+        <MapContainer search={this.state} />
       </div>
     );
   }
