@@ -52,7 +52,6 @@ class MapContainer extends Component {
         icon: bus,
         position: place.geometry.location
       });
-
       
       const infowindow = new googleMaps.InfoWindow();
       googleMaps.event.addListener(marker, 'click', function() {
