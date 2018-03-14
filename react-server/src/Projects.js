@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Nav from './Nav';
-import MapContainer from './MapContainer';
+import ProjectsMapContainer from './ProjectsMapContainer';
 
 
 class Projects extends Component {
@@ -29,20 +29,9 @@ class Projects extends Component {
   render() {
     return (
       <div>
-        <Nav form={true}/>
-        <div className="jumbotron">
-          <h1 className="display-4">Hello, show-projects page!</h1>
-          <hr className="my-4" />
-          <p className="lead">
-            <a className="btn btn-primary btn-lg"role="button">Learn more</a>
-          </p>
-        </div>
-        <div id="map"></div>
-        <ProjectsContainer
-          containerElement={<div style={{ height: `400px` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-          search={this.state}
-        />
+        <Nav form={true} />
+        {}
+        <ProjectsMapContainer search={this.state} />
       </div>
     );
   }
