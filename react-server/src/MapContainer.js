@@ -1,6 +1,7 @@
 import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
-import React, { Component } from 'react';
-import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox';
+// import React, { Component } from 'react';
+import React from 'react';
+// import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox';
 
 const MapContainer = withGoogleMap(props =>
   <GoogleMap

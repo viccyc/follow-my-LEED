@@ -38,7 +38,11 @@ class Projects extends Component {
           </p>
         </div>
         <div id="map"></div>
-        <MapContainer search={this.state} />
+        <MapContainer
+          containerElement={<div style={{ height: `400px` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+          search={this.state}
+        />
       </div>
     );
   }

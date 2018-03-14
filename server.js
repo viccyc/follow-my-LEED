@@ -39,6 +39,16 @@ app.get('/api', (req, res) => {
     .then(result => res.json({ result }));
 });
 
+app.get('/projects', (req, res) => {
+
+  console.log('Trying to get /projects');
+
+    knex('projects')
+    .select('name', 'address', 'city', 'lat', 'lng', 'certification_level_id')
+    .returning()
+    .then(result => res.json({ result }));
+});
+
 // TODO: test foreign key entries
 app.post('/api', (req, res) => {
   console.log('Trying to post to /api');
