@@ -17,6 +17,7 @@ import registerServiceWorker from './registerServiceWorker';
 //TODO: support queryString/:param so users can share a link or reload page
 ReactDOM.render((
   <BrowserRouter>
+    {/* <Route path='/find_score' component={Nav} /> */}
     <Switch>
       <Route path='/find_score' component={Score} />
       <Route path='/projects' component={Projects} />
