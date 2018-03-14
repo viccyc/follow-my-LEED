@@ -7,29 +7,33 @@ import './Nav.css';
 
 class Nav extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       action: 'find_score'
     };
     this.clickHandler = this.clickHandler.bind(this);
-
+    console.log('initializing nav component');
   }
 
   componentDidMount() {
 
   }
 
+  componentWillUnmount(){
+    console.log('should unmount nav');
+  }
+
   clickHandler(e) {
     e.preventDefault();
     const action = e.target.href.split('3000')[1];
-    console.log(`clicked tab in Nav, action is ${action}`);
     this.setState({ action: action });
   }
 
   render() {
     //not display address bar in home page
     let form = null;
+    console.log('in nav, this.props.form should be true ', this.props.form);
     if (this.props.form) {
       form = <Form action={this.state.action}/>;
     }
