@@ -70,6 +70,45 @@ function insertProject (number, name, reg_date, cert_date, address, city, provin
   })
 }
 
+// test data
+
+const projectObject = {
+  id: 1,
+  number: '8765',
+  name: 'Updated project name',
+  reg_date: '2000-02-02',
+  cert_date: '2000-02-02',
+  address: '333 4 Ave SW',
+  city: 'Calgary',
+  province: 'Alberta',
+  size: '777',
+  project_type_id: 1,
+  owner_type_id: 2,
+  certification_level_id: 3,
+  rating_system_id: 2
+};
+
+// function updateProject (projectObject, sendResponse) {
+function updateProject (projectObject) {
+  console.log('projectObject:', projectObject);
+  for (const key in projectObject) {
+    // console.log('projectObject[key]:', projectObject[key])
+    const column = projectObject[key][0];
+    const value = projectObject[key][1];
+
+  // console.log('column:', column, 'value:', value);
+    // var obj = projectObject[key];
+    // for (var prop in obj) {
+    //     // skip loop if the property is from prototype
+    //     if(!obj.hasOwnProperty(prop)) continue;
+
+    //     // your code
+    //     alert(prop + " = " + obj[prop]);
+    // }
+  }
+  return 'Hello!';
+}
+
 
 // testing for just the file - remove when we export the functions
 
@@ -81,9 +120,11 @@ function insertProject (number, name, reg_date, cert_date, address, city, provin
 //    console.log('rows returned: ', rows);
 // });
 
-insertProject(1234, 'Test Project', '2018-01-01', '2017-12-04', '654 7 Ave SW', 'Calgary',
-                    'Alberta', '3333', 1, 5, 4, 2, (success) => {
-   console.log(success);
-});
+// insertProject(1234, 'Test Project', '2018-01-01', '2017-12-04', '654 7 Ave SW', 'Calgary',
+//                     'Alberta', '3333', 1, 5, 4, 2, (success) => {
+//    console.log(success);
+// });
+
+console.log(updateProject(projectObject));
 
 

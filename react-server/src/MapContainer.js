@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import { withGoogleMap, GoogleMap, Marker, Circle } from "react-google-maps"
 import { compose, lifecycle } from "recompose";
 import React, { Component } from 'react';
 import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox';
+=======
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+// import React, { Component } from 'react';
+import React from 'react';
+// import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox';
+>>>>>>> c866f5672eed2e095395508f1f70f0d3f5511165
 
 class MapContainer extends Component {
   
