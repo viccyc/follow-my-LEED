@@ -6,11 +6,12 @@ class Score extends Component {
 
   constructor(props) {
     super(props);
+    console.log('initializing in the score component');
     this.state = {
-      address: this.props.location.state ? this.props.location.state.data.location.address : null,
-      longitude: this.props.location.state ? this.props.location.state.data.location.longitude : null,
-      latitude: this.props.location.state ? this.props.location.state.data.location.latitude : null,
-      radius: this.props.location.state ? this.props.location.state.data.radius : '800'
+      address: props.location.state ? props.location.state.data.location.address : null,
+      longitude: props.location.state ? props.location.state.data.location.longitude : null,
+      latitude: props.location.state ? props.location.state.data.location.latitude : null,
+      radius: props.location.state.data.radius ? props.location.state.data.radius : '800'
 
     };
   }
@@ -20,6 +21,8 @@ class Score extends Component {
   }
 
   render() {
+    console.log('rendering in score component');
+    console.log('in score, state.address should have a value received from redirect ', this.state.address)
     return (
       <div>
         <Nav form={true} />
