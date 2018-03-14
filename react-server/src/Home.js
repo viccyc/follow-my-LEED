@@ -49,7 +49,6 @@ class Home extends Component {
 
     this.setState({ autocomplete: autocomplete});
 
-    // const place = autocomplete.getPlace();
   }
 
   handleSubmit(e){
@@ -58,24 +57,25 @@ class Home extends Component {
     const address = place.formatted_address;
     const longitude = place.geometry.location.lng();
     const latitude = place.geometry.location.lat();
+    let location = Object.assign({}, this.state.location);
+    location.address = address;
+    location.longitude = longitude;
+    location.latitude = latitude;
     console.log(`clicked GO in Home page,`, address, longitude, latitude);
-    this.setState({ location: {
-      address: address,
-      longitude: longitude,
-      latitude: latitude
-    }});
+    this.setState({location});
   }
 
   clickHandler(e){
     e.preventDefault();
     const action = e.target.href.split('3000')[1];
-    console.log(`clicked tab in Nav from Home page, action is ${action}`);
     this.setState({action: action});
   }
 
   render() {
+    console.log('in home page, state.location.address is ', this.state.location.address);
     //when submit is clicked and state is reset, trigger rerender the page and redirect to target page
     if (this.state.location.address){
+      console.log('in redirect if statement from home page', this.state.action);
       return <Redirect to={{
         pathname: this.state.action,
         state: {

@@ -1,55 +1,112 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 
+const google = window.google;
 
 
 class Form extends Component {
 
   constructor(props) {
     super(props);
+    console.log('initializing in nav form component')
     this.state = {
-      redirectReady: false,
-      location: null,
+      autocomplete: null,
+      location: {
+        address: null,
+        longitude: null,
+        latitude: null
+      },
       radius: '800'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.initAutocomplete = this.initAutocomplete.bind(this);
+    this.focusHandler = this.focusHandler.bind(this);
 
   }
 
   componentDidMount() {
-    //TODO: fetch backend /api to get all leed buildings
+    console.log('componentDidMount in nav form component')
+    this.initAutocomplete();
+}
+
+  initAutocomplete(){
+    function geolocate() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var geolocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          var circle = new google.maps.Circle({
+            center: geolocation,
+            radius: position.coords.accuracy
+          });
+          autocomplete.setBounds(circle.getBounds());
+        });
+      }
+    }
+
+    const input = document.getElementById('searchTextField');
+
+    const autocomplete = new google.maps.places.Autocomplete(input);
+    geolocate();
+
+    this.setState({ autocomplete: autocomplete });
 
   }
 
   handleInputChange(e){
     e.preventDefault();
-    console.log('in onchange', e.target.type);
-    if (e.target.type === 'text'){
-      this.setState({ location: e.target.value});
-    } else {
-      this.setState({ radius: e.target.value });
-    }
+    this.setState({ radius: e.target.value });
+  }
+
+  focusHandler(e){
+    e.preventDefault();
+    this.initAutocomplete();
   }
 
   handleSubmit(e){
     e.preventDefault();
-    //change state to triger redirect to target page with data input
-    if (this.state.location) {
-      this.setState({ redirectReady: true});
-    }
+    const place = this.state.autocomplete.getPlace();
+    this.setState({
+      location: {
+        address: place.formatted_address,
+        longitude: place.geometry.location.lng(),
+        latitude: place.geometry.location.lat()
+      }});
   }
 
 
   render() {
-    //when clicking submit, render redirect with data
-    if (this.state.redirectReady){
+    console.log('--------------------------------');
+    console.log('rendering in nav form component');
+    console.log('this.state.location.address should be null', this.state.location.address);
+    console.log('this.state.autocomplete ', this.state.autocomplete);
+    //if user submit a location,
+    //save details in a variable and pass it to redirect component,
+    //then reset location (to null) and radius
+    if (this.state.location.address){
+      console.log('trigger redirect from nav form');
+      let location = Object.assign({}, this.state.location);
+      location.address = this.state.location.address;
+      location.longitude = this.state.location.longitude;
+      location.latitude = this.state.location.latitude;
+      const radius = this.state.radius;
+      this.setState({
+        location: {
+          address: null,
+          longitude: null,
+          latitude: null
+        },
+        radius: '800'
+      })
       return <Redirect to={{
         pathname: this.props.action,
         state: {
           data: {
-          location: this.state.location,
-          radius: this.state.radius
+          location: location,
+          radius: radius
           }
         }
       }} />
@@ -60,8 +117,9 @@ class Form extends Component {
           <div className="form-group">
             <label>Location</label>
             <input name="location"
+                  id="searchTextField"
+                  onFocus={this.focusHandler}
                   type="text"
-                  onChange={this.handleInputChange}
                   className="form-control"
                   placeholder="Enter the target location here" />
           </div>
