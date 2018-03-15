@@ -61,7 +61,7 @@ class Home extends Component {
     location.address = address;
     location.longitude = longitude;
     location.latitude = latitude;
-    console.log(`clicked GO in Home page,`, address, longitude, latitude);
+    // console.log(`clicked GO in Home page,`, address, longitude, latitude);
     this.setState({location});
   }
 
@@ -72,10 +72,10 @@ class Home extends Component {
   }
 
   render() {
-    console.log('in home page, state.location.address is ', this.state.location.address);
+    // console.log('in home page, state.location.address is ', this.state.location.address);
     //when submit is clicked and state is reset, trigger rerender the page and redirect to target page
     if (this.state.location.address){
-      console.log('in redirect if statement from home page', this.state.action);
+      // console.log('in redirect if statement from home page', this.state.action);
       return <Redirect to={{
         pathname: this.state.action,
         state: {
