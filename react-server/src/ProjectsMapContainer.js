@@ -3,73 +3,76 @@ import certified from './images/certified.png';
 import silver from './images/silver.png';
 import gold from './images/gold.png';
 import platinum from './images/platinum.png';
+import axios from 'axios';
 
 class ProjectsMapContainer extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    }
+    this.setupMapandMarker = this.setupMapandMarker.bind(this);
+  }
   
-  componentDidMount() {
+  componentWillMount() {    
+    axios.get(`/projects`)
+    .then(res => {
+      const data = res.data;
+      console.log('in axios data = ', data);
+      this.setState({
+        data: data
+      } , () => this.setupMapandMarker(this.props.search));
 
+      console.log('in Projects, axios get call this.state.data: ', this.state.data)
+    })
+
+    //this.setupMapandMarker(this.props.search);
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    this.setupMapandMarker(nextProps.search);
+  }
+  
+  setupMapandMarker(search) {
+    console.log('setupMapandMarker search: ', search);
+    console.log('data ', this.state.data);
     const googleMaps = window.google.maps;
-
+    
     const map = new googleMaps.Map(document.getElementById('map'), {
       zoom: 15,
-      center: { lat: this.props.search.latitude, lng: this.props.search.longitude }
+      center: { lat: search.latitude, lng: search.longitude }
     });
 
+    const centreLocMarker = new googleMaps.Marker({
+      position: { lat: search.latitude, lng: search.longitude },
+      map: map,
+    });
+    
     const icons = {
       1: certified,
       2: silver,
       3: gold, 
       4: platinum
     };
-
-    const data = [
-      {
-      name: "Nexen Wellness Centre",
-      address: "801 7 Ave. SW, 10th Floor",
-      city: "Calgary",
-      lat: 51.0465,
-      lng: -114.079,
-      certification_level_id: 1
-      },
-      {
-      name: "IHS Calgary Office",
-      address: "1331 MacLeod Trail SE",
-      city: "Calgary",
-      lat: 51.0398,
-      lng: -114.059,
-      certification_level_id: 3
-      },
-      {
-      name: "Municipal Building 9th Floor",
-      address: "9th Fl., 800 Macleod Trail SE",
-      city: "Calgary",
-      lat: 51.0456,
-      lng: -114.057,
-      certification_level_id: 2
-      },
-      {
-        name: "FT Services - Corporate Office",
-        address: "715 - 5th Avenue S.W.",
-        city: "Calgary",
-        lat: 51.0485,
-        lng: -114.077,
-        certification_level_id: 4
-      }
-    ]
-
+    
     // Create markers.
-    data.forEach(function(item) {
-      var marker = new googleMaps.Marker({
+    // console.log("in ProjectsMapContainer nextProps.search.data.result: ", nextProps.search.data.result);
+    this.state.data.result.forEach(function(item) {
+      // console.log("type of lat: ", typeof item.lat);
+      const marker = new googleMaps.Marker({
         position: { lat: item.lat, lng: item.lng },
         icon: icons[item.certification_level_id],
         map: map
       });
+      console.log('marker is ', marker);
     });
-  }
 
-    render() {
-      return (<div id='map' style={{ height: `600px`, width: `100%` }} />);
-    };
+  }
+  
+  render() {
+    return (<div id='map' style={{ height: `600px`, width: `100%` }} />);
+  };
 }
 
 export default ProjectsMapContainer;
