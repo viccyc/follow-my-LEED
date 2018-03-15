@@ -6,7 +6,7 @@ class Score extends Component {
 
   constructor(props) {
     super(props);
-    console.log('initializing in the score component');
+    // console.log('initializing in the score component');
     this.state = {
       address: props.location.state ? props.location.state.data.location.address : null,
       longitude: props.location.state ? props.location.state.data.location.longitude : null,
@@ -21,8 +21,8 @@ class Score extends Component {
   }
 
   render() {
-    console.log('rendering in score component');
-    console.log('in score, state.address should have a value received from redirect ', this.state.address)
+    // console.log('rendering in score component');
+    // console.log('in score, state.address should have a value received from redirect ', this.state.address)
     return (
       <div>
         <Nav form={true} />

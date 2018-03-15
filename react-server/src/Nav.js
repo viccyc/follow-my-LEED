@@ -13,7 +13,7 @@ class Nav extends Component {
       action: 'find_score'
     };
     this.clickHandler = this.clickHandler.bind(this);
-    console.log('initializing nav component');
+    // console.log('initializing nav component');
   }
 
   componentDidMount() {
@@ -21,7 +21,7 @@ class Nav extends Component {
   }
 
   componentWillUnmount(){
-    console.log('should unmount nav');
+    // console.log('should unmount nav');
   }
 
   clickHandler(e) {
@@ -33,7 +33,7 @@ class Nav extends Component {
   render() {
     //not display address bar in home page
     let form = null;
-    console.log('in nav, this.props.form should be true ', this.props.form);
+    // console.log('in nav, this.props.form should be true ', this.props.form);
     if (this.props.form) {
       form = <Form action={this.state.action}/>;
     }

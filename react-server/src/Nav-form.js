@@ -8,7 +8,7 @@ class Form extends Component {
 
   constructor(props) {
     super(props);
-    console.log('initializing in nav form component')
+    // console.log('initializing in nav form component')
     this.state = {
       autocomplete: null,
       location: {
@@ -26,7 +26,7 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount in nav form component')
+    // console.log('componentDidMount in nav form component')
     this.initAutocomplete();
 }
 
@@ -79,15 +79,15 @@ class Form extends Component {
 
 
   render() {
-    console.log('--------------------------------');
-    console.log('rendering in nav form component');
-    console.log('this.state.location.address should be null', this.state.location.address);
-    console.log('this.state.autocomplete ', this.state.autocomplete);
+    // console.log('--------------------------------');
+    // console.log('rendering in nav form component');
+    // console.log('this.state.location.address should be null', this.state.location.address);
+    // console.log('this.state.autocomplete ', this.state.autocomplete);
     //if user submit a location,
     //save details in a variable and pass it to redirect component,
     //then reset location (to null) and radius
     if (this.state.location.address){
-      console.log('trigger redirect from nav form');
+      // console.log('trigger redirect from nav form');
       let location = Object.assign({}, this.state.location);
       location.address = this.state.location.address;
       location.longitude = this.state.location.longitude;
