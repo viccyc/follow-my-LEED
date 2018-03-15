@@ -4,6 +4,7 @@ import silver from './images/silver.png';
 import gold from './images/gold.png';
 import platinum from './images/platinum.png';
 import axios from 'axios';
+import InfoContent from './InfoContent'
 
 class ProjectsMapContainer extends Component {
 
@@ -69,6 +70,10 @@ class ProjectsMapContainer extends Component {
       const infowindow = new googleMaps.InfoWindow();
       googleMaps.event.addListener(marker, 'click', function() {
         infowindow.setContent(item.name + ',  ' + certLevel[item.certification_level_id]);
+        // infowindow.setContent(InfoContent);
+        // const content = "<html><head><h1><infoContnet/h1></head><body><div><p> Hello InfoContent! </p></div></body></html>";
+        const createdHTML = InfoContent.createInfoHTML(item);
+        infowindow.setContent(createdHTML);
         infowindow.open(map, this);
       });
     });
@@ -81,3 +86,7 @@ class ProjectsMapContainer extends Component {
 }
 
 export default ProjectsMapContainer;
+
+// create a function which creates out the html - in the return, builds the html
+// this function could be in a different file
+// pass in the data (item) and call this function from the googleMaps loop
