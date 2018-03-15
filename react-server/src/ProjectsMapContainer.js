@@ -4,7 +4,7 @@ import silver from './images/silver.png';
 import gold from './images/gold.png';
 import platinum from './images/platinum.png';
 import axios from 'axios';
-import InfoContent from './InfoContent'
+import InfoContent from './InfoContent';
 
 class ProjectsMapContainer extends Component {
 
@@ -51,25 +51,20 @@ class ProjectsMapContainer extends Component {
       3: gold, 
       4: platinum
     };
-    
-    const certLevel = {
-      1: 'LEED Certified',
-      2: 'LEED Silver',
-      3: 'LEED Gold', 
-      4: 'LEED Platinum'
-    };
 
     // Create markers.
     this.state.data.result.forEach(function(item) {
+      // console.log("creating marker, item: ", item);
       const marker = new googleMaps.Marker({
         position: { lat: item.lat, lng: item.lng },
+        // icon: item.level,
         icon: icons[item.certification_level_id],
         map: map
       });
 
       const infowindow = new googleMaps.InfoWindow();
       googleMaps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(item.name + ',  ' + certLevel[item.certification_level_id]);
+        // infowindow.setContent(item.name + ',  ' + certLevel[item.certification_level_id]);
         // infowindow.setContent(InfoContent);
         // const content = "<html><head><h1><infoContnet/h1></head><body><div><p> Hello InfoContent! </p></div></body></html>";
         const createdHTML = InfoContent.createInfoHTML(item);
@@ -86,7 +81,3 @@ class ProjectsMapContainer extends Component {
 }
 
 export default ProjectsMapContainer;
-
-// create a function which creates out the html - in the return, builds the html
-// this function could be in a different file
-// pass in the data (item) and call this function from the googleMaps loop

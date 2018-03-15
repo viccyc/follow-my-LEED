@@ -1,23 +1,26 @@
-// Create a detached DOM using document.createElement
-// Render the passed in child using React.render(React.Children.only(props.children), detachedDOM)
-// Pass the detachedDOM into InfoWindow({content: detachedDOM})
-// create a function which creates out the html - in the return, builds the html
-// this function could be in a different file
-// pass in the data (item) and call this function from the googleMaps loop
-// import React from 'react';
+// import moment from 'moment';
+const moment = window.moment;
 
-// class InfoContent extends Component {
+const certLevel = {
+  1: 'LEED Certified',
+  2: 'LEED Silver',
+  3: 'LEED Gold', 
+  4: 'LEED Platinum'
+};
 
 const createInfoHTML = (item) => {
+  // console.log("item: ", item);
   return (
     `<div>
-      <p> Hello InfoContent! </p>
-    </div>`
+      <p> ${item.name}. Project # ${item.number} </p>
+      <p> Address: ${item.address} </p>
+      <p> ${certLevel[item.certification_level_id]}. Date certified: ${moment(item.cert_date).format("MMM DD YYYY")} </p>
+      <p> ${item.rating_system}. V: ${item.version}</p>
+      <p> Building size: ${item.size} </p>
+      <p> Building type: ${item.type} </p>
+      </div>`
   );
 }
 
-// }
-
-// export module InfoContent;
 exports.createInfoHTML = createInfoHTML;
-// module.exports = createInfoHTML;
+
