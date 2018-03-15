@@ -19,15 +19,10 @@ class ProjectsMapContainer extends Component {
     axios.get(`/projects`)
     .then(res => {
       const data = res.data;
-      console.log('in axios data = ', data);
       this.setState({
         data: data
       } , () => this.setupMapandMarker(this.props.search));
-
-      console.log('in Projects, axios get call this.state.data: ', this.state.data)
     })
-
-    //this.setupMapandMarker(this.props.search);
   }
   
   componentWillReceiveProps(nextProps) {
@@ -35,8 +30,8 @@ class ProjectsMapContainer extends Component {
   }
   
   setupMapandMarker(search) {
-    console.log('setupMapandMarker search: ', search);
-    console.log('data ', this.state.data);
+    // console.log('setupMapandMarker search: ', search);
+    // console.log('data ', this.state.data);
     const googleMaps = window.google.maps;
     
     const map = new googleMaps.Map(document.getElementById('map'), {
@@ -56,16 +51,26 @@ class ProjectsMapContainer extends Component {
       4: platinum
     };
     
+    const certLevel = {
+      1: 'LEED Certified',
+      2: 'LEED Silver',
+      3: 'LEED Gold', 
+      4: 'LEED Platinum'
+    };
+
     // Create markers.
-    // console.log("in ProjectsMapContainer nextProps.search.data.result: ", nextProps.search.data.result);
     this.state.data.result.forEach(function(item) {
-      // console.log("type of lat: ", typeof item.lat);
       const marker = new googleMaps.Marker({
         position: { lat: item.lat, lng: item.lng },
         icon: icons[item.certification_level_id],
         map: map
       });
-      console.log('marker is ', marker);
+
+      const infowindow = new googleMaps.InfoWindow();
+      googleMaps.event.addListener(marker, 'click', function() {
+        infowindow.setContent(item.name + ',  ' + certLevel[item.certification_level_id]);
+        infowindow.open(map, this);
+      });
     });
 
   }
