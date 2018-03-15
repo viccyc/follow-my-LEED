@@ -15,15 +15,11 @@ knex('projects')
   .returning()
   .then(data => {
     data.forEach(project => {
-      // console.log(project);
-      // console.log(project.id);
       let address = (`${project.address}, ${project.city}, ${project.province}`).split(' ').join('+');
-      console.log(address);
       axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`)
         .then(response => {
           let lat = response.data.results[0].geometry.location.lat;
           let lng = response.data.results[0].geometry.location.lng;
-          console.log(lat, lng, project.id);
           knex('projects')
             .where('id', project.id)
             .update({ lat: lat, lng: lng })

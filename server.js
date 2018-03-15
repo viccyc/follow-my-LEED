@@ -34,7 +34,7 @@ app.get('/api', (req, res) => {
   console.log('Trying to get /api');
 
     knex('projects')
-    .select('name', 'address', 'city', 'province', 'certification_level_id')
+    .select('name', 'address', 'city', 'province', 'lat', 'lng', 'certification_level_id')
     .returning()
     .then(result => res.json({ result }));
 });

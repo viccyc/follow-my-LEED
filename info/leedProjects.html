@@ -28,6 +28,22 @@
 
         let jsonFeatures = [];
 
+        const iconBase = '../react-server/src/images/';
+        const icons = {
+          1: {
+            icon: iconBase + 'certified.svg'
+          },
+          2: {
+            icon: iconBase + 'silver.png'
+          },
+          3: {
+            icon: iconBase + 'gold.png'
+          },
+          4: {
+            icon: iconBase + 'platinum.png'
+          }
+       };
+
         const data = [
         {
           name: "Nexen Wellness Centre",
@@ -35,25 +51,25 @@
           city: "Calgary",
           lat: 51.0465,
           lng: -114.079,
+          certification_level_id: 1
+          }
+          ,
+          {
+          name: "IHS Calgary Office",
+          address: "1331 MacLeod Trail SE",
+          city: "Calgary",
+          lat: 51.0398,
+          lng: -114.059,
+          certification_level_id: 3
+          },
+          {
+          name: "Municipal Building 9th Floor",
+          address: "9th Fl., 800 Macleod Trail SE",
+          city: "Calgary",
+          lat: 51.0456,
+          lng: -114.057,
           certification_level_id: 2
           }
-          // ,
-          // {
-          // name: "IHS Calgary Office",
-          // address: "1331 MacLeod Trail SE",
-          // city: "Calgary",
-          // lat: 51.0398,
-          // lng: -114.059,
-          // certification_level_id: 3
-          // },
-          // {
-          // name: "Municipal Building 9th Floor",
-          // address: "9th Fl., 800 Macleod Trail SE",
-          // city: "Calgary",
-          // lat: 51.0456,
-          // lng: -114.057,
-          // certification_level_id: 2
-          // }
         ]
 
         data.forEach(function(point){
@@ -68,8 +84,20 @@
                 }
             };
 
+        // // Create markers.
+        // data.forEach(function(item) {
+        //   var marker = new google.maps.Marker({
+        //     position: data.position,
+        //     icon: icons[data.certification_level_id].icon,
+        //     map: map
+        //   });
+        // });
+
             jsonFeatures.push(feature);
         });
+
+
+
         console.log('jsonFeatures ', jsonFeatures);
 
         const geoJson = { type: 'FeatureCollection', features: jsonFeatures };
