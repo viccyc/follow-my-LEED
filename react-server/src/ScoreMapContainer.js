@@ -1,11 +1,38 @@
 import React, { Component } from 'react';
-import bus from './images/bus2.png';
 import axios from 'axios';
+
+import info from './images/info.png';
+import m1 from './images/m1.png';
+
+// import supermarket from './images/supermarket.png';
+// import clothing from './images/clothing.png';
+// import convinientStore from './images/convinientStore.png';
+// import hardwareStore from './images/hardwareStore.png';
+// import pharmacy from './images/pharmacy.png';
+// import bank from './images/bank.png';
+// import gym from './images/gym.png';
+// import haircare from './images/haircare.png';
+// import laundry from './images/laundry.png';
+// import food from './images/food.png';
+// import art from './images/art.png';
+// import education from './images/education.png';
+// import entertainment from './images/entertainment.png';
+// import government from './images/government.png';
+// import doctor from './images/doctor.png';
+// import worship from './images/worship.png';
+// import police from './images/police.png';
+// import postOffice from './images/postOffice.png';
+// import library from './images/library.png';
+// import park from './images/park.png';
+import crossroads from './images/crossroads.png';
+
+
 
 class MapContainer extends Component {
   constructor(props) {
     super(props);
     console.log('initializing MapContainer constructor');
+    this.state = {services: {}};
     this.initMapAndMarker = this.initMapAndMarker.bind(this);
   }
 
@@ -24,60 +51,6 @@ class MapContainer extends Component {
   }
 
   initMapAndMarker(search){
-    const googleMaps = window.google.maps;
-
-    const map = new googleMaps.Map(document.getElementById('map'), {
-      zoom: 15,
-      center: { lat: search.latitude, lng: search.longitude }
-    });
-
-    const marker = new googleMaps.Marker({
-      position: { lat: search.latitude, lng: search.longitude },
-      map: map,
-    });
-
-    const cityCircle = new googleMaps.Circle({
-      strokeWeight: 0,
-      fillColor: '#87cefa',
-      fillOpacity: 0.25,
-      map: map,
-      center: { lat: search.latitude, lng: search.longitude },
-      radius: search.radius? search.radius : 800
-    });
-
-    const service = new googleMaps.places.PlacesService(map);
-    service.nearbySearch({
-      location: { lat: search.latitude, lng: search.longitude },
-      radius: search.radius ? search.radius : 800,
-      type: ['transit_station']
-    }, callback);
-    console.log(search.latitude, search.longitude);
-
-    function callback(results, status) {
-      if (status === googleMaps.places.PlacesServiceStatus.OK) {
-        console.log(results);
-        for (let i = 0; i < results.length; i++) {
-          createMarker(results[i]);
-        }
-      }
-    }
-
-    function createMarker(place) {
-      const placeLoc = place.geometry.location;
-      const marker = new googleMaps.Marker({
-        map: map,
-        icon: bus,
-        position: place.geometry.location
-      });
-
-      const infowindow = new googleMaps.InfoWindow();
-      googleMaps.event.addListener(marker, 'click', function () {
-        // console.log(place);
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-      })
-    }
-
     // get all ways around a certain address
     // axios.get(`http://overpass-api.de/api/interpreter?[out:json];way["footway"!~"."]["cycleway"!~"."](around:800,${this.props.search.latitude},${this.props.search.longitude});out;`)
     //   .then(results => {
@@ -132,6 +105,131 @@ class MapContainer extends Component {
     //       })
 
     //   })
+
+    const googleMaps = window.google.maps;
+    const MarkerClusterer = window.Cluster;
+
+    const map = new googleMaps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: { lat: search.latitude, lng: search.longitude }
+    });
+
+    const marker = new googleMaps.Marker({
+      position: { lat: search.latitude, lng: search.longitude },
+      map: map,
+    });
+
+    const cityCircle = new googleMaps.Circle({
+      strokeWeight: 0,
+      fillColor: '#87cefa',
+      fillOpacity: 0.25,
+      map: map,
+      center: { lat: search.latitude, lng: search.longitude },
+      radius: search.radius ? search.radius : 800
+    });
+
+    const service = new googleMaps.places.PlacesService(map);
+    const location = { lat: search.latitude, lng: search.longitude };
+    let markerList = [];
+
+    function showService(type, icon, label){
+      service.nearbySearch({
+        location: location,
+        radius: '800',
+        type: type
+      }, (results, status)=>{
+        if (status === googleMaps.places.PlacesServiceStatus.OK) {
+          countService(services, label, results);
+          results.forEach((place) => {
+            const marker = new googleMaps.Marker({
+              map: map,
+              icon: icon,
+              position: place.geometry.location
+            });
+            markerList.push(marker);
+            const infowindow = new googleMaps.InfoWindow();
+            googleMaps.event.addListener(marker, 'click', function () {
+              // console.log(place);
+              infowindow.setContent(place.name);
+              infowindow.open(map, this);
+            });
+          });
+        }
+      });
+    }
+
+  let services = this.state.services;
+  const countService = (services, label, data) => {
+    services[label] = data.length;
+    this.setState({services});
+  }
+
+  // const markerCluster = new MarkerClusterer(map, markerList, { imagePath: m1 });
+
+  // const communityResources = {};
+  //   communityResources['Supermarket'] = ['supermarket'],
+  //   communityResources['Supermarket'] = ['supermarket'],
+  //   communityResources['Supermarket'] = ['supermarket'],
+  //   communityResources['Supermarket'] = ['supermarket'],
+
+
+    // Food Retail:
+    // Supermarket;
+    // showService(['supermarket'], info, 'Supermarket');
+    // Grocery with produce section;
+
+    // Community - Serving Retail:
+    // Clothing store or department store selling clothes;
+    showService(['department_store', 'clothing_store'], info, 'Clothing store/department store selling clothes');
+    // Convenience Store;
+    showService(['convenience_store'], info, 'Convenience Store');
+    // Farmers Market;
+    // Hardware Store;
+    showService(['hardware_store'], info, 'Hardware Store');
+    // Pharmacy;
+    showService('pharmacy', info, 'Pharmacy');
+    // Other Retail;
+
+    // Services:
+    // Bank;
+    showService(['bank'], info, 'Bank');
+    // Gym, health club, exercise studio;
+    showService(['gym'], info, 'Gym, health club, exercise studio');
+    // Hair care;
+    showService(['hair_care'], info, 'Hair care');
+    // Laundry, dry cleaner;
+    showService(['laundry'], info, 'Laundry/dry cleaner');
+    // Restaurant, café, diner(excluding those with only drive - thru service);
+    showService(['bar', 'cafe', 'restaurant'], info, 'Restaurant/café/diner');
+
+    //Civic and Community Facilities
+    //Adult or senior care(licensed)
+    //Child care(licensed)
+    //Community or recreation center
+    //Cultural arts facility(museum, performing arts)
+    showService(['art_gallery', 'museum'], info, 'Cultural arts facility');
+    //Education facility(e.g.K - 12 school, university, adult education center, vocational school, community college)
+    showService(['school'], info, 'Education facility');
+    //Family entertainment venue(e.g.theater, sports)
+    showService(['bowling_alley', 'movie_theater'], info, 'Family entertainment venue');
+    //Government office that serves public on-site
+    showService(['local_government_office', 'city_hall'], info, 'Government office serving public on-site');
+    // Medical clinic or office that treats patients
+    showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], info, 'Medical clinic/office');
+    // Place of worship
+    showService(['church'], info, 'Place of worship');
+    // Police or fire station
+    showService(['police', 'fire_station'], info, 'Police or fire station');
+    // Post office
+    showService(['post_office'], info, 'Post office');
+    // Public library
+    showService(['library'], info, 'Public library');
+    // Public park
+    showService(['park'], info, 'Public park');
+    // Social services center
+
+
+    showService(['transit_station'], crossroads, 'Intersections');
 
 
     // get all ways around a certain address
@@ -191,7 +289,7 @@ class MapContainer extends Component {
           }
         }
 
-        console.log(list.length);
+        // console.log('number of results', list.length);
 
         return list;
       })
@@ -206,19 +304,20 @@ class MapContainer extends Component {
               return nodes.indexOf(element.id.toString()) !== -1;
             });
             // console.log(intersections);
-            console.log(intersections.length);
+            console.log('number of intersections', intersections.length);
 
             let list = [];
             intersections.forEach(intersection => {
               list.push(intersection.id);
             })
-            console.log(list);
+            console.log('intersections', list);
             return intersections;
           })
           .then(intersections => {
             intersections.forEach(intersection => {
               let marker = new googleMaps.Marker({
                 map: map,
+                icon: crossroads,
                 position: {lat: intersection.lat, lng: intersection.lon }
               });
             })
