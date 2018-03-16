@@ -11,4 +11,4 @@ This file cannot be run with `knex seed:run` because it makes http requests.
 
 ## Screenshots
 
-!["show Projects"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/showProjects.pnghttps://github.com/viccyc/follow-my-LEED/blob/master/docs/showProjects.png)
+!["show Projects"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/showProjects.png)
