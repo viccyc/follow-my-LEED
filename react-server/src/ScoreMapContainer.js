@@ -5,6 +5,12 @@ import axios from 'axios';
 class MapContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      street_network: null,
+      community_resources: null,
+      access_to_transit: null,
+      total: null
+    }
     console.log('initializing MapContainer constructor');
     this.initMapAndMarker = this.initMapAndMarker.bind(this);
   }
