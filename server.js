@@ -41,13 +41,17 @@ app.get('/api', (req, res) => {
 
 app.get('/projects', (req, res) => {
 
-  console.log('Trying to get /projects');
-
-    knex('projects')
-    .select('name', 'address', 'city', 'lat', 'lng', 'certification_level_id')
-    .returning()
-    .then(result => res.json({ result }));
-});
+  knex('projects')
+  .join('owner_types', 'projects.owner_type_id', '=', 'owner_types.id')
+  .join('rating_systems', 'projects.rating_system_id', '=', 'rating_systems.id')
+  .join('project_types', 'projects.project_type_id', '=', 'project_types.id')
+  .select('projects.id', 'projects.number', 'projects.name', 'projects.reg_date',
+          'projects.cert_date', 'projects.address', 'projects.city', 'projects.province',
+          'projects.size', 'projects.certification_level_id', 'projects.lat', 'projects.lng', 
+          'project_types.type', 'owner_types.type', 'rating_systems.rating_system', 'rating_systems.version')
+  .returning()
+  .then(result => res.json({ result }));
+  });
 
 // TODO: test foreign key entries
 app.post('/api', (req, res) => {
