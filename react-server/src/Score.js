@@ -49,13 +49,6 @@ class Score extends Component {
     return (
       <div>
         <Nav form={true} />
-        {/* <div className="jumbotron">
-          <h1 className="display-4">Hello, find-score page!</h1>
-          <hr className="my-4" />
-            <p className="lead">
-              <a className="btn btn-primary btn-lg" role="button">Learn more</a>
-            </p>
-        </div> */}
         <div className="container mt-2">
           <div className="row">
             <div className="col-8 pl-0">
