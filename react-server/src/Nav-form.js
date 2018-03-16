@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 const google = window.google;
 
@@ -114,30 +114,28 @@ class Form extends Component {
       }} />
     }
     return (
-      <li className="nav-item right-aligned">
-        <form onSubmit={this.handleSubmit}>
+        <form className="form-inline" onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label>Location</label>
+            <label className="mr-1 text-light">Location</label>
             <input name="location"
                   id="searchTextField"
                   ref={(input) => this.input = input}
                   onFocus={this.focusHandler}
                   type="text"
                   className="form-control"
-                  placeholder="Enter the target location here" />
+                  placeholder="Where?" />
           </div>
-          <div className="form-group">
-            <label >Radius</label>
+          <div className="form-group mx-sm-3">
+            <label className="mr-1 text-light">Radius</label>
             <select name="radius"
                   onChange={this.handleInputChange}
                   className="form-control">
               <option value="800">800</option>
               <option value="500">500</option>
             </select>
-            <button type="submit" className="btn btn-primary">Submit</button>
           </div>
+          <button type="submit" className="btn btn-primary">Submit</button>
         </form>
-      </li>
     );
 
   }
