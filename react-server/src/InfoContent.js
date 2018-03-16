@@ -1,4 +1,5 @@
 // import leedCgbc from './images/leedCgbc.png';
+// import './InfoContent.css';
 const moment = window.moment;
 const googleMaps = window.google.maps;
 
@@ -36,12 +37,12 @@ const certLevel = {
 
 const createInfoHTML = (item) => {
   return (
-    `<table class="table table-bordered">
-      <tbody>
-        <tr>
-          <img src="follow-my-LEED/react-server/public/leedCbgc.png" height=100 width=300 />
+    `<table class="table table-bordered" >
+      <tbody height=200 width=120>
+        <tr class="table-row">
+          <img src="https://s3-ca-central-1.amazonaws.com/cdnarchitect/wp-content/uploads/2016/10/CaGBC-logo_new-3-e1477500943100.jpg" height=100 width=100 />
         </tr>
-        <tr>
+        <tr class="table-row">
           <td>${item.name}. Project # ${item.number} </td>
         </tr>
         <tr>
