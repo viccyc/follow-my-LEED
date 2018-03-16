@@ -42,7 +42,7 @@ class MapContainer extends Component {
       fillOpacity: 0.25,
       map: map,
       center: { lat: search.latitude, lng: search.longitude },
-      radius: search.radius? search.radius : 100
+      radius: search.radius? search.radius : 800
     });
 
     const service = new googleMaps.places.PlacesService(map);
