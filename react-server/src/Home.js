@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom'
 
 import Nav from './Nav';
+import backgroundImg from './images/calgary_cityscape.png';
 import './index.css';
 import './Home.css';
 
@@ -88,8 +89,8 @@ class Home extends Component {
     return (
       <div>
         <Nav form={false} clickHandler={this.clickHandler}/>
-        <div className="jumbotron">
-          <h1 className="display-4">Hello!</h1>
+        <main style={{ backgroundImage: `url(${backgroundImg})` }}>
+          <h1 className="title text-center">Follow My LEED</h1>
           <form onSubmit={this.handleSubmit}>
             <div className="input-group input-group-lg">
               <div className="input-group-prepend">
@@ -103,10 +104,10 @@ class Home extends Component {
                     aria-label="Large"
                     aria-describedby="inputGroup-sizing-sm" />
             </div>
-            <hr className="my-4" />
+            {/* <hr className="my-4" /> */}
             <button type="submit" className="btn btn-primary">Go!</button>
           </form>
-        </div>
+        </main>
       </div>
 
     );

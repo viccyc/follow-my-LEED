@@ -1,0 +1,9 @@
+main {
+  height: 35em;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.title {
+  padding-top: 5em;
+}
