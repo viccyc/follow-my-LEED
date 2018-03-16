@@ -13,11 +13,10 @@ import Projects from './Projects';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
-//render different component according to the url(that user type directly into address bar)
+//render different component according to the url(that user types directly into address bar)
 //TODO: support queryString/:param so users can share a link or reload page
 ReactDOM.render((
   <BrowserRouter>
-    {/* <Route path='/find_score' component={Nav} /> */}
     <Switch>
       <Route path='/find_score' component={Score} />
       <Route path='/projects' component={Projects} />

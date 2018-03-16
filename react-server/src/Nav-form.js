@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 const google = window.google;
 
@@ -47,9 +47,9 @@ class Form extends Component {
       }
     }
 
-    const input = document.getElementById('searchTextField');
+    // const input = document.getElementById('searchTextField');
 
-    const autocomplete = new google.maps.places.Autocomplete(input);
+    const autocomplete = new google.maps.places.Autocomplete(this.input);
     geolocate();
 
     this.setState({ autocomplete: autocomplete });
@@ -68,7 +68,9 @@ class Form extends Component {
 
   handleSubmit(e){
     e.preventDefault();
+    console.log(place);
     const place = this.state.autocomplete.getPlace();
+    console.log('place addr is ', place.formatted_address);
     this.setState({
       location: {
         address: place.formatted_address,
@@ -79,10 +81,8 @@ class Form extends Component {
 
 
   render() {
-    // console.log('--------------------------------');
-    // console.log('rendering in nav form component');
-    // console.log('this.state.location.address should be null', this.state.location.address);
-    // console.log('this.state.autocomplete ', this.state.autocomplete);
+    console.log('rendering in nav form component');
+    console.log('addr from user: ', this.state.location.address);
     //if user submit a location,
     //save details in a variable and pass it to redirect component,
     //then reset location (to null) and radius
@@ -92,6 +92,7 @@ class Form extends Component {
       location.address = this.state.location.address;
       location.longitude = this.state.location.longitude;
       location.latitude = this.state.location.latitude;
+
       const radius = this.state.radius;
       this.setState({
         location: {
@@ -101,6 +102,7 @@ class Form extends Component {
         },
         radius: '800'
       })
+      console.log('location copy is ', location);
       return <Redirect to={{
         pathname: this.props.action,
         state: {
@@ -112,29 +114,28 @@ class Form extends Component {
       }} />
     }
     return (
-      <li className="nav-item right-aligned">
-        <form onSubmit={this.handleSubmit}>
+        <form className="form-inline" onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label>Location</label>
+            <label className="mr-1 text-light">Location</label>
             <input name="location"
                   id="searchTextField"
+                  ref={(input) => this.input = input}
                   onFocus={this.focusHandler}
                   type="text"
                   className="form-control"
-                  placeholder="Enter the target location here" />
+                  placeholder="Where?" />
           </div>
-          <div className="form-group">
-            <label >Radius</label>
+          <div className="form-group mx-sm-3">
+            <label className="mr-1 text-light">Radius</label>
             <select name="radius"
                   onChange={this.handleInputChange}
                   className="form-control">
               <option value="800">800</option>
               <option value="500">500</option>
             </select>
-            <button type="submit" className="btn btn-primary">Submit</button>
           </div>
+          <button type="submit" className="btn btn-primary">Submit</button>
         </form>
-      </li>
     );
 
   }

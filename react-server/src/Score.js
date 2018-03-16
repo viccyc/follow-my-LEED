@@ -1,39 +1,64 @@
 import React, { Component } from 'react';
 import Nav from './Nav';
-import MapContainer from './MapContainer';
+import MapContainer from './ScoreMapContainer';
+import ScoreTable from './ScoreTable';
 
 class Score extends Component {
 
   constructor(props) {
     super(props);
-    // console.log('initializing in the score component');
-    this.state = {
-      address: props.location.state ? props.location.state.data.location.address : null,
-      longitude: props.location.state ? props.location.state.data.location.longitude : null,
-      latitude: props.location.state ? props.location.state.data.location.latitude : null,
-      radius: props.location.state.data.radius ? props.location.state.data.radius : '800'
-
+    console.log('initializing in the score component');
+    this.state={
+      address: null,
+      longitude: null,
+      latitude: null,
+      radius: '800'
     };
+    this.updateStateWithNewData = this.updateStateWithNewData.bind(this);
+
   }
 
-  componentDidMount() {
-    //create map using this.state.location
+  componentWillMount() {
+    console.log('in score componentWillMount ', this.props);
+    this.updateStateWithNewData(this.props.location.state.data);
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log('in score componentWillReceiveProps', nextProps.location.state.data.location);
+
+    if (this.props !== nextProps.location.state.data.location){
+      console.log('in if from componentWillReceiveProps in score');
+      this.updateStateWithNewData(nextProps.location.state.data);
+    }
+  }
+
+  updateStateWithNewData(data) {
+    const { location, radius } = data;
+    this.setState({
+      address: location.address,
+      longitude: location.longitude,
+      latitude: location.latitude,
+      radius
+    }, () => { console.log('setState is done, updated state ', this.state.address); });
   }
 
   render() {
-    // console.log('rendering in score component');
-    // console.log('in score, state.address should have a value received from redirect ', this.state.address)
+    console.log('--------------------------------');
+    console.log('rendering in score component');
+    console.log('in score, state.address should have a value received from redirect ', this.state.address)
     return (
       <div>
         <Nav form={true} />
-        {/* <div className="jumbotron">
-          <h1 className="display-4">Hello, find-score page!</h1>
-          <hr className="my-4" />
-            <p className="lead">
-              <a className="btn btn-primary btn-lg" role="button">Learn more</a>
-            </p>
-        </div> */}
-        <MapContainer search={this.state} />
+        <div className="container mt-2">
+          <div className="row">
+            <div className="col-8 pl-0">
+              <MapContainer search={this.state} />
+            </div>
+            <div className="col-4 pr-0">
+              <ScoreTable />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
