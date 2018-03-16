@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import bus from './images/bus2.png';
+import intersectionpic from './images/intersection-resized.png';
 import axios from 'axios';
+
 
 class MapContainer extends Component {
   constructor(props) {
@@ -24,60 +26,6 @@ class MapContainer extends Component {
   }
 
   initMapAndMarker(search){
-    const googleMaps = window.google.maps;
-
-    const map = new googleMaps.Map(document.getElementById('map'), {
-      zoom: 15,
-      center: { lat: search.latitude, lng: search.longitude }
-    });
-
-    const marker = new googleMaps.Marker({
-      position: { lat: search.latitude, lng: search.longitude },
-      map: map,
-    });
-
-    const cityCircle = new googleMaps.Circle({
-      strokeWeight: 0,
-      fillColor: '#87cefa',
-      fillOpacity: 0.25,
-      map: map,
-      center: { lat: search.latitude, lng: search.longitude },
-      radius: search.radius? search.radius : 100
-    });
-
-    const service = new googleMaps.places.PlacesService(map);
-    service.nearbySearch({
-      location: { lat: search.latitude, lng: search.longitude },
-      radius: search.radius ? search.radius : 800,
-      type: ['transit_station']
-    }, callback);
-    console.log(search.latitude, search.longitude);
-
-    function callback(results, status) {
-      if (status === googleMaps.places.PlacesServiceStatus.OK) {
-        console.log(results);
-        for (let i = 0; i < results.length; i++) {
-          createMarker(results[i]);
-        }
-      }
-    }
-
-    function createMarker(place) {
-      const placeLoc = place.geometry.location;
-      const marker = new googleMaps.Marker({
-        map: map,
-        icon: bus,
-        position: place.geometry.location
-      });
-
-      const infowindow = new googleMaps.InfoWindow();
-      googleMaps.event.addListener(marker, 'click', function () {
-        // console.log(place);
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-      })
-    }
-
     // get all ways around a certain address
     // axios.get(`http://overpass-api.de/api/interpreter?[out:json];way["footway"!~"."]["cycleway"!~"."](around:800,${this.props.search.latitude},${this.props.search.longitude});out;`)
     //   .then(results => {
@@ -133,6 +81,59 @@ class MapContainer extends Component {
 
     //   })
 
+    const googleMaps = window.google.maps;
+
+    const map = new googleMaps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: { lat: search.latitude, lng: search.longitude }
+    });
+
+    const marker = new googleMaps.Marker({
+      position: { lat: search.latitude, lng: search.longitude },
+      map: map,
+    });
+
+    const cityCircle = new googleMaps.Circle({
+      strokeWeight: 0,
+      fillColor: '#87cefa',
+      fillOpacity: 0.25,
+      map: map,
+      center: { lat: search.latitude, lng: search.longitude },
+      radius: search.radius ? search.radius : 100
+    });
+
+    const service = new googleMaps.places.PlacesService(map);
+    service.nearbySearch({
+      location: { lat: search.latitude, lng: search.longitude },
+      radius: search.radius ? search.radius : 800,
+      type: ['transit_station']
+    }, callback);
+    console.log(search.latitude, search.longitude);
+
+    function callback(results, status) {
+      if (status === googleMaps.places.PlacesServiceStatus.OK) {
+        console.log(results);
+        for (let i = 0; i < results.length; i++) {
+          createMarker(results[i]);
+        }
+      }
+    }
+
+    function createMarker(place) {
+      const placeLoc = place.geometry.location;
+      const marker = new googleMaps.Marker({
+        map: map,
+        icon: bus,
+        position: place.geometry.location
+      });
+
+      const infowindow = new googleMaps.InfoWindow();
+      googleMaps.event.addListener(marker, 'click', function () {
+        // console.log(place);
+        infowindow.setContent(place.name);
+        infowindow.open(map, this);
+      })
+    }
 
     // get all ways around a certain address
     axios.get('http://overpass-api.de/api/interpreter?[out:json];way(around:400,51.041853,-114.072356);out;')
@@ -219,6 +220,7 @@ class MapContainer extends Component {
             intersections.forEach(intersection => {
               let marker = new googleMaps.Marker({
                 map: map,
+                icon: intersectionpic,
                 position: {lat: intersection.lat, lng: intersection.lon }
               });
             })
