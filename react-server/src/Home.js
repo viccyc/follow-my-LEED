@@ -43,9 +43,9 @@ class Home extends Component {
       }
     }
 
-    const input = document.getElementById('searchTextField');
+    // const input = document.getElementById('searchTextField');
 
-    const autocomplete = new google.maps.places.Autocomplete(input);
+    const autocomplete = new google.maps.places.Autocomplete(this.input);
     geolocate();
 
     this.setState({ autocomplete: autocomplete});
@@ -58,11 +58,11 @@ class Home extends Component {
     const address = place.formatted_address;
     const longitude = place.geometry.location.lng();
     const latitude = place.geometry.location.lat();
-    let location = Object.assign({}, this.state.location);
+    const {location} = this.state
     location.address = address;
     location.longitude = longitude;
     location.latitude = latitude;
-    // console.log(`clicked GO in Home page,`, address, longitude, latitude);
+    console.log(`clicked GO in Home page,`, address, longitude, latitude);
     this.setState({location});
   }
 
