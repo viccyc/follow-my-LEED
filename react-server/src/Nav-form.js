@@ -47,9 +47,9 @@ class Form extends Component {
       }
     }
 
-    const input = document.getElementById('searchTextField');
+    // const input = document.getElementById('searchTextField');
 
-    const autocomplete = new google.maps.places.Autocomplete(input);
+    const autocomplete = new google.maps.places.Autocomplete(this.input);
     geolocate();
 
     this.setState({ autocomplete: autocomplete });
@@ -68,7 +68,9 @@ class Form extends Component {
 
   handleSubmit(e){
     e.preventDefault();
+    console.log(place);
     const place = this.state.autocomplete.getPlace();
+    console.log('place addr is ', place.formatted_address);
     this.setState({
       location: {
         address: place.formatted_address,
@@ -79,10 +81,8 @@ class Form extends Component {
 
 
   render() {
-    // console.log('--------------------------------');
-    // console.log('rendering in nav form component');
-    // console.log('this.state.location.address should be null', this.state.location.address);
-    // console.log('this.state.autocomplete ', this.state.autocomplete);
+    console.log('rendering in nav form component');
+    console.log('addr from user: ', this.state.location.address);
     //if user submit a location,
     //save details in a variable and pass it to redirect component,
     //then reset location (to null) and radius
@@ -92,6 +92,7 @@ class Form extends Component {
       location.address = this.state.location.address;
       location.longitude = this.state.location.longitude;
       location.latitude = this.state.location.latitude;
+
       const radius = this.state.radius;
       this.setState({
         location: {
@@ -101,6 +102,7 @@ class Form extends Component {
         },
         radius: '800'
       })
+      console.log('location copy is ', location);
       return <Redirect to={{
         pathname: this.props.action,
         state: {
@@ -118,6 +120,7 @@ class Form extends Component {
             <label>Location</label>
             <input name="location"
                   id="searchTextField"
+                  ref={(input) => this.input = input}
                   onFocus={this.focusHandler}
                   type="text"
                   className="form-control"
