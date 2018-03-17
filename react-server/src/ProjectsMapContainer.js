@@ -67,7 +67,7 @@ class ProjectsMapContainer extends Component {
         // infowindow.setContent(item.name + ',  ' + certLevel[item.certification_level_id]);
         // infowindow.setContent(InfoContent);
         // const content = "<html><head><h1><infoContnet/h1></head><body><div><p> Hello InfoContent! </p></div></body></html>";
-        const createdHTML = InfoContent.createInfoHTML(item);
+        const createdHTML = InfoContent(item);
         infowindow.setContent(createdHTML);
         infowindow.open(map, this);
       });

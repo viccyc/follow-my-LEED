@@ -48,7 +48,7 @@ class Score extends Component {
     console.log('in score, state.address should have a value received from redirect ', this.state.address)
     return (
       <div>
-        <Nav form={true} />
+        <Nav form={true} searchAddress={this.state}/>
         <div className="container mt-2">
           <div className="row">
             <div className="col-8 pl-0">

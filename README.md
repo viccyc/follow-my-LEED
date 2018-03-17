@@ -9,6 +9,6 @@ On top of running `knex seed:run`, please also manually run this file: *./db/see
 
 This file cannot be run with `knex seed:run` because it makes http requests. 
 
-## Screenshots
+## Screenshots - In Progress, more to be added
 
 !["show Projects"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/showProjects.png)

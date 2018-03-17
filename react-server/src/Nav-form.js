@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import './Nav-form.css'
 
 const google = window.google;
 
@@ -117,13 +118,13 @@ class Form extends Component {
         <form className="form-inline" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label className="mr-1 text-light">Location</label>
-            <input name="location"
+            <input
                   id="searchTextField"
                   ref={(input) => this.input = input}
                   onFocus={this.focusHandler}
                   type="text"
-                  className="form-control"
-                  placeholder="Where?" />
+                  className="form-control nav-input"
+                  defaultValue={this.props.searchAddress.address} />
           </div>
           <div className="form-group mx-sm-3">
             <label className="mr-1 text-light">Radius</label>
@@ -131,10 +132,10 @@ class Form extends Component {
                   onChange={this.handleInputChange}
                   className="form-control">
               <option value="800">800</option>
-              <option value="500">500</option>
+              <option value="400">400</option>
             </select>
           </div>
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary">New search</button>
         </form>
     );
 
