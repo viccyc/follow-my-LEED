@@ -22,18 +22,41 @@ class Form extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.initAutocomplete = this.initAutocomplete.bind(this);
     this.focusHandler = this.focusHandler.bind(this);
-
   }
 
   componentDidMount() {
     // console.log('componentDidMount in nav form component')
-    this.initAutocomplete();
-}
+    const autocomplete = new google.maps.places.Autocomplete(this.input);
+    var location = {
+      address: "Assembly Coworking Space, Calgary, AB",
+      longitude: 51.053168,
+      latitude: -114.095139
+    };
+    
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        location = {
+          address: null,
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude
+        }
+        
+        const circle = new google.maps.Circle({
+          center: location,
+          radius: position.coords.accuracy
+        });
+        autocomplete.setBounds(circle.getBounds());
+      })
+    } 
+
+    // console.log(location);
+    this.setState({ autocomplete: autocomplete, location: location });
+  }
 
   initAutocomplete(){
     function geolocate() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
+        navigator.geolocation.getCurrentPosition(function(position) {
           var geolocation = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
@@ -68,7 +91,7 @@ class Form extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    console.log(place);
+    // console.log(place);
     const place = this.state.autocomplete.getPlace();
     console.log('place addr is ', place.formatted_address);
     this.setState({
@@ -81,8 +104,8 @@ class Form extends Component {
 
 
   render() {
-    console.log('rendering in nav form component');
-    console.log('addr from user: ', this.state.location.address);
+    // console.log('rendering in nav form component');
+    // console.log('addr from user: ', this.state.location.address);
     //if user submit a location,
     //save details in a variable and pass it to redirect component,
     //then reset location (to null) and radius
