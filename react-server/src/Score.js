@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Nav from './Nav';
-import MapContainer from './ScoreMapContainer';
-import ScoreTable from './ScoreTable';
+import ScoreMapContainer from './ScoreMapContainer';
 
 class Score extends Component {
 
@@ -20,7 +19,10 @@ class Score extends Component {
 
   componentWillMount() {
     console.log('in score componentWillMount ', this.props);
-    this.updateStateWithNewData(this.props.location.state.data);
+    
+    if (this.props.location.state) {
+      this.updateStateWithNewData(this.props.location.state.data);
+    }
   }
 
   componentWillReceiveProps(nextProps){
@@ -49,16 +51,7 @@ class Score extends Component {
     return (
       <div>
         <Nav form={true} />
-        <div className="container mt-2">
-          <div className="row">
-            <div className="col-8 pl-0">
-              <MapContainer search={this.state} />
-            </div>
-            <div className="col-4 pr-0">
-              <ScoreTable />
-            </div>
-          </div>
-        </div>
+        <ScoreMapContainer search={this.state} />
       </div>
     );
   }
