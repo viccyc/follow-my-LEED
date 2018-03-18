@@ -50,8 +50,17 @@ class Score extends Component {
     console.log('in score, state.address should have a value received from redirect ', this.state.address)
     return (
       <div>
-        <Nav form={true} />
-        <ScoreMapContainer search={this.state} />
+        <Nav form={true} searchAddress={this.state}/>
+        <div className="container mt-2">
+          <div className="row">
+            <div className="col-8 pl-0">
+              <MapContainer search={this.state} />
+            </div>
+            <div className="col-4 pr-0">
+              <ScoreTable />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
