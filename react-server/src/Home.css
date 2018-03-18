@@ -7,3 +7,13 @@ main {
 .title {
   padding-top: 5em;
 }
+
+#mainTitle {
+  font-weight: 800;
+  line-height: 2;
+  color: darkgreen;
+}
+
+#mainPhoto {
+  background-size: cover;
+}
