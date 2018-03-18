@@ -39,7 +39,7 @@ app.get('/api', (req, res) => {
     .then(result => res.json({ result }));
 });
 
-app.get('/projects', (req, res) => {
+app.get('/api/projects', (req, res) => {
 
   knex('projects')
   .join('owner_types', 'projects.owner_type_id', '=', 'owner_types.id')
