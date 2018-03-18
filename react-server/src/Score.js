@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Nav from './Nav';
 import ScoreMapContainer from './ScoreMapContainer';
+import ScoreTable from './ScoreTable';
 
 class Score extends Component {
 
@@ -51,16 +52,7 @@ class Score extends Component {
     return (
       <div>
         <Nav form={true} searchAddress={this.state}/>
-        <div className="container mt-2">
-          <div className="row">
-            <div className="col-8 pl-0">
-              <MapContainer search={this.state} />
-            </div>
-            <div className="col-4 pr-0">
-              <ScoreTable />
-            </div>
-          </div>
-        </div>
+        <ScoreMapContainer search={this.state} />
       </div>
     );
   }
