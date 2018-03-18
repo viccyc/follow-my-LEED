@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ScoreTable from './ScoreTable';
 
 import info from './images/info.png';
-import m1 from './images/m1.png';
+// import m1 from './images/m1.png';
 
 // import supermarket from './images/supermarket.png';
 // import clothing from './images/clothing.png';
@@ -26,20 +27,19 @@ import m1 from './images/m1.png';
 // import park from './images/park.png';
 import crossroads from './images/crossroads.png';
 
-
-
 class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      street_network: null,
-      community_resources: null,
-      access_to_transit: null,
-      total: null
+      services: {},
+      criteria_clicked: [],
+      // street_network: false,
+      // community_resources: false,
+      // access_to_transit: false
     }
     console.log('initializing MapContainer constructor');
-    this.state = {services: {}};
     this.initMapAndMarker = this.initMapAndMarker.bind(this);
+    this.handleTableClick = this.handleTableClick.bind(this);
   }
 
   componentDidMount() {
@@ -56,65 +56,14 @@ class MapContainer extends Component {
     }
   }
 
+  componentWillUpdate() {
+
+  }
+
   initMapAndMarker(search){
-    // get all ways around a certain address
-    // axios.get(`http://overpass-api.de/api/interpreter?[out:json];way["footway"!~"."]["cycleway"!~"."](around:800,${this.props.search.latitude},${this.props.search.longitude});out;`)
-    //   .then(results => {
-    //     // console.log(results.data.elements);
-    //     return results.data.elements;
-    //   })
-    //   // remove duplicate nodes within a certain way
-    //   // to prep data for the next step
-    //   .then(elements => {
-    //     elements.forEach(element => {
-    //       element.nodes = element.nodes.sort().filter((node, pos, array) => {
-    //         return !pos || node !== array[pos-1];
-    //       })
-    //     });
-    //     return elements;
-    //   })
-    //   // put all nodes in one array
-    //   // filter out all nodes that only appear once
-    //   // output a list of unique node ids
-    //   .then(newElements => {
-    //     let nodes = [];
-    //     newElements.forEach(newElement => {
-    //       nodes = nodes.concat(newElement.nodes);
-    //     })
-
-    //     nodes = nodes.sort().filter((node, index, array) => {
-    //       return array.indexOf(node) === index && array.lastIndexOf(node) !== index;
-    //     })
-    //     // console.log(nodes);
-    //     return nodes;
-    //   })
-    //   .then(nodes => {
-    //     let intersections = [];
-
-    //     axios.get(`http://overpass-api.de/api/interpreter?[out:json];node["footway"!~"."]["cycleway"!~"."](around:800,${this.props.search.latitude},${this.props.search.longitude});out;`)
-    //       .then(results => {
-    //         // console.log(results.data.elements);
-    //         // console.log(nodes);
-    //         intersections = results.data.elements.filter(element => {
-    //           return nodes.indexOf(element.id) !== -1;
-    //         });
-    //         console.log(intersections);
-    //         return intersections;
-    //       })
-    //       .then(intersections => {
-    //         intersections.forEach(intersection => {
-    //           let marker = new googleMaps.Marker({
-    //             map: map,
-    //             position: {lat: intersection.lat, lng: intersection.lon }
-    //           });
-    //         })
-    //       })
-
-    //   })
-
     const googleMaps = window.google.maps;
     const MarkerClusterer = window.Cluster;
-
+    
     const map = new googleMaps.Map(document.getElementById('map'), {
       zoom: 15,
       center: { lat: search.latitude, lng: search.longitude }
@@ -237,7 +186,6 @@ class MapContainer extends Component {
 
     showService(['transit_station'], crossroads, 'Intersections');
 
-
     // get all ways around a certain address
     axios.get('http://overpass-api.de/api/interpreter?[out:json];way(around:400,51.041853,-114.072356);out;')
       .then(results => {
@@ -245,15 +193,12 @@ class MapContainer extends Component {
           return element.hasOwnProperty('tags') &&
             element.tags.hasOwnProperty('highway') &&
             !element.tags.hasOwnProperty('bridge') &&
-            // !element.tags.hasOwnProperty('cycleway') &&
             !(element.tags.hasOwnProperty('service') && (element.tags.service === 'parking_aisle' || element.tags.service === 'driveway' || element.tags.service === 'alley')) &&
-            // element.tags.highway !== 'service' &&
             // element.tags.highway !== 'traffic_signals' &&
             element.tags.highway !== 'cycleway' &&
             element.tags.highway !== 'footway'
         })
 
-        // console.log(results);
         return results;
       })
       // remove duplicate nodes within a certain way
@@ -271,9 +216,6 @@ class MapContainer extends Component {
       // output a list of unique node ids
       .then(newElements => {
         let nodes = {};
-        // newElements.forEach(newElement => {
-        //   nodes = nodes.concat(newElement.nodes);
-        // })
 
         newElements.forEach(newElement => {
           newElement.nodes.forEach(node => {
@@ -294,8 +236,6 @@ class MapContainer extends Component {
             list.push(node);
           }
         }
-
-        // console.log('number of results', list.length);
 
         return list;
       })
@@ -332,10 +272,35 @@ class MapContainer extends Component {
 
   }
 
+  handleTableClick(value) {
+    console.log(value);
+    const currentCriteriaClicked = this.state.criteria_clicked;
+    let newCriteriaClicked = [];
+    if (currentCriteriaClicked.includes(value)) {
+      newCriteriaClicked = currentCriteriaClicked.filter(criterion => criterion !== value);
+    } else {
+      newCriteriaClicked = currentCriteriaClicked.push(value);
+    }
+    console.log(newCriteriaClicked);
+    this.setState({ criteria_clicked: newCriteriaClicked });  
+  }
+
   render() {
     console.log('--------------------------------');
-    console.log('redering in MapContainer');
-    return (<div id='map' style={{ height: `600px`, width: `100%` }} />);
+    console.log('rendering ScoreMapContainer');
+    return (      
+      <div className="container mt-2">
+        <div className="row">
+          <div className="col-8 pl-0">
+            {/* <MapContainer search={this.state} /> */}
+            <div id='map' style={{ height: `600px`, width: `100%` }} />
+          </div>
+          <div className="col-4 pr-0">
+            <ScoreTable handleTableClick={this.handleTableClick} />
+          </div>
+        </div>
+      </div>
+      );
   }
 
 }
