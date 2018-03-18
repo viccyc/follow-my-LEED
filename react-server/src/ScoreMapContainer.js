@@ -239,6 +239,26 @@ class MapContainer extends Component {
       map: map,
     });
 
+    const drawingManager = new googleMaps.drawing.DrawingManager({
+      drawingMode: googleMaps.drawing.OverlayType.MARKER,
+      drawingControl: true,
+      drawingControlOptions: {
+        position: googleMaps.ControlPosition.TOP_CENTER,
+        drawingModes: ['marker', 'circle', 'polygon', 'polyline', 'rectangle']
+      },
+      markerOptions: { icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png' },
+      circleOptions: {
+        fillColor: '#ffff00',
+        fillOpacity: 1,
+        strokeWeight: 5,
+        clickable: false,
+        editable: true,
+        zIndex: 1
+      }
+    });
+    
+    drawingManager.setMap(map);
+
     const cityCircle = new googleMaps.Circle({
       strokeWeight: 0,
       fillColor: '#87cefa',
