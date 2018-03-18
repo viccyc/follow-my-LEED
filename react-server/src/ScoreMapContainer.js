@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import info from './images/info.png';
-import m1 from './images/m1.png';
 
 // import supermarket from './images/supermarket.png';
 // import clothing from './images/clothing.png';
@@ -107,12 +106,133 @@ class MapContainer extends Component {
     //   })
 
     const googleMaps = window.google.maps;
-    const MarkerClusterer = window.Cluster;
+    const MarkerClusterer = window.MarkerClusterer;
+
+    const styledMapType = new googleMaps.StyledMapType(
+      [
+        { elementType: 'geometry', stylers: [{ color: '#ebe3cd' }] },
+        { elementType: 'labels.text.fill', stylers: [{ color: '#523735' }] },
+        { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f1e6' }] },
+        {
+          featureType: 'administrative',
+          elementType: 'geometry.stroke',
+          stylers: [{ color: '#c9b2a6' }]
+        },
+        {
+          featureType: 'administrative.land_parcel',
+          elementType: 'geometry.stroke',
+          stylers: [{ color: '#dcd2be' }]
+        },
+        {
+          featureType: 'administrative.land_parcel',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#ae9e90' }]
+        },
+        {
+          featureType: 'landscape.natural',
+          elementType: 'geometry',
+          stylers: [{ color: '#dfd2ae' }]
+        },
+        {
+          featureType: 'poi',
+          elementType: 'geometry',
+          stylers: [{ color: '#dfd2ae' }]
+        },
+        {
+          featureType: 'poi',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#93817c' }]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'geometry.fill',
+          stylers: [{ color: '#a5b076' }]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#447530' }]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry',
+          stylers: [{ color: '#f5f1e6' }]
+        },
+        {
+          featureType: 'road.arterial',
+          elementType: 'geometry',
+          stylers: [{ color: '#fdfcf8' }]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry',
+          stylers: [{ color: '#f8c967' }]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry.stroke',
+          stylers: [{ color: '#e9bc62' }]
+        },
+        {
+          featureType: 'road.highway.controlled_access',
+          elementType: 'geometry',
+          stylers: [{ color: '#e98d58' }]
+        },
+        {
+          featureType: 'road.highway.controlled_access',
+          elementType: 'geometry.stroke',
+          stylers: [{ color: '#db8555' }]
+        },
+        {
+          featureType: 'road.local',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#806b63' }]
+        },
+        {
+          featureType: 'transit.line',
+          elementType: 'geometry',
+          stylers: [{ color: '#dfd2ae' }]
+        },
+        {
+          featureType: 'transit.line',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#8f7d77' }]
+        },
+        {
+          featureType: 'transit.line',
+          elementType: 'labels.text.stroke',
+          stylers: [{ color: '#ebe3cd' }]
+        },
+        {
+          featureType: 'transit.station',
+          elementType: 'geometry',
+          stylers: [{ color: '#dfd2ae' }]
+        },
+        {
+          featureType: 'water',
+          elementType: 'geometry.fill',
+          stylers: [{ color: '#b9d3c2' }]
+        },
+        {
+          featureType: 'water',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#92998d' }]
+        }
+      ],
+      { name: 'Styled Map' });
 
     const map = new googleMaps.Map(document.getElementById('map'), {
       zoom: 15,
-      center: { lat: search.latitude, lng: search.longitude }
+      center: { lat: search.latitude, lng: search.longitude },
+      mapTypeControlOptions: {
+        mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+          'styled_map']
+      }
     });
+
+    map.mapTypes.set('styled_map', styledMapType);
+    map.setMapTypeId('styled_map');
+
 
     const marker = new googleMaps.Marker({
       position: { lat: search.latitude, lng: search.longitude },
@@ -128,108 +248,135 @@ class MapContainer extends Component {
       radius: search.radius ? search.radius : 800
     });
 
+    let markersList = [];
+    const markerCluster = new MarkerClusterer(map, markersList,
+      { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' }
+    );
+    const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
     const service = new googleMaps.places.PlacesService(map);
     const location = { lat: search.latitude, lng: search.longitude };
-    let markerList = [];
+    let services = this.state.services;
 
-    function showService(type, icon, label){
-      service.nearbySearch({
+    const showService = (type, icon, label)=>{
+      console.log('in each search, criteria is ', type, label);
+      const request = {
         location: location,
         radius: '800',
         type: type
-      }, (results, status)=>{
-        if (status === googleMaps.places.PlacesServiceStatus.OK) {
+      };
+      const callback = (results, status)=> {
+        if (status == googleMaps.places.PlacesServiceStatus.OK) {
           countService(services, label, results);
+          console.log('in each search, results have ', results.length);
           results.forEach((place) => {
             const marker = new googleMaps.Marker({
-              map: map,
+              // map: map,
               icon: icon,
               position: place.geometry.location
             });
-            markerList.push(marker);
             const infowindow = new googleMaps.InfoWindow();
             googleMaps.event.addListener(marker, 'click', function () {
-              // console.log(place);
+              infowindow.setContent(place.name);
+              infowindow.open(map, this);
+            });
+            addNewMarker(marker, true);
+          });
+        }
+      };
+      service.nearbySearch(request, callback);
+      markerCluster.redraw();
+    }
+
+    const countService = (services, label, data) => {
+      services[label] = data.length;
+      this.setState({services});
+    }
+
+    const showTransit = (type, label) => {
+      console.log('in each search, criteria is ', type, label);
+      const request = {
+        location: location,
+        radius: '400',
+        type: type
+      };
+      const callback = (results, status) => {
+        if (status == googleMaps.places.PlacesServiceStatus.OK) {
+          countService(services, label, results);
+          console.log(`in each search, ${label} results have `, results.length);
+          results.forEach((place) => {
+            const marker = new googleMaps.Marker({
+              map: map,
+              icon: crossroads,
+              position: place.geometry.location
+            });
+            const infowindow = new googleMaps.InfoWindow();
+            googleMaps.event.addListener(marker, 'click', function () {
               infowindow.setContent(place.name);
               infowindow.open(map, this);
             });
           });
         }
-      });
+      };
+      service.nearbySearch(request, callback);
     }
 
-  let services = this.state.services;
-  const countService = (services, label, data) => {
-    services[label] = data.length;
-    this.setState({services});
-  }
+    // // Food Retail:
+    // // Supermarket;
+    showService(['supermarket'], info, 'Supermarket');
+    // // Grocery with produce section;
 
-  // const markerCluster = new MarkerClusterer(map, markerList, { imagePath: m1 });
-
-  // const communityResources = {};
-  //   communityResources['Supermarket'] = ['supermarket'],
-  //   communityResources['Supermarket'] = ['supermarket'],
-  //   communityResources['Supermarket'] = ['supermarket'],
-  //   communityResources['Supermarket'] = ['supermarket'],
-
-
-    // Food Retail:
-    // Supermarket;
-    // showService(['supermarket'], info, 'Supermarket');
-    // Grocery with produce section;
-
-    // Community - Serving Retail:
-    // Clothing store or department store selling clothes;
+    // // // Community - Serving Retail:
+    // // // Clothing store or department store selling clothes;
     showService(['department_store', 'clothing_store'], info, 'Clothing store/department store selling clothes');
-    // Convenience Store;
-    showService(['convenience_store'], info, 'Convenience Store');
-    // Farmers Market;
-    // Hardware Store;
-    showService(['hardware_store'], info, 'Hardware Store');
-    // Pharmacy;
-    showService('pharmacy', info, 'Pharmacy');
-    // Other Retail;
+    // // // Convenience Store;
+    // showService(['convenience_store'], info, 'Convenience Store');
+    // // // Farmers Market;
+    // // // Hardware Store;
+    // showService(['hardware_store'], info, 'Hardware Store');
+    // // // Pharmacy;
+    // showService(['pharmacy'], info, 'Pharmacy');
+    // // // Other Retail;
 
-    // Services:
-    // Bank;
-    showService(['bank'], info, 'Bank');
-    // Gym, health club, exercise studio;
-    showService(['gym'], info, 'Gym, health club, exercise studio');
-    // Hair care;
-    showService(['hair_care'], info, 'Hair care');
-    // Laundry, dry cleaner;
-    showService(['laundry'], info, 'Laundry/dry cleaner');
-    // Restaurant, café, diner(excluding those with only drive - thru service);
-    showService(['bar', 'cafe', 'restaurant'], info, 'Restaurant/café/diner');
+    // // // Services:
+    // // // Bank;
+    // showService(['bank'], info, 'Bank');
+    // // // Gym, health club, exercise studio;
+    // showService(['gym'], info, 'Gym, health club, exercise studio');
+    // // // Hair care;
+    // showService(['hair_care'], info, 'Hair care');
+    // // // Laundry, dry cleaner;
+    // showService(['laundry'], info, 'Laundry/dry cleaner');
+    // // // Restaurant, café, diner(excluding those with only drive - thru service);
+    // showService(['bar', 'cafe', 'restaurant'], info, 'Restaurant/café/diner');
 
-    //Civic and Community Facilities
-    //Adult or senior care(licensed)
-    //Child care(licensed)
-    //Community or recreation center
-    //Cultural arts facility(museum, performing arts)
-    showService(['art_gallery', 'museum'], info, 'Cultural arts facility');
-    //Education facility(e.g.K - 12 school, university, adult education center, vocational school, community college)
-    showService(['school'], info, 'Education facility');
-    //Family entertainment venue(e.g.theater, sports)
-    showService(['bowling_alley', 'movie_theater'], info, 'Family entertainment venue');
-    //Government office that serves public on-site
-    showService(['local_government_office', 'city_hall'], info, 'Government office serving public on-site');
-    // Medical clinic or office that treats patients
-    showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], info, 'Medical clinic/office');
-    // Place of worship
-    showService(['church'], info, 'Place of worship');
-    // Police or fire station
-    showService(['police', 'fire_station'], info, 'Police or fire station');
-    // Post office
-    showService(['post_office'], info, 'Post office');
-    // Public library
-    showService(['library'], info, 'Public library');
-    // Public park
-    showService(['park'], info, 'Public park');
-    // Social services center
+    // // //Civic and Community Facilities
+    // // //Adult or senior care(licensed)
+    // // //Child care(licensed)
+    // // //Community or recreation center
+    // // //Cultural arts facility(museum, performing arts)
+    // showService(['art_gallery', 'museum'], info, 'Cultural arts facility');
+    // // //Education facility(e.g.K - 12 school, university, adult education center, vocational school, community college)
+    // showService(['school'], info, 'Education facility');
+    // // //Family entertainment venue(e.g.theater, sports)
+    // showService(['bowling_alley', 'movie_theater'], info, 'Family entertainment venue');
+    // // //Government office that serves public on-site
+    // showService(['local_government_office', 'city_hall'], info, 'Government office serving public on-site');
+    // // // Medical clinic or office that treats patients
+    // showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], info, 'Medical clinic/office');
+    // // // Place of worship
+    // showService(['church'], info, 'Place of worship');
+    // // // Police or fire station
+    // showService(['police', 'fire_station'], info, 'Police or fire station');
+    // // // Post office
+    // showService(['post_office'], info, 'Post office');
+    // // // Public library
+    // showService(['library'], info, 'Public library');
+    // // // Public park
+    // showService(['park'], info, 'Public park');
+    // // // Social services center
 
 
-    showService(['transit_station'], crossroads, 'Intersections');
+    showTransit(['transit_station'], 'Intersections');
 
 
     // get all ways around a certain address
