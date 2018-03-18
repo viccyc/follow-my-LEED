@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Nav from './Nav';
-import MapContainer from './ScoreMapContainer';
-import ScoreTable from './ScoreTable';
+import ScoreMapContainer from './ScoreMapContainer';
 
 class Score extends Component {
 
@@ -20,7 +19,10 @@ class Score extends Component {
 
   componentWillMount() {
     console.log('in score componentWillMount ', this.props);
-    this.updateStateWithNewData(this.props.location.state.data);
+    
+    if (this.props.location.state) {
+      this.updateStateWithNewData(this.props.location.state.data);
+    }
   }
 
   componentWillReceiveProps(nextProps){
