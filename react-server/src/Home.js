@@ -10,7 +10,17 @@ export default class Home extends Component {
     this.state = {
       value: '',
       autocomplete: null,
+      title: {
+        '/': 'FOLLOW MY LEED',
+        '/find_score': 'CALCULATE LEED SCORE',
+        '/projects': 'SHOW LEED PROJECTS'
+      },
+      focus: false,
+      // place: null,
+      submitButton: true
     };
+    this.blurHandler = this.blurHandler.bind(this);
+    this.focusHandler = this.focusHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.initAutocomplete = this.initAutocomplete.bind(this);
@@ -21,25 +31,29 @@ export default class Home extends Component {
     this.initAutocomplete();
   }
 
+  blurHandler() {
+
+    // window.google.maps.event.addListener(this.state.autocomplete, 'place_changed', function () {
+    //   var place = this.state.autocomplete.getPlace();
+    //   console.log(place);
+    // });
+    this.setState({ focus: false });
+  }
+
+  focusHandler() {
+    this.setState({ focus: true });
+  }
+
   handleChange(event) {
     this.setState({value: event.target.value});
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    // const place = this.state.autocomplete.getPlace();
-    // const address = place.formatted_address;
-    // const longitude = place.geometry.location.lng();
-    // const latitude = place.geometry.location.lat();
-    // const {location} = this.state
-    // location.address = address;
-    // location.longitude = longitude;
-    // location.latitude = latitude;
-    // console.log(`clicked GO in Home page,`, address, longitude, latitude);
-    // this.setState({location});
-    // console.log(this.props.handleSearch);
     const place = this.state.autocomplete.getPlace();
-    // console.log(place);
+    if (!place) {
+
+    }
     const address = {
       name: place.formatted_address,
       lat: parseFloat(place.geometry.location.lat().toFixed(7)),
@@ -67,6 +81,11 @@ export default class Home extends Component {
       });
     }
   
+  // let place; 
+  // googleMaps.event.addListener(autocomplete, 'place_changed', () => {
+  //   place = this.state.autocomplete.getPlace();
+  // });
+
     this.setState({ autocomplete: autocomplete });
   }
 
@@ -90,9 +109,20 @@ export default class Home extends Component {
     //     }
     //   }} />
     // }
+    const pathname = this.props.location.pathname;
+    const flashMessage = () => {
+      if (this.state.focus) {
+        return (
+          <div class="alert alert-warning" role="alert">
+            Please select from one of the drop down options.
+          </div>
+        );
+      }
+    };
     return (
       <main style={{ backgroundImage: `url(${backgroundImg})` }}>
-        <h1 className="title text-center">Follow My LEED</h1>
+        <h1 className="title text-center">{this.state.title[pathname]}</h1>
+        {flashMessage()}
         <form onSubmit={this.handleSubmit}>
           <div className="input-group input-group-lg">
             <div className="input-group-prepend">
@@ -105,6 +135,8 @@ export default class Home extends Component {
               aria-label="Large"
               aria-describedby="inputGroup-sizing-sm"
               placeholder='Enter a location'
+              onFocus={this.focusHandler}
+              onBlur={this.blurHandler}
               value={this.state.value} 
               onChange={this.handleChange} />
           </div>
