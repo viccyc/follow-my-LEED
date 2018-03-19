@@ -17,6 +17,7 @@ export default class NavForm extends Component {
     // };
     this.state = {
       autocomplete: null,
+      address: {}
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.initAutocomplete = this.initAutocomplete.bind(this);
@@ -40,21 +41,32 @@ export default class NavForm extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    // console.log(place);
+    //the first time, nav state is null
+    //if null, use this.props.address
+    //with one nav search, nav state has a value
+    //if there is a new value typed in, can use place on submit
+    //if no new value, use this state
+    if (!this.state.autocomplete.getPlace()){
+      if (!this.state.address.address){
+        console.log('empty state, use props');
+        this.props.handleSearch(this.props.address, this.props.path);
+        return;
+      }
+        console.log('empty input, use old state');
+        this.props.handleSearch(this.state.address, this.props.path);
+        return;
+      }
     const place = this.state.autocomplete.getPlace();
+    console.log('place', place);
     console.log('place addr is ', place.formatted_address);
-    this.setState({
-      location: {
-        address: place.formatted_address,
-        longitude: place.geometry.location.lng(),
-        latitude: place.geometry.location.lat()
-      }});
     const address = {
       address: place.formatted_address,
       longitude: place.geometry.location.lng(),
       latitude: place.geometry.location.lat()
     };
+    this.setState({ address});
     this.props.handleSearch(address, this.props.path);
+
   }
 
   initAutocomplete() {
