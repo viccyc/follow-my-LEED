@@ -246,16 +246,7 @@ class ScoreMapContainer extends Component {
         if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
         countService(services, label, results);
         results.forEach((place) => {
-          const marker = new googleMaps.Marker({
-            icon: info,
-            position: place.geometry.location
-          });
-          const infowindow = new googleMaps.InfoWindow();
-          googleMaps.event.addListener(marker, 'click', function () {
-            infowindow.setContent(place.name);
-            infowindow.open(map, this);
-          });
-          addNewMarker(marker, true);
+          filterDistance(place);
         });
         if (pagination.hasNextPage) {
           pagination.nextPage();
@@ -264,6 +255,55 @@ class ScoreMapContainer extends Component {
       service.nearbySearch(request, callback);
       markerCluster.redraw();
     }
+
+    const createMarker = (place)=>{
+      const marker = new googleMaps.Marker({
+        icon: info,
+        position: place.geometry.location
+      });
+      const infowindow = new googleMaps.InfoWindow();
+      googleMaps.event.addListener(marker, 'click', function () {
+        infowindow.setContent(place.name);
+        infowindow.open(map, this);
+      });
+      addNewMarker(marker, true);
+
+    };
+
+    const filterDistance = (place)=>{
+      //prepare data&function in search
+      const origins = [`${address.latitude},${address.longitude}`];
+      const destinations = [`${place.geometry.location.lat()},${place.geometry.location.lng()}`];
+      const distanceService = new googleMaps.DistanceMatrixService();
+      const checkDistance = distanceService.__proto__.getDistanceMatrix.bind(distanceService);
+      const request = {
+        origins: origins,
+        destinations: destinations,
+        travelMode: 'WALKING',
+        unitSystem: googleMaps.UnitSystem.METRIC
+      }
+      const callback = (response, status) => {
+        if (status === 'OK') {
+          const origins = response.originAddresses;
+          const destinations = response.destinationAddresses;
+
+          for (let i = 0; i < origins.length; i++) {
+            let results = response.rows[i].elements;
+            for (let j = 0; j < results.length; j++) {
+              let element = results[j];
+              let value = element.distance.value;
+              console.log(value);
+              //if distance is qualified, create marker;
+              if (value <= 800){
+                createMarker(place);
+              }
+            }
+          }
+        }
+      }
+      checkDistance(request, callback);
+
+    };
 
     const countService = (services, label, data) => {
       if (services[label]) {
@@ -304,59 +344,59 @@ class ScoreMapContainer extends Component {
     showTransit(['transit_station'], 'Intersections');
 
     // // Food Retail:
-    // // Supermarket;
+    // // // Supermarket;
     showService(['supermarket'], 'Supermarket');
-    // // Grocery with produce section;
+    // // // Grocery with produce section;
 
-    // // // Community - Serving Retail:
-    // // // Clothing store or department store selling clothes;
-    showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
-    // // // Convenience Store;
+    // // // // Community - Serving Retail:
+    // // // // Clothing store or department store selling clothes;
+    // showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
+    // // // // // Convenience Store;
     showService(['convenience_store'], 'Convenience Store');
-    // // // Farmers Market;
-    // // // Hardware Store;
-    showService(['hardware_store'], 'Hardware Store');
-    // // // Pharmacy;
-    showService(['pharmacy'], 'Pharmacy');
-    // // // Other Retail;
+    // // // // // Farmers Market;
+    // // // // // Hardware Store;
+    // showService(['hardware_store'], 'Hardware Store');
+    // // // // // Pharmacy;
+    // showService(['pharmacy'], 'Pharmacy');
+    // // // // // Other Retail;
 
-    // // // Services:
-    // // // Bank;
-    showService(['bank'], 'Bank');
-    // // // Gym, health club, exercise studio;
-    showService(['gym'], 'Gym, health club, exercise studio');
-    // // // Hair care;
-    showService(['hair_care'], 'Hair care');
-    // // // Laundry, dry cleaner;
-    showService(['laundry'], 'Laundry/dry cleaner');
-    // // // Restaurant, café, diner(excluding those with only drive - thru service);
-    showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
+    // // // // // Services:
+    // // // // // Bank;
+    // showService(['bank'], 'Bank');
+    // // // // // Gym, health club, exercise studio;
+    // showService(['gym'], 'Gym, health club, exercise studio');
+    // // // // // Hair care;
+    // showService(['hair_care'], 'Hair care');
+    // // // // // Laundry, dry cleaner;
+    // showService(['laundry'], 'Laundry/dry cleaner');
+    // // // // // Restaurant, café, diner(excluding those with only drive - thru service);
+    // showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
 
-    // // //Civic and Community Facilities
-    // // //Adult or senior care(licensed)
-    // // //Child care(licensed)
-    // // //Community or recreation center
-    // // //Cultural arts facility(museum, performing arts)
-    showService(['art_gallery', 'museum'], 'Cultural arts facility');
-    // // //Education facility(e.g.K - 12 school, university, adult education center, vocational school, community college)
-    showService(['school'], 'Education facility');
-    // // //Family entertainment venue(e.g.theater, sports)
-    showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
-    // // //Government office that serves public on-site
-    showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
-    // // // Medical clinic or office that treats patients
-    showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
-    // // // Place of worship
-    showService(['church'], 'Place of worship');
-    // // // Police or fire station
-    showService(['police', 'fire_station'], 'Police or fire station');
-    // // // Post office
-    showService(['post_office'], 'Post office');
-    // // // Public library
-    showService(['library'], 'Public library');
-    // // // Public park
-    showService(['park'], 'Public park');
-    // // // Social services center
+    // // // // //Civic and Community Facilities
+    // // // // //Adult or senior care(licensed)
+    // // // // //Child care(licensed)
+    // // // // //Community or recreation center
+    // // // // //Cultural arts facility(museum, performing arts)
+    // showService(['art_gallery', 'museum'], 'Cultural arts facility');
+    // // // // //Education facility(e.g.K - 12 school, university, adult education center, vocational school, community college)
+    // showService(['school'], 'Education facility');
+    // // // // //Family entertainment venue(e.g.theater, sports)
+    // showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
+    // // // // //Government office that serves public on-site
+    // showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
+    // // // // // Medical clinic or office that treats patients
+    // showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
+    // // // // // Place of worship
+    // showService(['church'], 'Place of worship');
+    // // // // // Police or fire station
+    // showService(['police', 'fire_station'], 'Police or fire station');
+    // // // // // Post office
+    // showService(['post_office'], 'Post office');
+    // // // // // Public library
+    // showService(['library'], 'Public library');
+    // // // // // Public park
+    // showService(['park'], 'Public park');
+    // // // // // Social services center
 
 
 

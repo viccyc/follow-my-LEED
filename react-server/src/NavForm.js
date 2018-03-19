@@ -41,7 +41,7 @@ export default class NavForm extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    //the first time, nav state is null
+    //the first time, nav form state is null
     //if null, use this.props.address
     //with one nav search, nav state has a value
     //if there is a new value typed in, can use place on submit
