@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 
 class ScoreTable extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    this.props.handleTableClick(e.currentTarget.value);
+  }
 
   render() {
     return (
-      <table class="table table-bordered">
+      <table className="table table-bordered">
         <thead>
           <tr>
             <th scope="col">Criterion</th>
@@ -14,15 +21,15 @@ class ScoreTable extends Component {
         </thead>
         <tbody>
           <tr>
-            <td>Street Network</td>
+            <td><button type="button" className="btn btn-light" onClick={this.handleClick} value="street_network">Street Network</button></td>
             <td>...</td>
           </tr>
           <tr>
-            <td>Community Resources</td>
+            <td><button type="button" className="btn btn-light" onClick={this.handleClick} value="community_resources">Community Resources</button></td>
             <td>...</td>
           </tr>
           <tr>
-            <td>Access to Transit</td>
+            <td><button type="button" className="btn btn-light" onClick={this.handleClick} value="access_to_transit">Access to Transit</button></td>
             <td>...</td>
           </tr>
           <tr>

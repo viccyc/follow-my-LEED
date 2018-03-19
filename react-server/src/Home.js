@@ -1,117 +1,117 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom'
 
-import Nav from './Nav';
 import backgroundImg from './images/calgary_cityscape.png';
-import './index.css';
 import './Home.css';
 
-const google = window.google;
-// const $ = window.$;
-
-class Home extends Component {
+export default class Home extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      location: {
-        address: null,
-        longitude: null,
-        latitude: null
-      },
-      action: '/find_score',
-      autocomplete: null
+      value: '',
+      autocomplete: null,
     };
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.clickHandler = this.clickHandler.bind(this);
+    this.initAutocomplete = this.initAutocomplete.bind(this);
+    // this.clickHandler = this.clickHandler.bind(this);
   }
 
   componentDidMount() {
-    function geolocate() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          var geolocation = {
+    this.initAutocomplete();
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    // const place = this.state.autocomplete.getPlace();
+    // const address = place.formatted_address;
+    // const longitude = place.geometry.location.lng();
+    // const latitude = place.geometry.location.lat();
+    // const {location} = this.state
+    // location.address = address;
+    // location.longitude = longitude;
+    // location.latitude = latitude;
+    // console.log(`clicked GO in Home page,`, address, longitude, latitude);
+    // this.setState({location});
+    // console.log(this.props.handleSearch);
+    const place = this.state.autocomplete.getPlace();
+    // console.log(place);
+    const address = {
+      name: place.formatted_address,
+      lat: parseFloat(place.geometry.location.lat().toFixed(7)),
+      lng: parseFloat(place.geometry.location.lng().toFixed(7))
+    };
+    const pathname = this.props.location.pathname;
+    this.props.handleSearch(address, pathname);
+    this.state.value = '';
+  }
+
+  initAutocomplete() {
+    const googleMaps = window.google.maps;
+    const autocomplete = new googleMaps.places.Autocomplete(document.getElementById('searchTextField'));
+    
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const circle = new googleMaps.Circle({
+          center: {
             lat: position.coords.latitude,
             lng: position.coords.longitude
-          };
-          var circle = new google.maps.Circle({
-            center: geolocation,
-            radius: position.coords.accuracy
-          });
-          autocomplete.setBounds(circle.getBounds());
+          },
+          radius: position.coords.accuracy
         });
-      }
+        autocomplete.setBounds(circle.getBounds());
+      });
     }
-
-    // const input = document.getElementById('searchTextField');
-
-    const autocomplete = new google.maps.places.Autocomplete(this.input);
-    geolocate();
-
-    this.setState({ autocomplete: autocomplete});
-
+  
+    this.setState({ autocomplete: autocomplete });
   }
 
-  handleSubmit(e){
-    e.preventDefault();
-    const place = this.state.autocomplete.getPlace();
-    const address = place.formatted_address;
-    const longitude = place.geometry.location.lng();
-    const latitude = place.geometry.location.lat();
-    const {location} = this.state
-    location.address = address;
-    location.longitude = longitude;
-    location.latitude = latitude;
-    console.log(`clicked GO in Home page,`, address, longitude, latitude);
-    this.setState({location});
-  }
-
-  clickHandler(e){
-    e.preventDefault();
-    const action = e.target.href.split('3000')[1];
-    this.setState({action: action});
-  }
+  // clickHandler(e){
+  //   e.preventDefault();
+  //   const action = e.target.href.split('3000')[1];
+  //   this.setState({action: action});
+  // }
 
   render() {
     // console.log('in home page, state.location.address is ', this.state.location.address);
     //when submit is clicked and state is reset, trigger rerender the page and redirect to target page
-    if (this.state.location.address){
-      // console.log('in redirect if statement from home page', this.state.action);
-      return <Redirect to={{
-        pathname: this.state.action,
-        state: {
-          data: {
-          location: this.state.location
-          }
-        }
-      }} />
-    }
+    // if (this.state.location.address){
+    //   // console.log('in redirect if statement from home page', this.state.action);
+    //   return <Redirect to={{
+    //     pathname: this.state.action,
+    //     state: {
+    //       data: {
+    //       location: this.state.location
+    //       }
+    //     }
+    //   }} />
+    // }
     return (
-      <div>
-        <Nav form={false} clickHandler={this.clickHandler}/>
-        <main style={{ backgroundImage: `url(${backgroundImg})` }}>
-          <h1 className="title text-center">Follow My LEED</h1>
-          <form onSubmit={this.handleSubmit}>
-            <div className="input-group input-group-lg">
-              <div className="input-group-prepend">
-                <span className="input-group-text" id="inputGroup-sizing-lg">Location</span>
-              </div>
-              <input name="location"
-                    ref={(input) => this.input = input}
-                    id="searchTextField"
-                    type="text"
-                    className="form-control"
-                    aria-label="Large"
-                    aria-describedby="inputGroup-sizing-sm" />
+      <main style={{ backgroundImage: `url(${backgroundImg})` }}>
+        <h1 className="title text-center">Follow My LEED</h1>
+        <form onSubmit={this.handleSubmit}>
+          <div className="input-group input-group-lg">
+            <div className="input-group-prepend">
+              <span className="input-group-text" id="inputGroup-sizing-lg">Location</span>
             </div>
-            {/* <hr className="my-4" /> */}
-            <button type="submit" className="btn btn-primary">Go!</button>
-          </form>
-        </main>
-      </div>
-
+            <input name="location"
+              id="searchTextField"
+              type="text"
+              className="form-control"
+              aria-label="Large"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder='Enter a location'
+              value={this.state.value} 
+              onChange={this.handleChange} />
+          </div>
+          {/* <hr className="my-4" /> */}
+          <button type="submit" className="btn btn-primary">Go!</button>
+        </form>
+      </main>      
     );
   }
 }
-
-export default Home;
