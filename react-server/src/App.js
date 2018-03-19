@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link, withRouter } from 'react-router-dom';
 
+import MenuItem from './MenuItem';
 import NavForm from './NavForm';
 import Home from './Home';
 import Score from './Score';
@@ -14,38 +15,18 @@ class App extends Component {
     super(props);
     this.state = {
       address: null,
-      redirect: false,
-      tab: 'calculate_leed_score'
+      redirect: false
     };
     this.handleSearch = this.handleSearch.bind(this);
   }
-  
-  // componentDidMount() {
-  //   this.initAutocomplete();
-  // }
-  
-  // componentDidUpdate(nextProps) {
-    //   this.initAutocomplete();
-    // }
-    
-    // shouldComponentUpdate(nextProps, nextState) {
-      //   console.log(this.state.autocomplete);
-      //   console.log(nextState.autocomplete);
-      //   if (this.state.autocomplete && nextState.autocomplete) {
-        //     const stateUid = Object.keys(this.state.autocomplete.gm_bindings_.bounds[Object.keys(this.state.autocomplete.gm_bindings_.bounds)[0]])[0];
-        //     const nextStateUid = Object.keys(nextState.autocomplete.gm_bindings_.bounds[Object.keys(nextState.autocomplete.gm_bindings_.bounds)[0]])[0];
-        //     console.log(stateUid);
-        //     console.log(nextStateUid);
-        //     if (stateUid === nextStateUid) {
-          //       return false;
-          //     }
-          //   } else {
-            //     return true;
-            //   }
-            // }
             
   handleSearch(address, pathname) {
     if (pathname === '/') {
+      // this.props.history.push({
+      //   pathname: "/find_score",
+      //   search: "?address=",
+      //   state: { address: address }
+      // });
       this.setState({ address: address, redirect: true });
     } else {
       this.setState({ address: address });
@@ -63,8 +44,8 @@ class App extends Component {
       return (
         <div>
           <nav>
-            <Link to="/find_score">CALCULATE LEED SCORE</Link>
-            <Link to="/projects">SHOW LEED PROJECTS</Link>
+            <Link to="/find_score" style={{ textDecoration: 'none' }}><MenuItem title='CALCULATE SCORE'/></Link>
+            <Link to="/find_score" style={{ textDecoration: 'none' }}><MenuItem title='SHOW PROJECTS'/></Link>
             {NavFormComponent()}
           </nav>
           <Score address={this.state.address} />
@@ -74,8 +55,8 @@ class App extends Component {
       return (
         <div>
           <nav>
-            <Link to="/find_score">CALCULATE LEED SCORE</Link>
-            <Link to="/projects">SHOW LEED PROJECTS</Link>
+            <Link to="/find_score" style={{ textDecoration: 'none' }}><MenuItem title='CALCULATE SCORE'/></Link>
+            <Link to="/find_score" style={{ textDecoration: 'none' }}><MenuItem title='SHOW PROJECTS'/></Link>
             {NavFormComponent()}
           </nav>
           <div>
@@ -92,4 +73,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
