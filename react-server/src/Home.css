@@ -17,3 +17,16 @@ main {
 #mainPhoto {
   background-size: cover;
 }
+
+#go-button {
+  margin-right: 30px;
+  background-color: #3aa83a;
+  border-color: darkgreen;
+  font-size: large;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+#inputGroup-sizing-lg {
+  border-left-width: 30px;
+}

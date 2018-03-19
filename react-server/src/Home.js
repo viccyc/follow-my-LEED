@@ -88,7 +88,7 @@ class Home extends Component {
     }
     return (
       <div>
-        <Nav form={false} clickHandler={this.clickHandler}/>
+        <Nav form={false} clickHandler={this.clickHandler} searchAddress={this.state.location}/>
         <main id="mainPhoto" style={{ backgroundImage: `url(${backgroundImg})` }}>
           <h1 id="mainTitle" className="title text-center">Follow My LEED</h1>
           <form onSubmit={this.handleSubmit}>
@@ -103,9 +103,9 @@ class Home extends Component {
                     className="form-control"
                     aria-label="Large"
                     aria-describedby="inputGroup-sizing-sm" />
-            </div>
             {/* <hr className="my-4" /> */}
-            <button type="submit" className="btn btn-primary">Go!</button>
+            <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
+            </div>
           </form>
         </main>
       </div>

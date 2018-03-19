@@ -39,15 +39,11 @@ class Nav extends Component {
 
     //onclick, setState, purpose: {action: 'api route to either find score or show leed'}
       return (
-        <nav className="navbar navbar-dark bg-dark">      
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="/find_score" onClick={this.props.clickHandler || this.clickHandler}>CALCULATE LEED SCORE <span class="sr-only">(current)</span></a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/projects" onClick={this.props.clickHandler || this.clickHandler}>SHOW LEED PROJECTS</a>
-            </li>
-          </ul>
+        <nav id="navbar" className="navbar navbar">      
+          <div>
+            <a id="navbar-link" className="nav-link" href="/find_score" onClick={this.props.clickHandler || this.clickHandler}>CALCULATE SCORE <span class="sr-only">(current)</span></a>
+            <a id="navbar-link2" className="nav-link" href="/projects" onClick={this.props.clickHandler || this.clickHandler}>SHOW PROJECTS</a>
+          </div>
           {form}    
         </nav>
       );
@@ -57,3 +53,4 @@ class Nav extends Component {
 
 
 export default Nav;
+

@@ -7,8 +7,22 @@
   width: 30%;
 } */
 
-.form-control {
-  width: 350px;
+#navbar {
+  background-color: #023b02;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
+#navbar-link {
+  color: #d5cdcd;
+  float: left;
+  border-style: groove;
+}
+
+#navbar-link2 {
+  color: #d5cdcd;
+  float: right;
+  border-style: groove;
+  margin-left: 5px;
+}
 

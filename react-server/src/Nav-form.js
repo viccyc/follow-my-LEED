@@ -158,7 +158,7 @@ class Form extends Component {
               <option value="400">400</option>
             </select>
           </div>
-          <button type="submit" className="btn btn-primary">New search</button>
+          <button id="sub-btn" type="submit" className="btn btn-primary">New search</button>
         </form>
     );
 

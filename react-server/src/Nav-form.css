@@ -1,6 +1,10 @@
-
-
 #searchTextField {
   width: 350px;
+}
+
+#sub-btn {
+  background-color: #3aa83a;
+  border-color: darkgreen;
+  font-size: large;
 }
 
