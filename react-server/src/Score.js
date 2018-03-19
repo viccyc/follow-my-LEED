@@ -5,28 +5,6 @@ import Home from './Home';
 import ScoreTable from './ScoreTable';
 
 import info from './images/info.png';
-// import m1 from './images/m1.png';
-
-// import supermarket from './images/supermarket.png';
-// import clothing from './images/clothing.png';
-// import convinientStore from './images/convinientStore.png';
-// import hardwareStore from './images/hardwareStore.png';
-// import pharmacy from './images/pharmacy.png';
-// import bank from './images/bank.png';
-// import gym from './images/gym.png';
-// import haircare from './images/haircare.png';
-// import laundry from './images/laundry.png';
-// import food from './images/food.png';
-// import art from './images/art.png';
-// import education from './images/education.png';
-// import entertainment from './images/entertainment.png';
-// import government from './images/government.png';
-// import doctor from './images/doctor.png';
-// import worship from './images/worship.png';
-// import police from './images/police.png';
-// import postOffice from './images/postOffice.png';
-// import library from './images/library.png';
-// import park from './images/park.png';
 import crossroads from './images/crossroads.png';
 
 class ScoreMapContainer extends Component {
@@ -49,7 +27,7 @@ class ScoreMapContainer extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
+  componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
     if (this.props.search !== nextProps.search) {
       this.setState({
@@ -326,57 +304,57 @@ class ScoreMapContainer extends Component {
 
     // // Food Retail:
     // // Supermarket;
-    showService(['supermarket'], info, 'Supermarket');
+    showService(['supermarket'], 'Supermarket');
     // // Grocery with produce section;
 
     // // // Community - Serving Retail:
     // // // Clothing store or department store selling clothes;
-    showService(['department_store', 'clothing_store'], info, 'Clothing store/department store selling clothes');
+    showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
     // // // Convenience Store;
-    showService(['convenience_store'], info, 'Convenience Store');
+    showService(['convenience_store'], 'Convenience Store');
     // // // Farmers Market;
     // // // Hardware Store;
-    showService(['hardware_store'], info, 'Hardware Store');
+    showService(['hardware_store'], 'Hardware Store');
     // // // Pharmacy;
-    showService(['pharmacy'], info, 'Pharmacy');
+    showService(['pharmacy'], 'Pharmacy');
     // // // Other Retail;
 
     // // // Services:
     // // // Bank;
-    showService(['bank'], info, 'Bank');
+    showService(['bank'], 'Bank');
     // // // Gym, health club, exercise studio;
-    showService(['gym'], info, 'Gym, health club, exercise studio');
+    showService(['gym'], 'Gym, health club, exercise studio');
     // // // Hair care;
-    showService(['hair_care'], info, 'Hair care');
+    showService(['hair_care'], 'Hair care');
     // // // Laundry, dry cleaner;
-    showService(['laundry'], info, 'Laundry/dry cleaner');
+    showService(['laundry'], 'Laundry/dry cleaner');
     // // // Restaurant, café, diner(excluding those with only drive - thru service);
-    showService(['bar', 'cafe', 'restaurant'], info, 'Restaurant/café/diner');
+    showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
 
     // // //Civic and Community Facilities
     // // //Adult or senior care(licensed)
     // // //Child care(licensed)
     // // //Community or recreation center
     // // //Cultural arts facility(museum, performing arts)
-    showService(['art_gallery', 'museum'], info, 'Cultural arts facility');
+    showService(['art_gallery', 'museum'], 'Cultural arts facility');
     // // //Education facility(e.g.K - 12 school, university, adult education center, vocational school, community college)
-    showService(['school'], info, 'Education facility');
+    showService(['school'], 'Education facility');
     // // //Family entertainment venue(e.g.theater, sports)
-    showService(['bowling_alley', 'movie_theater'], info, 'Family entertainment venue');
+    showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
     // // //Government office that serves public on-site
-    showService(['local_government_office', 'city_hall'], info, 'Government office serving public on-site');
+    showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
     // // // Medical clinic or office that treats patients
-    showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], info, 'Medical clinic/office');
+    showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
     // // // Place of worship
-    showService(['church'], info, 'Place of worship');
+    showService(['church'], 'Place of worship');
     // // // Police or fire station
-    showService(['police', 'fire_station'], info, 'Police or fire station');
+    showService(['police', 'fire_station'], 'Police or fire station');
     // // // Post office
-    showService(['post_office'], info, 'Post office');
+    showService(['post_office'], 'Post office');
     // // // Public library
-    showService(['library'], info, 'Public library');
+    showService(['library'], 'Public library');
     // // // Public park
-    showService(['park'], info, 'Public park');
+    showService(['park'], 'Public park');
     // // // Social services center
 
 

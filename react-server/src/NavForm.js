@@ -27,7 +27,7 @@ export default class NavForm extends Component {
   componentDidMount() {
     this.initAutocomplete();
   }
-  
+
   // focusHandler(e){
   //   e.preventDefault();
   //   this.initAutocomplete();
@@ -54,7 +54,7 @@ export default class NavForm extends Component {
   initAutocomplete() {
     const googleMaps = window.google.maps;
     const autocomplete = new googleMaps.places.Autocomplete(document.getElementById('navTextField'));
-    
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const circle = new googleMaps.Circle({
@@ -67,7 +67,7 @@ export default class NavForm extends Component {
         autocomplete.setBounds(circle.getBounds());
       });
     }
-  
+
     this.setState({ autocomplete: autocomplete });
   }
 
