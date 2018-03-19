@@ -4,24 +4,19 @@ import React, { Component } from 'react';
 import Home from './Home';
 import ScoreTable from './ScoreTable';
 
-import info from './images/info.png';
 import crossroads from './images/crossroads.png';
+import info from './images/info.png';
 
 export default class Score extends Component {
+
   constructor(props) {
     super(props);
-    this.state = {
-      services: {},
-      area: null,
-      criteriaClicked: []
-    };
     // console.log('initializing MapContainer constructor');
     this.initMapAndMarker = this.initMapAndMarker.bind(this);
-    this.handleTableClick = this.handleTableClick.bind(this);
   }
 
   componentDidMount() {
-    console.log('in MapContainer componentDidMount');
+    // console.log('in MapContainer componentDidMount');
     if (this.props.address) {
       this.initMapAndMarker(this.props.address);
     };
@@ -30,10 +25,6 @@ export default class Score extends Component {
   componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
     // if (this.props.address !== nextProps.address) {
-    this.setState({
-      services: {},
-      criteriaClicked: []
-    });
     this.initMapAndMarker(nextProps.search);
   }
 
@@ -41,7 +32,7 @@ export default class Score extends Component {
     const googleMaps = window.google.maps;
     const MarkerClusterer = window.MarkerClusterer;
 
-    const location = { lat: address.latitude, lng: address.longitude };
+    const location = { lat: address.lat, lng: address.lng };
 
     const map = new googleMaps.Map(document.getElementById('map'), {
       zoom: 15,
@@ -65,7 +56,6 @@ export default class Score extends Component {
       center: location,
       radius: 800
     });
-
 
     const styledMapType = new googleMaps.StyledMapType(
       [
@@ -185,7 +175,6 @@ export default class Score extends Component {
     map.mapTypes.set('styled_map', styledMapType);
     map.setMapTypeId('styled_map');
 
-
     const drawingManager = new googleMaps.drawing.DrawingManager({
       drawingMode: googleMaps.drawing.OverlayType.MARKER,
       drawingControl: true,
@@ -285,65 +274,45 @@ export default class Score extends Component {
       service.nearbySearch(request, callback);
     }
 
-    showTransit(['transit_station'], 'Intersections');
+    if (this.state.criteriaClicked.includes('access_to_transit')) {
+      showTransit(['transit_station'], 'Intersections');
+    }
 
-    // // Food Retail:
-    // // Supermarket;
-    showService(['supermarket'], 'Supermarket');
-    // // Grocery with produce section;
-
-    // // // Community - Serving Retail:
-    // // // Clothing store or department store selling clothes;
-    showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
-    // // // Convenience Store;
-    showService(['convenience_store'], 'Convenience Store');
-    // // // Farmers Market;
-    // // // Hardware Store;
-    showService(['hardware_store'], 'Hardware Store');
-    // // // Pharmacy;
-    showService(['pharmacy'], 'Pharmacy');
-    // // // Other Retail;
-
-    // // // Services:
-    // // // Bank;
-    showService(['bank'], 'Bank');
-    // // // Gym, health club, exercise studio;
-    showService(['gym'], 'Gym, health club, exercise studio');
-    // // // Hair care;
-    showService(['hair_care'], 'Hair care');
-    // // // Laundry, dry cleaner;
-    showService(['laundry'], 'Laundry/dry cleaner');
-    // // // Restaurant, café, diner(excluding those with only drive - thru service);
-    showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
-
-    // // //Civic and Community Facilities
-    // // //Adult or senior care(licensed)
-    // // //Child care(licensed)
-    // // //Community or recreation center
-    // // //Cultural arts facility(museum, performing arts)
-    showService(['art_gallery', 'museum'], 'Cultural arts facility');
-    // // //Education facility(e.g.K - 12 school, university, adult education center, vocational school, community college)
-    showService(['school'], 'Education facility');
-    // // //Family entertainment venue(e.g.theater, sports)
-    showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
-    // // //Government office that serves public on-site
-    showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
-    // // // Medical clinic or office that treats patients
-    showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
-    // // // Place of worship
-    showService(['church'], 'Place of worship');
-    // // // Police or fire station
-    showService(['police', 'fire_station'], 'Police or fire station');
-    // // // Post office
-    showService(['post_office'], 'Post office');
-    // // // Public library
-    showService(['library'], 'Public library');
-    // // // Public park
-    showService(['park'], 'Public park');
-    // // // Social services center
-
-
-
+    
+    // TODO: Food Retail
+    // TODO: Grocery with produce section
+    // TODO: Community - Serving Retail
+    // TODO: Farmers Market
+    // TODO: Other Retail
+    // TODO: Services
+    // TODO: Civic and Community Facilities
+    // TODO: Adult or senior care(licensed)
+    // TODO: Child care(licensed)
+    // TODO: Community or recreation center
+    // TODO: Social services center
+    
+    if (this.state.criteriaClicked.includes('community_resources')) {
+      showService(['supermarket'], 'Supermarket');
+      showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
+      showService(['convenience_store'], 'Convenience Store');
+      showService(['hardware_store'], 'Hardware Store');
+      showService(['pharmacy'], 'Pharmacy');
+      showService(['bank'], 'Bank');
+      showService(['gym'], 'Gym, health club, exercise studio');
+      showService(['hair_care'], 'Hair care');
+      showService(['laundry'], 'Laundry/dry cleaner');
+      showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
+      showService(['art_gallery', 'museum'], 'Cultural arts facility');
+      showService(['school'], 'Education facility');
+      showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
+      showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
+      showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
+      showService(['church'], 'Place of worship');
+      showService(['police', 'fire_station'], 'Police or fire station');
+      showService(['post_office'], 'Post office');
+      showService(['library'], 'Public library');
+      showService(['park'], 'Public park');
+    }
 
     // get all ways around a certain address
     if (this.state.criteriaClicked.includes('street_network')) {
@@ -423,18 +392,8 @@ export default class Score extends Component {
 
   }
 
-  handleTableClick(value) {
-    let criteriaClicked = this.state.criteriaClicked;
-    if (criteriaClicked.includes(value)) {
-      criteriaClicked = criteriaClicked.filter(criterion => criterion !== value);
-    } else {
-      criteriaClicked.push(value);
-    }
-    this.setState({ criteriaClicked: criteriaClicked });
-  }
-
   render() {
-    if (this.props.address) {
+    if (this.props.state.address) {
       return (
         <div className="container mt-2">
           <div className="row">
@@ -442,7 +401,7 @@ export default class Score extends Component {
               <div id='map' style={{ height: `600px`, width: `100%` }} />
             </div>
             <div className="col-4 pr-0">
-              <ScoreTable handleTableClick={this.handleTableClick} />
+              <ScoreTable handleScoreTableClick={this.props.handleScoreTableClick} criteriaClicked={this.props.state.criteriaClicked} />
             </div>
           </div>
         </div>
