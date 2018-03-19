@@ -7,6 +7,7 @@ export default class NavForm extends Component {
     super(props);
     this.state = {
       value: '',
+      address: {},
       autocomplete: null
     };
     this.handleChange = this.handleChange.bind(this);
@@ -19,14 +20,30 @@ export default class NavForm extends Component {
     this.initAutocomplete();
   }
 
+  // focusHandler(e){
+  //   e.preventDefault();
+  //   this.initAutocomplete();
+  // }
+
   handleChange(event) {
     this.setState({value: event.target.value});
   }
 
   handleSubmit(event) {
     event.preventDefault();
+
+    if (!this.state.autocomplete.getPlace()){
+      if (!this.state.address.address){
+        console.log('empty state, use props');
+        this.props.handleSearch(this.props.address, this.props.path);
+        return;
+      }
+        console.log('empty input, use old state');
+        this.props.handleSearch(this.state.address, this.props.path);
+        return;
+      }
+
     const place = this.state.autocomplete.getPlace();
-    // console.log(place);
     const address = {
       name: place.formatted_address,
       lat: parseFloat(place.geometry.location.lat().toFixed(7)),
@@ -34,26 +51,27 @@ export default class NavForm extends Component {
     };
     const pathname = this.props.location.pathname;
     this.props.handleSearch(address, pathname);
+    this.state.address = address;
     this.state.value = '';
   }
 
   initAutocomplete() {
     const googleMaps = window.google.maps;
     const autocomplete = new googleMaps.places.Autocomplete(document.getElementById('navTextField'));
-    
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const circle = new googleMaps.Circle({
           center: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
+            lat: position.coords.lat,
+            lng: position.coords.lng
           },
           radius: position.coords.accuracy
         });
         autocomplete.setBounds(circle.getBounds());
       });
     }
-  
+
     this.setState({ autocomplete: autocomplete });
   }
 
@@ -64,7 +82,7 @@ export default class NavForm extends Component {
             <label className="mr-1 text-light">Location</label>
             <input
                   id="navTextField"
-                  // onFocus={this.focusHandler}
+                  onFocus={this.focusHandler}
                   type="text"
                   className="form-control nav-input"
                   defaultValue={this.props.address.name}

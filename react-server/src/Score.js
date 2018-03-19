@@ -5,28 +5,6 @@ import Home from './Home';
 import ScoreTable from './ScoreTable';
 
 import info from './images/info.png';
-// import m1 from './images/m1.png';
-
-// import supermarket from './images/supermarket.png';
-// import clothing from './images/clothing.png';
-// import convinientStore from './images/convinientStore.png';
-// import hardwareStore from './images/hardwareStore.png';
-// import pharmacy from './images/pharmacy.png';
-// import bank from './images/bank.png';
-// import gym from './images/gym.png';
-// import haircare from './images/haircare.png';
-// import laundry from './images/laundry.png';
-// import food from './images/food.png';
-// import art from './images/art.png';
-// import education from './images/education.png';
-// import entertainment from './images/entertainment.png';
-// import government from './images/government.png';
-// import doctor from './images/doctor.png';
-// import worship from './images/worship.png';
-// import police from './images/police.png';
-// import postOffice from './images/postOffice.png';
-// import library from './images/library.png';
-// import park from './images/park.png';
 import crossroads from './images/crossroads.png';
 
 export default class Score extends Component {
@@ -34,6 +12,7 @@ export default class Score extends Component {
     super(props);
     this.state = {
       services: {},
+      area: null,
       criteriaClicked: []
     };
     // console.log('initializing MapContainer constructor');
@@ -50,25 +29,29 @@ export default class Score extends Component {
 
   componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
-    if (this.props.search !== nextProps.search) {
-      this.setState({ 
-        services: {},
-        criteriaClicked: []
-      })
-    };
+    // if (this.props.address !== nextProps.address) {
+    this.setState({
+      services: {},
+      criteriaClicked: []
+    });
     this.initMapAndMarker(nextProps.search);
   }
 
-  initMapAndMarker(address){
+  initMapAndMarker(address) {
     const googleMaps = window.google.maps;
-    const MarkerClusterer = window.Cluster;
-    const location = { lat: address.lat, lng: address.lng };
-    
+    const MarkerClusterer = window.MarkerClusterer;
+
+    const location = { lat: address.latitude, lng: address.longitude };
+
     const map = new googleMaps.Map(document.getElementById('map'), {
       zoom: 15,
-      center: location
+      center: location,
+      mapTypeControlOptions: {
+        mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+          'styled_map']
+      }
     });
-    
+
     const marker = new googleMaps.Marker({
       position: location,
       map: map,
@@ -83,108 +66,283 @@ export default class Score extends Component {
       radius: 800
     });
 
-    // const service = new googleMaps.places.PlacesService(map);
-    // let markerList = [];
 
-    // function showService(type, icon, label){
-    //   service.nearbySearch({
-    //     location: location,
-    //     radius: '800',
-    //     type: type
-    //   }, (results, status)=>{
-    //     if (status === googleMaps.places.PlacesServiceStatus.OK) {
-    //       countService(services, label, results);
-    //       results.forEach((place) => {
-    //         const marker = new googleMaps.Marker({
-    //           map: map,
-    //           icon: icon,
-    //           position: place.geometry.location
-    //         });
-    //         markerList.push(marker);
-    //         const infowindow = new googleMaps.InfoWindow();
-    //         googleMaps.event.addListener(marker, 'click', function () {
-    //           // console.log(place);
-    //           infowindow.setContent(place.name);
-    //           infowindow.open(map, this);
-    //         });
-    //       });
-    //     }
-    //   });
-    // }
+    const styledMapType = new googleMaps.StyledMapType(
+      [
+        { elementType: 'geometry', stylers: [{ color: '#ebe3cd' }] },
+        { elementType: 'labels.text.fill', stylers: [{ color: '#523735' }] },
+        { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f1e6' }] },
+        {
+          featureType: 'administrative',
+          elementType: 'geometry.stroke',
+          stylers: [{ color: '#c9b2a6' }]
+        },
+        {
+          featureType: 'administrative.land_parcel',
+          elementType: 'geometry.stroke',
+          stylers: [{ color: '#dcd2be' }]
+        },
+        {
+          featureType: 'administrative.land_parcel',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#ae9e90' }]
+        },
+        {
+          featureType: 'landscape.natural',
+          elementType: 'geometry',
+          stylers: [{ color: '#dfd2ae' }]
+        },
+        {
+          featureType: 'poi',
+          elementType: 'geometry',
+          stylers: [{ color: '#dfd2ae' }]
+        },
+        {
+          featureType: 'poi',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#93817c' }]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'geometry.fill',
+          stylers: [{ color: '#a5b076' }]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#447530' }]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry',
+          stylers: [{ color: '#f5f1e6' }]
+        },
+        {
+          featureType: 'road.arterial',
+          elementType: 'geometry',
+          stylers: [{ color: '#fdfcf8' }]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry',
+          stylers: [{ color: '#f8c967' }]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry.stroke',
+          stylers: [{ color: '#e9bc62' }]
+        },
+        {
+          featureType: 'road.highway.controlled_access',
+          elementType: 'geometry',
+          stylers: [{ color: '#e98d58' }]
+        },
+        {
+          featureType: 'road.highway.controlled_access',
+          elementType: 'geometry.stroke',
+          stylers: [{ color: '#db8555' }]
+        },
+        {
+          featureType: 'road.local',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#806b63' }]
+        },
+        {
+          featureType: 'transit.line',
+          elementType: 'geometry',
+          stylers: [{ color: '#dfd2ae' }]
+        },
+        {
+          featureType: 'transit.line',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#8f7d77' }]
+        },
+        {
+          featureType: 'transit.line',
+          elementType: 'labels.text.stroke',
+          stylers: [{ color: '#ebe3cd' }]
+        },
+        {
+          featureType: 'transit.station',
+          elementType: 'geometry',
+          stylers: [{ color: '#dfd2ae' }]
+        },
+        {
+          featureType: 'water',
+          elementType: 'geometry.fill',
+          stylers: [{ color: '#b9d3c2' }]
+        },
+        {
+          featureType: 'water',
+          elementType: 'labels.text.fill',
+          stylers: [{ color: '#92998d' }]
+        }
+      ],
+      { name: 'Styled Map' });
 
-    // let services = this.state.services;
-    // const countService = (services, label, data) => {
-    //   services[label] = data.length;
-    //   this.setState({services});
-    // }
-
-    // const markerCluster = new MarkerClusterer(map, markerList, { imagePath: m1 });
-
-  // const communityResources = {};
-  //   communityResources['Supermarket'] = ['supermarket'],
-  //   communityResources['Supermarket'] = ['supermarket'],
-  //   communityResources['Supermarket'] = ['supermarket'],
-  //   communityResources['Supermarket'] = ['supermarket'],
 
 
-    // Food Retail:
-    // Supermarket;
-    // showService(['supermarket'], info, 'Supermarket');
-    // Grocery with produce section;
+    map.mapTypes.set('styled_map', styledMapType);
+    map.setMapTypeId('styled_map');
 
-    // // Community - Serving Retail:
-    // // Clothing store or department store selling clothes;
-    // showService(['department_store', 'clothing_store'], info, 'Clothing store/department store selling clothes');
-    // // Convenience Store;
-    // showService(['convenience_store'], info, 'Convenience Store');
-    // // Farmers Market;
-    // // Hardware Store;
-    // showService(['hardware_store'], info, 'Hardware Store');
-    // // Pharmacy;
-    // showService('pharmacy', info, 'Pharmacy');
-    // // Other Retail;
 
-    // // Services:
-    // // Bank;
-    // showService(['bank'], info, 'Bank');
-    // // Gym, health club, exercise studio;
-    // showService(['gym'], info, 'Gym, health club, exercise studio');
-    // // Hair care;
-    // showService(['hair_care'], info, 'Hair care');
-    // // Laundry, dry cleaner;
-    // showService(['laundry'], info, 'Laundry/dry cleaner');
-    // // Restaurant, café, diner(excluding those with only drive - thru service);
-    // showService(['bar', 'cafe', 'restaurant'], info, 'Restaurant/café/diner');
+    const drawingManager = new googleMaps.drawing.DrawingManager({
+      drawingMode: googleMaps.drawing.OverlayType.MARKER,
+      drawingControl: true,
+      drawingControlOptions: {
+        position: googleMaps.ControlPosition.TOP_CENTER,
+        drawingModes: ['polygon']
+      }
+    });
 
-    // //Civic and Community Facilities
-    // //Adult or senior care(licensed)
-    // //Child care(licensed)
-    // //Community or recreation center
-    // //Cultural arts facility(museum, performing arts)
-    // showService(['art_gallery', 'museum'], info, 'Cultural arts facility');
-    // //Education facility(e.g.K - 12 school, university, adult education center, vocational school, community college)
-    // showService(['school'], info, 'Education facility');
-    // //Family entertainment venue(e.g.theater, sports)
-    // showService(['bowling_alley', 'movie_theater'], info, 'Family entertainment venue');
-    // //Government office that serves public on-site
-    // showService(['local_government_office', 'city_hall'], info, 'Government office serving public on-site');
-    // // Medical clinic or office that treats patients
-    // showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], info, 'Medical clinic/office');
-    // // Place of worship
-    // showService(['church'], info, 'Place of worship');
-    // // Police or fire station
-    // showService(['police', 'fire_station'], info, 'Police or fire station');
-    // // Post office
-    // showService(['post_office'], info, 'Post office');
-    // // Public library
-    // showService(['library'], info, 'Public library');
-    // // Public park
-    // showService(['park'], info, 'Public park');
-    // // Social services center
+    drawingManager.setMap(map);
 
-    // if (this.state.criteriaClicked.includes('access_to_transit')) {
-    //   showService(['transit_station'], crossroads, 'Intersections');
-    // }
+    googleMaps.event.addListener(drawingManager, 'polygoncomplete', (polygon) => {
+      const area = googleMaps.geometry.spherical.computeArea(polygon.getPath());
+      console.log('polygon complete, area is ', Math.ceil(area), 'suqare meters');
+      this.setState({ area: Math.ceil(area) });
+    });
+
+    const cityCircle = new googleMaps.Circle({
+      strokeWeight: 0,
+      fillColor: '#87cefa',
+      fillOpacity: 0.25,
+      map: map,
+      center: location,
+      radius: 800
+    });
+
+    let markersList = [];
+    let services = this.state.services;
+    const markerCluster = new MarkerClusterer(map, markersList,
+      { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' }
+    );
+    const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
+    const service = new googleMaps.places.PlacesService(map);
+
+    const showService = (type, label) => {
+      const request = {
+        location: location,
+        radius: '800',
+        type: type
+      };
+      const callback = (results, status, pagination) => {
+        if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
+        countService(services, label, results);
+        results.forEach((place) => {
+          const marker = new googleMaps.Marker({
+            icon: info,
+            position: place.geometry.location
+          });
+          const infowindow = new googleMaps.InfoWindow();
+          googleMaps.event.addListener(marker, 'click', function () {
+            infowindow.setContent(place.name);
+            infowindow.open(map, this);
+          });
+          addNewMarker(marker, true);
+        });
+        if (pagination.hasNextPage) {
+          pagination.nextPage();
+        };
+      }
+      service.nearbySearch(request, callback);
+      markerCluster.redraw();
+    };
+
+    const countService = (services, label, data) => {
+      if (services[label]) {
+        services[label] += data.length;
+        this.setState({ services });
+        return;
+      }
+      services[label] = data.length;
+      this.setState({ services });
+    }
+
+    const showTransit = (type, label) => {
+      const request = {
+        location: location,
+        radius: '400',
+        type: type
+      };
+      const callback = (results, status) => {
+        if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
+        countService(services, label, results);
+        results.forEach((place) => {
+          const marker = new googleMaps.Marker({
+            map: map,
+            icon: crossroads,
+            position: place.geometry.location
+          });
+          const infowindow = new googleMaps.InfoWindow();
+          googleMaps.event.addListener(marker, 'click', function () {
+            infowindow.setContent(place.name);
+            infowindow.open(map, this);
+          });
+        });
+
+      };
+      service.nearbySearch(request, callback);
+    }
+
+    showTransit(['transit_station'], 'Intersections');
+
+    // // Food Retail:
+    // // Supermarket;
+    showService(['supermarket'], 'Supermarket');
+    // // Grocery with produce section;
+
+    // // // Community - Serving Retail:
+    // // // Clothing store or department store selling clothes;
+    showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
+    // // // Convenience Store;
+    showService(['convenience_store'], 'Convenience Store');
+    // // // Farmers Market;
+    // // // Hardware Store;
+    showService(['hardware_store'], 'Hardware Store');
+    // // // Pharmacy;
+    showService(['pharmacy'], 'Pharmacy');
+    // // // Other Retail;
+
+    // // // Services:
+    // // // Bank;
+    showService(['bank'], 'Bank');
+    // // // Gym, health club, exercise studio;
+    showService(['gym'], 'Gym, health club, exercise studio');
+    // // // Hair care;
+    showService(['hair_care'], 'Hair care');
+    // // // Laundry, dry cleaner;
+    showService(['laundry'], 'Laundry/dry cleaner');
+    // // // Restaurant, café, diner(excluding those with only drive - thru service);
+    showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
+
+    // // //Civic and Community Facilities
+    // // //Adult or senior care(licensed)
+    // // //Child care(licensed)
+    // // //Community or recreation center
+    // // //Cultural arts facility(museum, performing arts)
+    showService(['art_gallery', 'museum'], 'Cultural arts facility');
+    // // //Education facility(e.g.K - 12 school, university, adult education center, vocational school, community college)
+    showService(['school'], 'Education facility');
+    // // //Family entertainment venue(e.g.theater, sports)
+    showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
+    // // //Government office that serves public on-site
+    showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
+    // // // Medical clinic or office that treats patients
+    showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
+    // // // Place of worship
+    showService(['church'], 'Place of worship');
+    // // // Police or fire station
+    showService(['police', 'fire_station'], 'Police or fire station');
+    // // // Post office
+    showService(['post_office'], 'Post office');
+    // // // Public library
+    showService(['library'], 'Public library');
+    // // // Public park
+    showService(['park'], 'Public park');
+    // // // Social services center
+
+
 
 
     // get all ways around a certain address
@@ -198,7 +356,7 @@ export default class Score extends Component {
               !(element.tags.hasOwnProperty('service') && (element.tags.service === 'parking_aisle' || element.tags.service === 'driveway' || element.tags.service === 'alley')) &&
               element.tags.highway !== 'cycleway' &&
               element.tags.highway !== 'footway'
-          }) 
+          })
           return results;
         })
         // remove duplicate nodes within a certain way
@@ -216,7 +374,7 @@ export default class Score extends Component {
         // output a list of unique node ids
         .then(newElements => {
           let nodes = {};
-  
+
           newElements.forEach(newElement => {
             newElement.nodes.forEach(node => {
               if (!nodes.hasOwnProperty(node)) {
@@ -226,7 +384,7 @@ export default class Score extends Component {
               }
             })
           })
-  
+
           let list = [];
           for (let node in nodes) {
             nodes[node] = nodes[node].filter((item, index, array) => {
@@ -236,12 +394,12 @@ export default class Score extends Component {
               list.push(node);
             }
           }
-  
+
           return list;
         })
         .then(nodes => {
           let intersections = [];
-  
+
           axios.get(`http://overpass-api.de/api/interpreter?[out:json];node(around:400,${address.lat},${address.lng});out;`)
             .then(results => {
               intersections = results.data.elements.filter(element => {
@@ -272,12 +430,12 @@ export default class Score extends Component {
     } else {
       criteriaClicked.push(value);
     }
-    this.setState({ criteriaClicked: criteriaClicked });  
+    this.setState({ criteriaClicked: criteriaClicked });
   }
 
   render() {
     if (this.props.address) {
-      return (      
+      return (
         <div className="container mt-2">
           <div className="row">
             <div className="col-8 pl-0">
@@ -304,13 +462,13 @@ export default class Score extends Component {
         //         className="form-control"
         //         aria-label="Large"
         //         aria-describedby="inputGroup-sizing-sm"
-        //         value={this.state.value} 
+        //         value={this.state.value}
         //         onChange={this.handleChange} />
         //     </div>
         //     {/* <hr className="my-4" /> */}
         //     <button type="submit" className="btn btn-primary">Go!</button>
         //   </form>
-        // </main>      
+        // </main>
       );
     }
   }

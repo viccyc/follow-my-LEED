@@ -52,28 +52,28 @@ export default class Home extends Component {
     event.preventDefault();
     const place = this.state.autocomplete.getPlace();
     if (!place) {
-
     }
     const address = {
       name: place.formatted_address,
       lat: parseFloat(place.geometry.location.lat().toFixed(7)),
       lng: parseFloat(place.geometry.location.lng().toFixed(7))
     };
-    const pathname = this.props.location.pathname;
-    this.props.handleSearch(address, pathname);
+    console.log(this.props.location.pathname);
+    // const pathname = this.props.location.pathname;
+    this.props.handleSearch(address, this.props.location.pathname);
     this.state.value = '';
   }
 
   initAutocomplete() {
     const googleMaps = window.google.maps;
     const autocomplete = new googleMaps.places.Autocomplete(document.getElementById('searchTextField'));
-    
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const circle = new googleMaps.Circle({
           center: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
+            lat: position.coords.lat,
+            lng: position.coords.lng
           },
           radius: position.coords.accuracy
         });
@@ -109,11 +109,11 @@ export default class Home extends Component {
     //     }
     //   }} />
     // }
-    const pathname = this.props.location.pathname;
+    // const pathname = this.props.location.pathname;
     const flashMessage = () => {
       if (this.state.focus) {
         return (
-          <div class="alert alert-warning" role="alert">
+          <div className="alert alert-warning" role="alert">
             Please select from one of the drop down options.
           </div>
         );
@@ -121,7 +121,8 @@ export default class Home extends Component {
     };
     return (
       <main style={{ backgroundImage: `url(${backgroundImg})` }}>
-        <h1 className="title text-center">{this.state.title[pathname]}</h1>
+        <h1 className="title text-center">{this.state.title.pathname}</h1>
+        <h1 className="title text-center">hello</h1>
         {flashMessage()}
         <form onSubmit={this.handleSubmit}>
           <div className="input-group input-group-lg">
@@ -143,7 +144,7 @@ export default class Home extends Component {
           {/* <hr className="my-4" /> */}
           <button type="submit" className="btn btn-primary">Go!</button>
         </form>
-      </main>      
+      </main>
     );
   }
 }
