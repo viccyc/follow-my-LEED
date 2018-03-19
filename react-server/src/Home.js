@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import backgroundImg from './images/calgary_cityscape.png';
+import backgroundImg from './images/calgary_tower-min.png';
 import './Home.css';
 
 export default class Home extends Component {
@@ -140,9 +140,9 @@ export default class Home extends Component {
               onBlur={this.blurHandler}
               value={this.state.value} 
               onChange={this.handleChange} />
+           <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
           </div>
           {/* <hr className="my-4" /> */}
-          <button type="submit" className="btn btn-primary">Go!</button>
         </form>
       </main>
     );

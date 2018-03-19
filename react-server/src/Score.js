@@ -400,8 +400,8 @@ export default class Score extends Component {
             <div className="col-8 pl-0">
               <div id='map' style={{ height: `600px`, width: `100%` }} />
             </div>
-            <div className="col-4 pr-0">
-              <ScoreTable handleScoreTableClick={this.props.handleScoreTableClick} criteriaClicked={this.props.state.criteriaClicked} />
+            <div id="tableDiv" className="col-4 pr-0">
+              <ScoreTable handleTableClick={this.handleTableClick} />
             </div>
           </div>
         </div>

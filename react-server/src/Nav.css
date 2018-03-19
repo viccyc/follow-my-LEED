@@ -7,8 +7,38 @@
   width: 30%;
 } */
 
+#navbar {
+  background-color: #359135;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+#navbar-link1 {
+  color: #d5cdcd;
+  float: left;
+  border-style: groove;
+}
+
+#navbar-link2 {
+  color: #d5cdcd;
+  float: right;
+  border-style: groove;
+  margin-left: 5px;
+}
+
+#navTextField {
+  width: 250px;
+}
+
 .form-control {
   width: 350px;
 }
 
+#tableDiv {
+  background-color: #eae7e7;
+  padding-left: 0px;
+}
 
+#scoreTable {
+  background-color: #bfc3bf;
+}

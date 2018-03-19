@@ -19,7 +19,7 @@ class ScoreTable extends Component {
       }
     }
     return (
-      <table className="table table-bordered">
+      <table id="scoreTable" className="table table-bordered">
         <thead>
           <tr>
             <th scope="col">Criterion</th>
