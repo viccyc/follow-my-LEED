@@ -8,10 +8,10 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      // value: '',
       autocomplete: null,
     };
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.initAutocomplete = this.initAutocomplete.bind(this);
     // this.clickHandler = this.clickHandler.bind(this);
@@ -21,9 +21,9 @@ export default class Home extends Component {
     this.initAutocomplete();
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
+  // handleChange(event) {
+  //   this.setState({value: event.target.value});
+  // }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -42,18 +42,18 @@ export default class Home extends Component {
     // console.log(place);
     const address = {
       name: place.formatted_address,
-      lat: parseFloat(place.geometry.location.lat().toFixed(7)),
-      lng: parseFloat(place.geometry.location.lng().toFixed(7))
+      latitude: parseFloat(place.geometry.location.lat().toFixed(7)),
+      longitude: parseFloat(place.geometry.location.lng().toFixed(7))
     };
     const pathname = this.props.location.pathname;
     this.props.handleSearch(address, pathname);
-    this.state.value = '';
+    // this.state.value = '';
   }
 
   initAutocomplete() {
     const googleMaps = window.google.maps;
     const autocomplete = new googleMaps.places.Autocomplete(document.getElementById('searchTextField'));
-    
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const circle = new googleMaps.Circle({
@@ -66,7 +66,7 @@ export default class Home extends Component {
         autocomplete.setBounds(circle.getBounds());
       });
     }
-  
+
     this.setState({ autocomplete: autocomplete });
   }
 
@@ -105,13 +105,13 @@ export default class Home extends Component {
               aria-label="Large"
               aria-describedby="inputGroup-sizing-sm"
               placeholder='Enter a location'
-              value={this.state.value} 
+              value={this.state.value}
               onChange={this.handleChange} />
            <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
           </div>
           {/* <hr className="my-4" /> */}
         </form>
-      </main>      
+      </main>
     );
   }
 }
