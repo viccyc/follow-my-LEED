@@ -49,6 +49,12 @@ export default class NavForm extends Component {
         longitude: place.geometry.location.lng(),
         latitude: place.geometry.location.lat()
       }});
+    const address = {
+      address: place.formatted_address,
+      longitude: place.geometry.location.lng(),
+      latitude: place.geometry.location.lat()
+    };
+    this.props.handleSearch(address, this.props.path);
   }
 
   initAutocomplete() {

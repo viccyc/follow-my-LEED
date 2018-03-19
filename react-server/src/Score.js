@@ -29,13 +29,14 @@ class ScoreMapContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
-    if (this.props.search !== nextProps.search) {
+    // if (this.props.address !== nextProps.address) {
       this.setState({
         services: {},
         criteriaClicked: []
       })
-      this.initMapAndMarker(nextProps.search);
-    };
+
+      this.initMapAndMarker(nextProps.address);
+    // };
   }
 
   // componentDidUpdate() {
@@ -56,7 +57,7 @@ class ScoreMapContainer extends Component {
     const googleMaps = window.google.maps;
     const MarkerClusterer = window.MarkerClusterer;
 
-    const location = { lat: address.lat, lng: address.lng };
+    const location = { lat: address.latitude, lng: address.longitude };
 
     const map = new googleMaps.Map(document.getElementById('map'), {
       zoom: 15,

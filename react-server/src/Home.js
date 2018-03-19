@@ -42,8 +42,8 @@ export default class Home extends Component {
     // console.log(place);
     const address = {
       name: place.formatted_address,
-      lat: parseFloat(place.geometry.location.lat().toFixed(7)),
-      lng: parseFloat(place.geometry.location.lng().toFixed(7))
+      latitude: parseFloat(place.geometry.location.lat().toFixed(7)),
+      longitude: parseFloat(place.geometry.location.lng().toFixed(7))
     };
     const pathname = this.props.location.pathname;
     this.props.handleSearch(address, pathname);
