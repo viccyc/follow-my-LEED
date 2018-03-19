@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 
-<<<<<<< HEAD
-import Nav from './Nav';
 import backgroundImg from './images/calgary_tower-min.png';
-import './index.css';
-=======
-import backgroundImg from './images/calgary_cityscape.png';
->>>>>>> upstream/master
 import './Home.css';
 
 export default class Home extends Component {
@@ -97,33 +91,8 @@ export default class Home extends Component {
     //   }} />
     // }
     return (
-<<<<<<< HEAD
-      <div>
-        <Nav form={false} clickHandler={this.clickHandler} searchAddress={this.state.location}/>
-        <main id="mainPhoto" style={{ backgroundImage: `url(${backgroundImg})` }}>
-          <h1 id="mainTitle" className="title text-center">Follow My LEED</h1>
-          <form onSubmit={this.handleSubmit}>
-            <div className="input-group input-group-lg">
-              <div className="input-group-prepend">
-                <span className="input-group-text" id="inputGroup-sizing-lg">Location</span>
-              </div>
-              <input name="location"
-                    ref={(input) => this.input = input}
-                    id="searchTextField"
-                    type="text"
-                    className="form-control"
-                    aria-label="Large"
-                    aria-describedby="inputGroup-sizing-sm" />
-            {/* <hr className="my-4" /> */}
-            <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
-            </div>
-          </form>
-        </main>
-      </div>
-
-=======
-      <main style={{ backgroundImage: `url(${backgroundImg})` }}>
-        <h1 className="title text-center">Follow My LEED</h1>
+      <main id="mainPhoto" style={{ backgroundImage: `url(${backgroundImg})` }}>
+        <h1 id="mainTitle" className="title text-center">Follow My LEED</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="input-group input-group-lg">
             <div className="input-group-prepend">
@@ -140,10 +109,9 @@ export default class Home extends Component {
               onChange={this.handleChange} />
           </div>
           {/* <hr className="my-4" /> */}
-          <button type="submit" className="btn btn-primary">Go!</button>
+          <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
         </form>
       </main>      
->>>>>>> upstream/master
     );
   }
 }
