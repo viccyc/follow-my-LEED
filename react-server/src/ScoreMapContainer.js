@@ -31,7 +31,7 @@ class MapContainer extends Component {
   constructor(props) {
     super(props);
     console.log('initializing MapContainer constructor');
-    this.state = {services: {}};
+    this.state = {services: {}, area: null};
     this.initMapAndMarker = this.initMapAndMarker.bind(this);
   }
 
@@ -244,20 +244,17 @@ class MapContainer extends Component {
       drawingControl: true,
       drawingControlOptions: {
         position: googleMaps.ControlPosition.TOP_CENTER,
-        drawingModes: ['marker', 'circle', 'polygon', 'polyline', 'rectangle']
-      },
-      markerOptions: { icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png' },
-      circleOptions: {
-        fillColor: '#ffff00',
-        fillOpacity: 1,
-        strokeWeight: 5,
-        clickable: false,
-        editable: true,
-        zIndex: 1
+        drawingModes: ['polygon']
       }
     });
-    
+
     drawingManager.setMap(map);
+
+    googleMaps.event.addListener(drawingManager, 'polygoncomplete', (polygon) => {
+      const area = googleMaps.geometry.spherical.computeArea(polygon.getPath());
+      console.log('polygon complete, area is ', Math.ceil(area), 'suqare meters');
+      this.setState({ area: Math.ceil(area)});
+    });
 
     const cityCircle = new googleMaps.Circle({
       strokeWeight: 0,
@@ -284,30 +281,37 @@ class MapContainer extends Component {
         radius: '800',
         type: type
       };
-      const callback = (results, status)=> {
-        if (status == googleMaps.places.PlacesServiceStatus.OK) {
-          countService(services, label, results);
-          console.log('in each search, results have ', results.length);
-          results.forEach((place) => {
-            const marker = new googleMaps.Marker({
-              // map: map,
-              icon: icon,
-              position: place.geometry.location
-            });
-            const infowindow = new googleMaps.InfoWindow();
-            googleMaps.event.addListener(marker, 'click', function () {
-              infowindow.setContent(place.name);
-              infowindow.open(map, this);
-            });
-            addNewMarker(marker, true);
+      const callback = (results, status, pagination)=> {
+        if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
+        countService(services, label, results);
+        results.forEach((place) => {
+          const marker = new googleMaps.Marker({
+            // map: map,
+            icon: icon,
+            position: place.geometry.location
           });
-        }
-      };
+          const infowindow = new googleMaps.InfoWindow();
+          googleMaps.event.addListener(marker, 'click', function () {
+            infowindow.setContent(place.name);
+            infowindow.open(map, this);
+          });
+          addNewMarker(marker, true);
+        });
+        if (pagination.hasNextPage) {
+          console.log('trigger next page');
+          pagination.nextPage();
+        };
+      }
       service.nearbySearch(request, callback);
       markerCluster.redraw();
     }
 
     const countService = (services, label, data) => {
+      if (services[label]) {
+        services[label] += data.length;
+        this.setState({services});
+        return;
+      }
       services[label] = data.length;
       this.setState({services});
     }
