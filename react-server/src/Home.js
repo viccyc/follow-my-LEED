@@ -107,9 +107,9 @@ export default class Home extends Component {
               placeholder='Enter a location'
               value={this.state.value} 
               onChange={this.handleChange} />
+           <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
           </div>
           {/* <hr className="my-4" /> */}
-          <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
         </form>
       </main>      
     );

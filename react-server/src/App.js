@@ -43,7 +43,7 @@ class App extends Component {
     if (this.state.redirect) {
       return (
         <div>
-          <nav>
+          <nav id="navbar" className="navbar navbar">
             <Link to="/find_score" style={{ textDecoration: 'none' }}><MenuItem title='CALCULATE SCORE'/></Link>
             <Link to="/find_score" style={{ textDecoration: 'none' }}><MenuItem title='SHOW PROJECTS'/></Link>
             {NavFormComponent()}
@@ -54,9 +54,8 @@ class App extends Component {
     } else {
       return (
         <div>
-          <nav>
-            <Link to="/find_score" style={{ textDecoration: 'none' }}><MenuItem title='CALCULATE SCORE'/></Link>
-            <Link to="/find_score" style={{ textDecoration: 'none' }}><MenuItem title='SHOW PROJECTS'/></Link>
+          <nav id="navbar" className="navbar navbar">
+            <MenuItem />
             {NavFormComponent()}
           </nav>
           <div>

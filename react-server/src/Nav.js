@@ -41,7 +41,7 @@ class Nav extends Component {
       return (
         <nav id="navbar" className="navbar navbar">      
           <div>
-            <a id="navbar-link" className="nav-link" href="/find_score" onClick={this.props.clickHandler || this.clickHandler}>CALCULATE SCORE <span class="sr-only">(current)</span></a>
+            <a id="navbar-link1" className="nav-link" href="/find_score" onClick={this.props.clickHandler || this.clickHandler}>CALCULATE SCORE <span class="sr-only">(current)</span></a>
             <a id="navbar-link2" className="nav-link" href="/projects" onClick={this.props.clickHandler || this.clickHandler}>SHOW PROJECTS</a>
           </div>
           {form}    
