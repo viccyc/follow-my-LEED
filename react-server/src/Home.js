@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import backgroundImg from './images/calgary_cityscape.png';
+import backgroundImg from './images/calgary_tower-min.png';
 import './Home.css';
 
 export default class Home extends Component {
@@ -91,8 +91,8 @@ export default class Home extends Component {
     //   }} />
     // }
     return (
-      <main style={{ backgroundImage: `url(${backgroundImg})` }}>
-        <h1 className="title text-center">Follow My LEED</h1>
+      <main id="mainPhoto" style={{ backgroundImage: `url(${backgroundImg})` }}>
+        <h1 id="mainTitle" className="title text-center">Follow My LEED</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="input-group input-group-lg">
             <div className="input-group-prepend">
@@ -107,9 +107,9 @@ export default class Home extends Component {
               placeholder='Enter a location'
               value={this.state.value}
               onChange={this.handleChange} />
+           <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
           </div>
           {/* <hr className="my-4" /> */}
-          <button type="submit" className="btn btn-primary">Go!</button>
         </form>
       </main>
     );
