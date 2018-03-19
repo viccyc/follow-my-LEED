@@ -29,7 +29,7 @@ import info from './images/info.png';
 // import park from './images/park.png';
 import crossroads from './images/crossroads.png';
 
-class ScoreMapContainer extends Component {
+export default class Score extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,30 +48,16 @@ class ScoreMapContainer extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
+  componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
     if (this.props.search !== nextProps.search) {
       this.setState({ 
         services: {},
         criteriaClicked: []
       })
-      // this.initMapAndMarker(nextProps.search);
     };
+    this.initMapAndMarker(nextProps.search);
   }
-
-  componentDidUpdate() {
-    console.log('did update');
-    if (this.props.address) {
-      this.initMapAndMarker(this.props.address);
-    };
-  }
-
-  // componentWillUpdate(nextProps) {
-    // console.log('will update');
-    // if (nextProps.address) {
-    //   this.initMapAndMarker(nextProps.address);
-    // };
-  // }
 
   initMapAndMarker(address){
     const googleMaps = window.google.maps;
@@ -330,5 +316,3 @@ class ScoreMapContainer extends Component {
   }
 
 }
-
-export default ScoreMapContainer;
