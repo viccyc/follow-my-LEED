@@ -7,15 +7,16 @@ class ScoreTable extends Component {
   }
 
   handleClick(event) {
-    this.props.handleScoreTableClick(event.currentTarget.value);
+    this.props.handleClick(event.currentTarget.value);
   }
 
   render() {
+    const criteriaClicked = this.props.criteriaClicked;
     const toggleButton = (value) => {
-      if (this.props.criteriaClicked.includes(value)) {
+      if (criteriaClicked && criteriaClicked.includes(value)) {
         return (<button type="button" className="btn btn-light" onClick={this.handleClick} value={value} >Hide</button>)
       } else {
-        return (<button type="button" className="btn btn-light" onClick={this.handleClick} value={value} >Hide</button>)
+        return (<button type="button" className="btn btn-light" onClick={this.handleClick} value={value} >Show</button>)
       }
     }
     return (
@@ -23,7 +24,7 @@ class ScoreTable extends Component {
         <thead>
           <tr>
             <th scope="col">Criterion</th>
-            <th scope="col">Score</th>
+            <th scope="col">Count</th>
             <th scope="col">Show/Hide Markers</th>
           </tr>
         </thead>
@@ -39,9 +40,9 @@ class ScoreTable extends Component {
             <td>{toggleButton('community_resources')}</td>
           </tr>
           <tr>
-            <td>Access to Transit</td>
+            <td>Transit Stops</td>
             <td>...</td>
-            <td>{toggleButton('access_to_transit')}</td>
+            <td>{toggleButton('transit_stops')}</td>
           </tr>
           <tr>
             <td>Total</td>
