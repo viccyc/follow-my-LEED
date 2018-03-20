@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { Component } from 'react';
 
 import InfoContent from './InfoContent';
-import Home from './Home';
 
 import certified from './images/certified.png';
 import silver from './images/silver.png';
