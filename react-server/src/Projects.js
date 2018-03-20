@@ -99,19 +99,19 @@ export default class Projects extends Component {
           <table id="scoreTable">
               <tr>
                 <td><img src={platinum} /></td>
-               <td>LEED Platinum</td>
+               <td id="tableCell">LEED Platinum</td>
               </tr>
               <tr>
-                <td>gold</td>
-                <td>LEED Gold</td>
+                <td><img src={gold} /></td>
+                <td id="tableCell">LEED Gold</td>
               </tr>
               <tr>
-                <td>silver</td>
-                <td>LEED Silver</td>
+                <td><img src={silver} /></td>
+                <td id="tableCell">LEED Silver</td>
               </tr>
               <tr>
-                <td>certified</td>
-                <td>LEED Certified</td>
+                <td><img src={certified} /></td>
+                <td id="tableCell">LEED Certified</td>
               </tr>
             </table>
          </div>

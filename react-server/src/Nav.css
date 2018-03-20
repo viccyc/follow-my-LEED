@@ -32,6 +32,8 @@
 
 #scoreTable {
   background-color: #e7eae7;
-  border-color: #0b0e0e;
-  border-style: double;
+}
+
+#tableCell {
+  padding: 10px
 }
