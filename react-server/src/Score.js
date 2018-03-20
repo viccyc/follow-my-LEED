@@ -304,6 +304,7 @@ export default class Score extends Component {
       this.setState({ services, communityResources });
     }
 
+    let TransitStopMarkers = [];
     const showTransit = (type, label) => {
       const request = {
         location: location,
@@ -315,7 +316,7 @@ export default class Score extends Component {
         // countService(services, label, results);
         results.forEach((place) => {
           const marker = new googleMaps.Marker({
-            map: map,
+            // map: map,
             icon: crossroads,
             position: place.geometry.location
           });
@@ -324,16 +325,16 @@ export default class Score extends Component {
             infowindow.setContent(place.name);
             infowindow.open(map, this);
           });
+          TransitStopMarkers.push(marker);
         });
         this.setState({ transitStops: results.length });
 
       };
       service.nearbySearch(request, callback);
     }
-
-    // if (criteriaClicked.includes('access_to_transit')) {
-      showTransit(['transit_station'], 'Intersections');
-    // }
+    
+    showTransit(['transit_station'], 'Intersections');
+    console.log('TransitStopMarkers', TransitStopMarkers);
     
     // // TODO: Food Retail
     // // TODO: Grocery with produce section
@@ -371,6 +372,7 @@ export default class Score extends Component {
     // }
 
     // get all ways around a certain address
+    let intersectionMarkers = [];
     axios.get(`http://overpass-api.de/api/interpreter?[out:json];way(around:400,${address.lat},${address.lng});out;`)
       .then(results => {
         results = results.data.elements.filter(element => {
@@ -436,15 +438,16 @@ export default class Score extends Component {
             intersections.forEach(intersection => {
               // console.log(typeof intersection.lat);
               const intersectionMarker = new googleMaps.Marker({
-                map: map,
+                // map: map,
                 icon: crossroads,
                 position: { lat: intersection.lat, lng: intersection.lon }
               });
+              intersectionMarkers.push(intersectionMarker);
             })
             this.setState({ streetNetwork: intersections.length });
           })
       })
-
+      console.log('intersectionMarkers', intersectionMarkers);
   }
 
   render() {
