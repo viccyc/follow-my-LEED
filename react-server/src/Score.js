@@ -4,24 +4,25 @@ import React, { Component } from 'react';
 import Home from './Home';
 import ScoreTable from './ScoreTable';
 
-import info from './images/info.png';
 import crossroads from './images/crossroads.png';
+import info from './images/info.png';
 
-class ScoreMapContainer extends Component {
+export default class Score extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       services: {},
       area: null,
       criteriaClicked: []
-    };
+    },
     // console.log('initializing MapContainer constructor');
+    this.handleClick = this.handleClick.bind(this);
     this.initMapAndMarker = this.initMapAndMarker.bind(this);
-    this.handleTableClick = this.handleTableClick.bind(this);
   }
 
   componentDidMount() {
-    console.log('in MapContainer componentDidMount');
+    // console.log('in MapContainer componentDidMount');
     if (this.props.address) {
       this.initMapAndMarker(this.props.address);
     };
@@ -30,42 +31,32 @@ class ScoreMapContainer extends Component {
   componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
     // if (this.props.address !== nextProps.address) {
-      this.setState({
-        services: {},
-        criteriaClicked: []
-      })
-
-      this.initMapAndMarker(nextProps.address);
-    // };
+    this.initMapAndMarker(nextProps.address);
   }
 
-  // componentDidUpdate() {
-  //   console.log('did update');
-  //   if (this.props.address) {
-  //     this.initMapAndMarker(this.props.address);
-  //   };
-  // }
+  handleClick(value) {
+    let criteriaClicked = this.state.criteriaClicked;
+    if (criteriaClicked.includes(value)) {
+      criteriaClicked = criteriaClicked.filter(criterion => criterion !== value);
+    } else {
+      criteriaClicked.push(value);
+    }
+    this.setState({ criteriaClicked: criteriaClicked });
+  }
 
-  // componentWillUpdate(nextProps) {
-    // console.log('will update');
-    // if (nextProps.address) {
-    //   this.initMapAndMarker(nextProps.address);
-    // };
-  // }
-
-  initMapAndMarker(address){
+  initMapAndMarker(address) {
     const googleMaps = window.google.maps;
     const MarkerClusterer = window.MarkerClusterer;
-
-    const location = { lat: address.latitude, lng: address.longitude };
+    const criteriaClicked = this.state.criteriaClicked;
+    const location = { lat: address.lat, lng: address.lng };
 
     const map = new googleMaps.Map(document.getElementById('map'), {
       zoom: 15,
       center: location,
-      mapTypeControlOptions: {
-        mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
-          'styled_map']
-      }
+      // mapTypeControlOptions: {
+      //   mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+      //     'styled_map']
+      // }
     });
 
     const marker = new googleMaps.Marker({
@@ -82,125 +73,121 @@ class ScoreMapContainer extends Component {
       radius: 800
     });
 
+    // const styledMapType = new googleMaps.StyledMapType(
+    //   [
+    //     { elementType: 'geometry', stylers: [{ color: '#ebe3cd' }] },
+    //     { elementType: 'labels.text.fill', stylers: [{ color: '#523735' }] },
+    //     { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f1e6' }] },
+    //     {
+    //       featureType: 'administrative',
+    //       elementType: 'geometry.stroke',
+    //       stylers: [{ color: '#c9b2a6' }]
+    //     },
+    //     {
+    //       featureType: 'administrative.land_parcel',
+    //       elementType: 'geometry.stroke',
+    //       stylers: [{ color: '#dcd2be' }]
+    //     },
+    //     {
+    //       featureType: 'administrative.land_parcel',
+    //       elementType: 'labels.text.fill',
+    //       stylers: [{ color: '#ae9e90' }]
+    //     },
+    //     {
+    //       featureType: 'landscape.natural',
+    //       elementType: 'geometry',
+    //       stylers: [{ color: '#dfd2ae' }]
+    //     },
+    //     {
+    //       featureType: 'poi',
+    //       elementType: 'geometry',
+    //       stylers: [{ color: '#dfd2ae' }]
+    //     },
+    //     {
+    //       featureType: 'poi',
+    //       elementType: 'labels.text.fill',
+    //       stylers: [{ color: '#93817c' }]
+    //     },
+    //     {
+    //       featureType: 'poi.park',
+    //       elementType: 'geometry.fill',
+    //       stylers: [{ color: '#a5b076' }]
+    //     },
+    //     {
+    //       featureType: 'poi.park',
+    //       elementType: 'labels.text.fill',
+    //       stylers: [{ color: '#447530' }]
+    //     },
+    //     {
+    //       featureType: 'road',
+    //       elementType: 'geometry',
+    //       stylers: [{ color: '#f5f1e6' }]
+    //     },
+    //     {
+    //       featureType: 'road.arterial',
+    //       elementType: 'geometry',
+    //       stylers: [{ color: '#fdfcf8' }]
+    //     },
+    //     {
+    //       featureType: 'road.highway',
+    //       elementType: 'geometry',
+    //       stylers: [{ color: '#f8c967' }]
+    //     },
+    //     {
+    //       featureType: 'road.highway',
+    //       elementType: 'geometry.stroke',
+    //       stylers: [{ color: '#e9bc62' }]
+    //     },
+    //     {
+    //       featureType: 'road.highway.controlled_access',
+    //       elementType: 'geometry',
+    //       stylers: [{ color: '#e98d58' }]
+    //     },
+    //     {
+    //       featureType: 'road.highway.controlled_access',
+    //       elementType: 'geometry.stroke',
+    //       stylers: [{ color: '#db8555' }]
+    //     },
+    //     {
+    //       featureType: 'road.local',
+    //       elementType: 'labels.text.fill',
+    //       stylers: [{ color: '#806b63' }]
+    //     },
+    //     {
+    //       featureType: 'transit.line',
+    //       elementType: 'geometry',
+    //       stylers: [{ color: '#dfd2ae' }]
+    //     },
+    //     {
+    //       featureType: 'transit.line',
+    //       elementType: 'labels.text.fill',
+    //       stylers: [{ color: '#8f7d77' }]
+    //     },
+    //     {
+    //       featureType: 'transit.line',
+    //       elementType: 'labels.text.stroke',
+    //       stylers: [{ color: '#ebe3cd' }]
+    //     },
+    //     {
+    //       featureType: 'transit.station',
+    //       elementType: 'geometry',
+    //       stylers: [{ color: '#dfd2ae' }]
+    //     },
+    //     {
+    //       featureType: 'water',
+    //       elementType: 'geometry.fill',
+    //       stylers: [{ color: '#b9d3c2' }]
+    //     },
+    //     {
+    //       featureType: 'water',
+    //       elementType: 'labels.text.fill',
+    //       stylers: [{ color: '#92998d' }]
+    //     }
+    //   ],
+    //   { name: 'Styled Map' });
 
-    const styledMapType = new googleMaps.StyledMapType(
-      [
-        { elementType: 'geometry', stylers: [{ color: '#ebe3cd' }] },
-        { elementType: 'labels.text.fill', stylers: [{ color: '#523735' }] },
-        { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f1e6' }] },
-        {
-          featureType: 'administrative',
-          elementType: 'geometry.stroke',
-          stylers: [{ color: '#c9b2a6' }]
-        },
-        {
-          featureType: 'administrative.land_parcel',
-          elementType: 'geometry.stroke',
-          stylers: [{ color: '#dcd2be' }]
-        },
-        {
-          featureType: 'administrative.land_parcel',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#ae9e90' }]
-        },
-        {
-          featureType: 'landscape.natural',
-          elementType: 'geometry',
-          stylers: [{ color: '#dfd2ae' }]
-        },
-        {
-          featureType: 'poi',
-          elementType: 'geometry',
-          stylers: [{ color: '#dfd2ae' }]
-        },
-        {
-          featureType: 'poi',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#93817c' }]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'geometry.fill',
-          stylers: [{ color: '#a5b076' }]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#447530' }]
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry',
-          stylers: [{ color: '#f5f1e6' }]
-        },
-        {
-          featureType: 'road.arterial',
-          elementType: 'geometry',
-          stylers: [{ color: '#fdfcf8' }]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry',
-          stylers: [{ color: '#f8c967' }]
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry.stroke',
-          stylers: [{ color: '#e9bc62' }]
-        },
-        {
-          featureType: 'road.highway.controlled_access',
-          elementType: 'geometry',
-          stylers: [{ color: '#e98d58' }]
-        },
-        {
-          featureType: 'road.highway.controlled_access',
-          elementType: 'geometry.stroke',
-          stylers: [{ color: '#db8555' }]
-        },
-        {
-          featureType: 'road.local',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#806b63' }]
-        },
-        {
-          featureType: 'transit.line',
-          elementType: 'geometry',
-          stylers: [{ color: '#dfd2ae' }]
-        },
-        {
-          featureType: 'transit.line',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#8f7d77' }]
-        },
-        {
-          featureType: 'transit.line',
-          elementType: 'labels.text.stroke',
-          stylers: [{ color: '#ebe3cd' }]
-        },
-        {
-          featureType: 'transit.station',
-          elementType: 'geometry',
-          stylers: [{ color: '#dfd2ae' }]
-        },
-        {
-          featureType: 'water',
-          elementType: 'geometry.fill',
-          stylers: [{ color: '#b9d3c2' }]
-        },
-        {
-          featureType: 'water',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#92998d' }]
-        }
-      ],
-      { name: 'Styled Map' });
-
-
-
-    map.mapTypes.set('styled_map', styledMapType);
-    map.setMapTypeId('styled_map');
-
+    // map.mapTypes.set('styled_map', styledMapType);
+    // map.setMapTypeId('styled_map');
 
     const drawingManager = new googleMaps.drawing.DrawingManager({
       drawingMode: googleMaps.drawing.OverlayType.MARKER,
@@ -215,17 +202,8 @@ class ScoreMapContainer extends Component {
 
     googleMaps.event.addListener(drawingManager, 'polygoncomplete', (polygon) => {
       const area = googleMaps.geometry.spherical.computeArea(polygon.getPath());
-      console.log('polygon complete, area is ', Math.ceil(area), 'suqare meters');
+      console.log('polygon complete, area is ', Math.ceil(area), 'square meters');
       this.setState({ area: Math.ceil(area) });
-    });
-
-    const cityCircle = new googleMaps.Circle({
-      strokeWeight: 0,
-      fillColor: '#87cefa',
-      fillOpacity: 0.25,
-      map: map,
-      center: location,
-      radius: 800
     });
 
     let markersList = [];
@@ -246,16 +224,8 @@ class ScoreMapContainer extends Component {
         if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
         countService(services, label, results);
         results.forEach((place) => {
-          const marker = new googleMaps.Marker({
-            icon: info,
-            position: place.geometry.location
-          });
-          const infowindow = new googleMaps.InfoWindow();
-          googleMaps.event.addListener(marker, 'click', function () {
-            infowindow.setContent(place.name);
-            infowindow.open(map, this);
-          });
-          addNewMarker(marker, true);
+          console.log('going to run filterDistance');
+          filterDistance(place);
         });
         if (pagination.hasNextPage) {
           pagination.nextPage();
@@ -265,13 +235,68 @@ class ScoreMapContainer extends Component {
       markerCluster.redraw();
     }
 
+    const createMarker = (place)=>{
+      const marker = new googleMaps.Marker({
+        icon: info,
+        position: place.geometry.location
+      });
+      const infowindow = new googleMaps.InfoWindow();
+      googleMaps.event.addListener(marker, 'click', function () {
+        infowindow.setContent(place.name);
+        infowindow.open(map, this);
+      });
+      addNewMarker(marker, true);
+
+    };
+
+    const filterDistance = (place)=>{
+      //prepare data&function in search
+      console.log('in filterDistance');
+      
+      const origins = [`${address.lat},${address.lng}`];
+      const destinations = [`${place.geometry.location.lat()},${place.geometry.location.lng()}`];
+      const distanceService = new googleMaps.DistanceMatrixService();
+      const checkDistance = distanceService.__proto__.getDistanceMatrix.bind(distanceService);
+      const request = {
+        origins: origins,
+        destinations: destinations,
+        travelMode: 'WALKING',
+        unitSystem: googleMaps.UnitSystem.METRIC
+      }
+      console.log('request in filterDistance', request);
+      const callback = (response, status) => {
+        if (status === 'OK') {
+          console.log('callback in filterDistance', response);
+          const origins = response.originAddresses;
+          const destinations = response.destinationAddresses;
+
+          for (let i = 0; i < origins.length; i++) {
+            let results = response.rows[i].elements;
+            for (let j = 0; j < results.length; j++) {
+              let element = results[j];
+              let value = element.distance.value;
+              console.log(value);
+              //if distance is qualified, create marker;
+              if (value <= 800){
+                createMarker(place);
+              }
+            }
+          }
+        }
+      }
+      checkDistance(request, callback);
+
+    };
+
     const countService = (services, label, data) => {
       if (services[label]) {
         services[label] += data.length;
+        // this.props.setMapData({ services });
         this.setState({ services });
         return;
       }
       services[label] = data.length;
+      // this.props.setMapData({ services });
       this.setState({ services });
     }
 
@@ -283,7 +308,7 @@ class ScoreMapContainer extends Component {
       };
       const callback = (results, status) => {
         if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
-        countService(services, label, results);
+        // countService(services, label, results);
         results.forEach((place) => {
           const marker = new googleMaps.Marker({
             map: map,
@@ -296,73 +321,54 @@ class ScoreMapContainer extends Component {
             infowindow.open(map, this);
           });
         });
+        const scoreTable = { 'transit_stops': results.length };
+        // this.props.setMapData({ scoreTable })
 
       };
       service.nearbySearch(request, callback);
     }
 
-    showTransit(['transit_station'], 'Intersections');
-
-    // // Food Retail:
-    // // Supermarket;
-    showService(['supermarket'], 'Supermarket');
-    // // Grocery with produce section;
-
-    // // // Community - Serving Retail:
-    // // // Clothing store or department store selling clothes;
-    showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
-    // // // Convenience Store;
-    showService(['convenience_store'], 'Convenience Store');
-    // // // Farmers Market;
-    // // // Hardware Store;
-    showService(['hardware_store'], 'Hardware Store');
-    // // // Pharmacy;
-    showService(['pharmacy'], 'Pharmacy');
-    // // // Other Retail;
-
-    // // // Services:
-    // // // Bank;
-    showService(['bank'], 'Bank');
-    // // // Gym, health club, exercise studio;
-    showService(['gym'], 'Gym, health club, exercise studio');
-    // // // Hair care;
-    showService(['hair_care'], 'Hair care');
-    // // // Laundry, dry cleaner;
-    showService(['laundry'], 'Laundry/dry cleaner');
-    // // // Restaurant, café, diner(excluding those with only drive - thru service);
-    showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
-
-    // // //Civic and Community Facilities
-    // // //Adult or senior care(licensed)
-    // // //Child care(licensed)
-    // // //Community or recreation center
-    // // //Cultural arts facility(museum, performing arts)
-    showService(['art_gallery', 'museum'], 'Cultural arts facility');
-    // // //Education facility(e.g.K - 12 school, university, adult education center, vocational school, community college)
-    showService(['school'], 'Education facility');
-    // // //Family entertainment venue(e.g.theater, sports)
-    showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
-    // // //Government office that serves public on-site
-    showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
-    // // // Medical clinic or office that treats patients
-    showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
-    // // // Place of worship
-    showService(['church'], 'Place of worship');
-    // // // Police or fire station
-    showService(['police', 'fire_station'], 'Police or fire station');
-    // // // Post office
-    showService(['post_office'], 'Post office');
-    // // // Public library
-    showService(['library'], 'Public library');
-    // // // Public park
-    showService(['park'], 'Public park');
-    // // // Social services center
-
-
-
+    // if (criteriaClicked.includes('access_to_transit')) {
+      showTransit(['transit_station'], 'Intersections');
+    // }
+    
+    // // TODO: Food Retail
+    // // TODO: Grocery with produce section
+    // // TODO: Community - Serving Retail
+    // // TODO: Farmers Market
+    // // TODO: Other Retail
+    // // TODO: Services
+    // // TODO: Civic and Community Facilities
+    // // TODO: Adult or senior care(licensed)
+    // // TODO: Child care(licensed)
+    // // TODO: Community or recreation center
+    // // TODO: Social services center
+    
+    // if (criteriaClicked.includes('community_resources')) {
+      showService(['supermarket'], 'Supermarket');
+    //   showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
+      showService(['convenience_store'], 'Convenience Store');
+    //   showService(['hardware_store'], 'Hardware Store');
+    //   showService(['pharmacy'], 'Pharmacy');
+    //   showService(['bank'], 'Bank');
+    //   showService(['gym'], 'Gym, health club, exercise studio');
+    //   showService(['hair_care'], 'Hair care');
+    //   showService(['laundry'], 'Laundry/dry cleaner');
+    //   showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
+    //   showService(['art_gallery', 'museum'], 'Cultural arts facility');
+    //   showService(['school'], 'Education facility');
+    //   showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
+    //   showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
+    //   showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
+    //   showService(['church'], 'Place of worship');
+    //   showService(['police', 'fire_station'], 'Police or fire station');
+    //   showService(['post_office'], 'Post office');
+    //   showService(['library'], 'Public library');
+    //   showService(['park'], 'Public park');
+    // }
 
     // get all ways around a certain address
-    if (this.state.criteriaClicked.includes('street_network')) {
+    if (criteriaClicked.includes('street_network')) {
       axios.get(`http://overpass-api.de/api/interpreter?[out:json];way(around:400,${address.lat},${address.lng});out;`)
         .then(results => {
           results = results.data.elements.filter(element => {
@@ -373,7 +379,7 @@ class ScoreMapContainer extends Component {
               element.tags.highway !== 'cycleway' &&
               element.tags.highway !== 'footway'
           })
-          return results;
+          return results;criteriaClicked.includes('street_network')
         })
         // remove duplicate nodes within a certain way
         // to prep data for the next step
@@ -421,12 +427,12 @@ class ScoreMapContainer extends Component {
               intersections = results.data.elements.filter(element => {
                 return nodes.indexOf(element.id.toString()) !== -1;
               });
-              console.log(intersections);
+              // console.log(intersections);
               return intersections;
             })
             .then(intersections => {
               intersections.forEach(intersection => {
-                console.log(typeof intersection.lat);
+                // console.log(typeof intersection.lat);
                 const intersectionMarker = new googleMaps.Marker({
                   map: map,
                   icon: crossroads,
@@ -439,56 +445,19 @@ class ScoreMapContainer extends Component {
 
   }
 
-  handleTableClick(value) {
-    let criteriaClicked = this.state.criteriaClicked;
-    if (criteriaClicked.includes(value)) {
-      criteriaClicked = criteriaClicked.filter(criterion => criterion !== value);
-    } else {
-      criteriaClicked.push(value);
-    }
-    this.setState({ criteriaClicked: criteriaClicked });
-  }
-
   render() {
-    if (this.props.address) {
-      return (
-        <div className="container mt-2">
-          <div className="row">
-            <div className="col-8 pl-0">
-              <div id='map' style={{ height: `600px`, width: `100%` }} />
-            </div>
-            <div id="tableDiv" className="col-4 pr-0">
-              <ScoreTable handleTableClick={this.handleTableClick} />
-            </div>
+    return (
+      <div className="container mt-2">
+        <div className="row">
+          <div className="col-8 pl-0">
+            <div id='map' style={{ height: `600px`, width: `100%` }} />
+          </div>
+          <div id="tableDiv" className="col-4 pr-0">
+            <ScoreTable handleClick={this.handleClick} />
           </div>
         </div>
-        );
-    } else {
-      return (<Home location={this.props.location} autocomplete={this.props.autocomplete} handleSearch={this.props.handleSearch} />
-        // <main style={{ backgroundImage: `url(${backgroundImg})` }}>
-        //   <h1 className="title text-center">Follow My LEED</h1>
-        //   <form onSubmit={this.handleSubmit}>
-        //     <div className="input-group input-group-lg">
-        //       <div className="input-group-prepend">
-        //         <span className="input-group-text" id="inputGroup-sizing-lg">Location</span>
-        //       </div>
-        //       <input name="location"
-        //         id="searchTextField"
-        //         type="text"
-        //         className="form-control"
-        //         aria-label="Large"
-        //         aria-describedby="inputGroup-sizing-sm"
-        //         value={this.state.value}
-        //         onChange={this.handleChange} />
-        //     </div>
-        //     {/* <hr className="my-4" /> */}
-        //     <button type="submit" className="btn btn-primary">Go!</button>
-        //   </form>
-        // </main>
+      </div>
       );
-    }
   }
 
 }
-
-export default ScoreMapContainer;
