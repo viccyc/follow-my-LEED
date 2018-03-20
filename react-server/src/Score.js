@@ -14,10 +14,11 @@ export default class Score extends Component {
     this.state = {
       services: {},
       area: null,
-      criteriaClicked: [],
-      streetNetwork: null,
-      communityResources: null,
-      transitStops: null
+      streetNetwork: null, // count
+      communityResources: null, // count
+      transitStops: null, // count
+      showMarkers: null,
+      hideMarkers: null
     },
     // console.log('initializing MapContainer constructor');
     this.handleClick = this.handleClick.bind(this);
@@ -27,14 +28,18 @@ export default class Score extends Component {
   componentDidMount() {
     // console.log('in MapContainer componentDidMount');
     if (this.props.address) {
-      this.initMapAndMarker(this.props.address);
+      // this.initMapAndMarker(this.props.address);
+      const { showMarkers, hideMarkers} = this.initMapAndMarker(this.props.address);
+      this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
     };
   }
 
   componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
     // if (this.props.address !== nextProps.address) {
-    this.initMapAndMarker(nextProps.address);
+    // this.initMapAndMarker(nextProps.address);
+    const { showMarkers, hideMarkers} = this.initMapAndMarker(this.props.address);
+    this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
   }
 
   handleClick(value) {
@@ -50,7 +55,6 @@ export default class Score extends Component {
   initMapAndMarker(address) {
     const googleMaps = window.google.maps;
     const MarkerClusterer = window.MarkerClusterer;
-    const criteriaClicked = this.state.criteriaClicked;
     const location = { lat: address.lat, lng: address.lng };
 
     const map = new googleMaps.Map(document.getElementById('map'), {
@@ -334,7 +338,7 @@ export default class Score extends Component {
     }
     
     showTransit(['transit_station'], 'Intersections');
-    console.log('transitStopMarkers', transitStopMarkers);
+    // console.log('transitStopMarkers', transitStopMarkers);
     
     // // TODO: Food Retail
     // // TODO: Grocery with produce section
@@ -383,7 +387,7 @@ export default class Score extends Component {
             element.tags.highway !== 'cycleway' &&
             element.tags.highway !== 'footway'
         })
-        return results;criteriaClicked.includes('street_network')
+        return results;
       })
       // remove duplicate nodes within a certain way
       // to prep data for the next step
@@ -447,7 +451,26 @@ export default class Score extends Component {
             this.setState({ streetNetwork: intersections.length });
           })
       })
-      console.log('intersectionMarkers', intersectionMarkers);
+    // console.log('intersectionMarkers', intersectionMarkers);
+
+    return {
+      showMarkers: (targetArray) => {
+        if (targetArray === 'street_network'){
+          console.log('in showMarkers ', targetArray)
+          intersectionMarkers.forEach((marker) => {
+            marker.setMap(map);
+          });
+        }
+      },
+      hideMarkers: (targetArray) => {
+        if (targetArray === 'street_network') {
+          console.log('in hideMarkers ', targetArray)
+          intersectionMarkers.forEach((marker) => {
+            marker.setMap(null);
+          });
+        }
+      }
+    }
   }
 
   render() {
@@ -458,7 +481,7 @@ export default class Score extends Component {
             <div id='map' style={{ height: `600px`, width: `100%` }} />
           </div>
           <div id="tableDiv" className="col-4 pr-0">
-            <ScoreTable handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} />
+            <ScoreTable criteriaClicked={this.state.criteriaClicked} handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} />
           </div>
         </div>
       </div>
