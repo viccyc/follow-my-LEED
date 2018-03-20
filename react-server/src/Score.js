@@ -304,7 +304,7 @@ export default class Score extends Component {
       this.setState({ services, communityResources });
     }
 
-    let TransitStopMarkers = [];
+    let transitStopMarkers = [];
     const showTransit = (type, label) => {
       const request = {
         location: location,
@@ -325,7 +325,7 @@ export default class Score extends Component {
             infowindow.setContent(place.name);
             infowindow.open(map, this);
           });
-          TransitStopMarkers.push(marker);
+          transitStopMarkers.push(marker);
         });
         this.setState({ transitStops: results.length });
 
@@ -334,7 +334,7 @@ export default class Score extends Component {
     }
     
     showTransit(['transit_station'], 'Intersections');
-    console.log('TransitStopMarkers', TransitStopMarkers);
+    console.log('transitStopMarkers', transitStopMarkers);
     
     // // TODO: Food Retail
     // // TODO: Grocery with produce section
