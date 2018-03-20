@@ -88,10 +88,6 @@ export default class Projects extends Component {
   }
 
   render() {
-    if (this.props.state.address) {
-      return (<div id='map' style={{ height: `600px`, width: `100%` }} />);
-    } else {
-      return (<Home location={this.props.location} autocomplete={this.props.autocomplete} handleSearch={this.props.handleSearch} />);
-    }
+    return (<div id='map' style={{ height: `600px`, width: `100%` }} />);
   };
 }
