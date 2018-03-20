@@ -18,55 +18,27 @@ class App extends Component {
     this.state = {
       address: null,
       redirect: false,
-      // services: {},
-      // scoreTable: {
-      //   'street_network': null,
-      //   'community_resources': null,
-      //   'access_to_transit': null
-      // },
-      // area: null,
-      // criteriaClicked: []
     };
     this.handleSearch = this.handleSearch.bind(this);
-    // this.handleScoreTableClick = this.handleScoreTableClick.bind(this);
-    // this.setMapData = this.setMapData.bind(this);
   }
             
   handleSearch(address, pathname) {
     if (pathname === '/') {
-      // this.props.history.push({
-      //   pathname: "/find_score",
-      //   search: "?address=",
-      //   state: { address: address }
-      // });
-      this.setState({ address: address, redirect: true });
+      this.setState({ address: address });
+      this.props.history.push({
+        pathname: "/find_score",
+        search: `?address=${address.name}`,
+        // state: { address: address }
+      });
     } else {
       this.setState({ address: address });
+      this.props.history.push({
+        pathname: pathname,
+        search: `?address=${address.name}`,
+        // state: { address: address }
+      });
     }
   }
-
-  // handleScoreTableClick(value) {
-  //   let criteriaClicked = this.state.criteriaClicked;
-  //   if (criteriaClicked.includes(value)) {
-  //     criteriaClicked = criteriaClicked.filter(criterion => criterion !== value);
-  //   } else {
-  //     criteriaClicked.push(value);
-  //   }
-  //   this.setState({ criteriaClicked: criteriaClicked });
-  // }
-
-  // setMapData(newState) {
-  //   this.setState(newState);
-  // }
-
-  // setScoreTableData(data) {
-  //   const oldScoreTable = this.state.scoreTable;
-  //   // const keys = Object.keys(oldScoreTable);
-  //   for (let keys in oldScoreTable){
-  //     if (keys === 
-  //   }
-  //   this.state.scoreTable[]
-  // }
 
   render() {
     if (this.state.redirect) {
