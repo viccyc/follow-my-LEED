@@ -38,7 +38,7 @@ export default class Score extends Component {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
     // if (this.props.address !== nextProps.address) {
     // this.initMapAndMarker(nextProps.address);
-    const { showMarkers, hideMarkers} = this.initMapAndMarker(this.props.address);
+    const { showMarkers, hideMarkers} = this.initMapAndMarker(nextProps.address);
     this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
   }
 
@@ -215,10 +215,13 @@ export default class Score extends Component {
 
     let markersList = [];
     let services = this.state.services;
-    const markerCluster = new MarkerClusterer(map, markersList,
+    const markerCluster = new MarkerClusterer(map, markersList, { ignoreHidden: false },
       { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' }
     );
     const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
+    const setMarkerMap = MarkerClusterer.prototype.setMap.bind(markerCluster);
+    console.log('markerCluster ', markerCluster);
+    console.log('setMarkerMap ', setMarkerMap);
     const service = new googleMaps.places.PlacesService(map);
 
     const showService = (type, label) => {
@@ -239,7 +242,7 @@ export default class Score extends Component {
         };
       }
       service.nearbySearch(request, callback);
-      markerCluster.redraw();
+      // markerCluster.redraw();
     }
 
     const createMarker = (place)=>{
@@ -252,7 +255,7 @@ export default class Score extends Component {
         infowindow.setContent(place.name);
         infowindow.open(map, this);
       });
-      addNewMarker(marker, true);
+      addNewMarker(marker);
 
     };
 
@@ -455,19 +458,58 @@ export default class Score extends Component {
 
     return {
       showMarkers: (targetArray) => {
-        if (targetArray === 'street_network'){
-          console.log('in showMarkers ', targetArray)
-          intersectionMarkers.forEach((marker) => {
-            marker.setMap(map);
-          });
+        switch (targetArray) {
+          case 'street_network':
+            // console.log('in showMarkers ', targetArray)
+            intersectionMarkers.forEach((marker) => {
+              marker.setMap(map);
+            });
+            break;
+          case 'community_resources':
+            // console.log('in showMarkers ', markersList);
+            console.log('in showMarkers markerCluster.getMarkers()', markerCluster.getMarkers());
+            // console.log('in showMarkers markerCluster', markerCluster);
+            // markerCluster.setMap(map);
+            // markersList.forEach((marker) => {
+            //   marker.setMap(map);
+            // });
+            // markerCluster.getMarkers().setVisible(true);
+            // markerCluster.repaint();
+            
+            
+            break;
+          case 'transit_stops':
+            transitStopMarkers.forEach((marker) => {
+              marker.setMap(map);
+            });
+            break;
+          default: break;
         }
       },
       hideMarkers: (targetArray) => {
-        if (targetArray === 'street_network') {
-          console.log('in hideMarkers ', targetArray)
-          intersectionMarkers.forEach((marker) => {
-            marker.setMap(null);
-          });
+        switch (targetArray) {
+          case 'street_network':
+            // console.log('in showMarkers ', targetArray)
+            intersectionMarkers.forEach((marker) => {
+              marker.setMap(null);
+            });
+            break;
+          case 'community_resources':
+            // console.log('in showMarkers markersList', markersList);
+            console.log('in showMarkers markerCluster.getMarkers()', markerCluster.getMarkers());
+            // console.log('in showMarkers markerCluster', markerCluster);
+            // markerCluster.setMap(null);
+            // markersList.forEach((marker) => {
+            //   marker.setMap(null);
+            // });
+            // markerCluster.getMarkers().setVisible(false);
+            break;
+          case 'transit_stops':
+            transitStopMarkers.forEach((marker) => {
+              marker.setMap(null);
+            });
+            break;
+          default: break;
         }
       }
     }

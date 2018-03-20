@@ -72,12 +72,12 @@ class ScoreTable extends Component {
           <tr>
             <td>Community Resources</td>
             <td>{this.props.communityResources}</td>
-            {/* <td>{toggleButton('community_resources')}</td> */}
+            <td>{toggleButton('community_resources')}</td>
           </tr>
           <tr>
             <td>Transit Stops</td>
             <td>{this.props.transitStops}</td>
-            {/* <td>{toggleButton('transit_stops')}</td> */}
+            <td>{toggleButton('transit_stops')}</td>
           </tr>
           <tr>
             <td>Total</td>
