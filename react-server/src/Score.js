@@ -23,7 +23,8 @@ class ScoreMapContainer extends Component {
   componentDidMount() {
     console.log('in MapContainer componentDidMount');
     if (this.props.address) {
-      this.initMapAndMarker(this.props.address);
+      const showMarkers = this.initMapAndMarker(this.props.address);
+      this.setState({ showMarkers});
     };
   }
 
@@ -228,7 +229,8 @@ class ScoreMapContainer extends Component {
       radius: 800
     });
 
-    let markersList = [];
+
+    let markersList = [marker];
     let services = this.state.services;
     const markerCluster = new MarkerClusterer(map, markersList,
       { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' }
@@ -476,6 +478,13 @@ class ScoreMapContainer extends Component {
             })
         })
     }
+
+    const markers = [marker];
+    return (map, markers) => {
+      markers.forEach((marker) => {
+        marker.setMap(map);
+      });
+    };
 
   }
 
