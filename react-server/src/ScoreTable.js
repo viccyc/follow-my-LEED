@@ -3,22 +3,42 @@ import React, { Component } from 'react';
 class ScoreTable extends Component {
   constructor(props) {
     super(props);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleShowClick = this.handleShowClick.bind(this);
+    this.handleHideClick = this.handleHideClick.bind(this);
+
   }
 
-  // handleClick(event) {
-  //   this.props.handleClick(event.currentTarget.value);
-  // }
+  handleShowClick(event) {
+    event.preventDefault();
+    console.log('in handleShowClick', event.target.value, this.props.showMarkers);
+    this.props.showMarkers(event.target.value);
+  }
+
+  handleHideClick(event) {
+    event.preventDefault();
+    console.log('in handleHideClick', event.target.value, this.props.hideMarkers);
+    this.props.hideMarkers(event.target.value);
+  }
 
   render() {
     const transitStops = this.props.transitStops;
+    // const toggleButton = (value) => {
+    // //   if (criteriaClicked && criteriaClicked.includes(value)) {
+    //     return (<button type="button" className="btn btn-light" onClick={this.props.showMarkers} >Show</button>)
+    // //   } else {
+    //   return (<button type="button" className="btn btn-light" onClick={this.props.hideMarkers} >Hide</button>)
+    // //   }
+    // }
     const toggleButton = (value) => {
-    //   if (criteriaClicked && criteriaClicked.includes(value)) {
-        return (<button type="button" className="btn btn-light" onClick={this.props.showMarkers} >Hide</button>)
-    //   } else {
-    //     return (<button type="button" className="btn btn-light" onClick={this.props.clearMarkers(value)} >Show</button>)
-    //   }
+      return (
+        <div>
+          <button type="button" className="btn btn-light" value={value} onClick={this.handleShowClick} >Show</button>
+          <button type="button" className="btn btn-light" value={value} onClick={this.handleHideClick} >Hide</button>
+      </div>)
+
     }
+
+
     return (
       <table id="scoreTable" className="table table-bordered">
         <thead>

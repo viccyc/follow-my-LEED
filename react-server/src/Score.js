@@ -4,7 +4,9 @@ import React, { Component } from 'react';
 import Home from './Home';
 import ScoreTable from './ScoreTable';
 
-import crossroads from './images/crossroads.png';
+import intersectionIcon from './images/intersection.png';
+import transportation from './images/transportation.png';
+
 import info from './images/info.png';
 
 export default class Score extends Component {
@@ -17,8 +19,7 @@ export default class Score extends Component {
       criteriaClicked: [],
       streetNetwork: null,
       communityResources: null,
-      transitStops: null,
-      showMarkers: null,
+      transitStops: null
     },
     // console.log('initializing MapContainer constructor');
     this.handleClick = this.handleClick.bind(this);
@@ -28,8 +29,8 @@ export default class Score extends Component {
   componentDidMount() {
     // console.log('in MapContainer componentDidMount');
     if (this.props.address) {
-      const showMarkers = this.initMapAndMarker(this.props.address);
-      this.setState({ showMarkers: showMarkers});
+      const { showMarkers, hideMarkers} = this.initMapAndMarker(this.props.address);
+      this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
     };
   }
 
@@ -66,7 +67,7 @@ export default class Score extends Component {
 
     const marker = new googleMaps.Marker({
       position: location,
-      // map: map,
+      map: map,
     });
 
     const circle = new googleMaps.Circle({
@@ -250,14 +251,13 @@ export default class Score extends Component {
         infowindow.setContent(place.name);
         infowindow.open(map, this);
       });
-      addNewMarker(marker, true);
+      // addNewMarker(marker, true);
+      addNewMarker(marker);
 
     };
 
     const filterDistance = (place)=>{
       //prepare data&function in search
-      console.log('in filterDistance');
-
       const origins = [`${address.lat},${address.lng}`];
       const destinations = [`${place.geometry.location.lat()},${place.geometry.location.lng()}`];
       const distanceService = new googleMaps.DistanceMatrixService();
@@ -268,10 +268,8 @@ export default class Score extends Component {
         travelMode: 'WALKING',
         unitSystem: googleMaps.UnitSystem.METRIC
       }
-      console.log('request in filterDistance', request);
       const callback = (response, status) => {
         if (status === 'OK') {
-          console.log('callback in filterDistance', response);
           const origins = response.originAddresses;
           const destinations = response.destinationAddresses;
 
@@ -280,7 +278,6 @@ export default class Score extends Component {
             for (let j = 0; j < results.length; j++) {
               let element = results[j];
               let value = element.distance.value;
-              console.log(value);
               //if distance is qualified, create marker;
               if (value <= 800){
                 createMarker(place);
@@ -306,6 +303,7 @@ export default class Score extends Component {
       this.setState({ services, communityResources });
     }
 
+    let transitStopMarkers = [];
     const showTransit = (type, label) => {
       const request = {
         location: location,
@@ -317,8 +315,8 @@ export default class Score extends Component {
         // countService(services, label, results);
         results.forEach((place) => {
           const marker = new googleMaps.Marker({
-            map: map,
-            icon: crossroads,
+            // map: map,
+            icon: transportation,
             position: place.geometry.location
           });
           const infowindow = new googleMaps.InfoWindow();
@@ -326,6 +324,7 @@ export default class Score extends Component {
             infowindow.setContent(place.name);
             infowindow.open(map, this);
           });
+          transitStopMarkers.push(marker);
         });
         this.setState({ transitStops: results.length });
 
@@ -333,9 +332,8 @@ export default class Score extends Component {
       service.nearbySearch(request, callback);
     }
 
-    // if (criteriaClicked.includes('access_to_transit')) {
-      showTransit(['transit_station'], 'Intersections');
-    // }
+    showTransit(['transit_station'], 'Intersections');
+    console.log('transitStopMarkers', transitStopMarkers);
 
     // // TODO: Food Retail
     // // TODO: Grocery with produce section
@@ -373,6 +371,7 @@ export default class Score extends Component {
     // }
 
     // get all ways around a certain address
+    let intersectionMarkers = [];
     axios.get(`http://overpass-api.de/api/interpreter?[out:json];way(around:400,${address.lat},${address.lng});out;`)
       .then(results => {
         results = results.data.elements.filter(element => {
@@ -438,21 +437,42 @@ export default class Score extends Component {
             intersections.forEach(intersection => {
               // console.log(typeof intersection.lat);
               const intersectionMarker = new googleMaps.Marker({
-                map: map,
-                icon: crossroads,
+                // map: map,
+                icon: intersectionIcon,
                 position: { lat: intersection.lat, lng: intersection.lon }
               });
+              intersectionMarkers.push(intersectionMarker);
             })
             this.setState({ streetNetwork: intersections.length });
           })
       })
 
-    const markers = [marker];
-    return () => {
-      markers.forEach((marker) => {
-        marker.setMap(map);
-      });
-    };
+    console.log('intersectionMarkers', intersectionMarkers);
+    //intersectionMarkers -tested
+    //transitStopMarkers - tested
+    // return () => {
+    //     intersectionMarkers.forEach((marker) => {
+    //       marker.setMap(map);
+    //     });
+    // };
+      return {
+        showMarkers: (targetArray) => {
+          if (targetArray === 'street_network'){
+            console.log('in showMarkers ', targetArray)
+            intersectionMarkers.forEach((marker) => {
+              marker.setMap(map);
+            });
+          }
+        },
+        hideMarkers: (targetArray) => {
+          if (targetArray === 'street_network') {
+            console.log('in hideMarkers ', targetArray)
+            intersectionMarkers.forEach((marker) => {
+              marker.setMap(null);
+            });
+          }
+        }
+      }
 
   }
 
@@ -464,7 +484,7 @@ export default class Score extends Component {
             <div id='map' style={{ height: `600px`, width: `100%` }} />
           </div>
           <div id="tableDiv" className="col-4 pr-0">
-            <ScoreTable showMarkers={this.state.showMarkers} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} />
+            <ScoreTable showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} />
           </div>
         </div>
       </div>
