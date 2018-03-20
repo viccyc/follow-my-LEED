@@ -8,7 +8,6 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
       autocomplete: null,
       title: {
         '/': 'FOLLOW MY LEED',
@@ -16,15 +15,12 @@ export default class Home extends Component {
         '/projects': 'SHOW LEED PROJECTS'
       },
       focus: false,
-      // place: null,
       submitButton: true
     };
     this.blurHandler = this.blurHandler.bind(this);
     this.focusHandler = this.focusHandler.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.initAutocomplete = this.initAutocomplete.bind(this);
-    // this.clickHandler = this.clickHandler.bind(this);
   }
 
   componentDidMount() {
@@ -32,20 +28,11 @@ export default class Home extends Component {
   }
 
   blurHandler() {
-
-    // window.google.maps.event.addListener(this.state.autocomplete, 'place_changed', function () {
-    //   var place = this.state.autocomplete.getPlace();
-    //   console.log(place);
-    // });
     this.setState({ focus: false });
   }
 
   focusHandler() {
     this.setState({ focus: true });
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
   }
 
   handleSubmit(event) {
@@ -58,10 +45,7 @@ export default class Home extends Component {
       lat: parseFloat(place.geometry.location.lat().toFixed(7)),
       lng: parseFloat(place.geometry.location.lng().toFixed(7))
     };
-    console.log(this.props.location.pathname);
-    // const pathname = this.props.location.pathname;
     this.props.handleSearch(address, this.props.location.pathname);
-    this.state.value = '';
   }
 
   initAutocomplete() {
@@ -72,19 +56,14 @@ export default class Home extends Component {
       navigator.geolocation.getCurrentPosition(function(position) {
         const circle = new googleMaps.Circle({
           center: {
-            lat: position.coords.lat,
-            lng: position.coords.lng
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
           },
           radius: position.coords.accuracy
         });
         autocomplete.setBounds(circle.getBounds());
       });
     }
-  
-  // let place; 
-  // googleMaps.event.addListener(autocomplete, 'place_changed', () => {
-  //   place = this.state.autocomplete.getPlace();
-  // });
 
     this.setState({ autocomplete: autocomplete });
   }
@@ -96,20 +75,6 @@ export default class Home extends Component {
   // }
 
   render() {
-    // console.log('in home page, state.location.address is ', this.state.location.address);
-    //when submit is clicked and state is reset, trigger rerender the page and redirect to target page
-    // if (this.state.location.address){
-    //   // console.log('in redirect if statement from home page', this.state.action);
-    //   return <Redirect to={{
-    //     pathname: this.state.action,
-    //     state: {
-    //       data: {
-    //       location: this.state.location
-    //       }
-    //     }
-    //   }} />
-    // }
-    // const pathname = this.props.location.pathname;
     const flashMessage = () => {
       if (this.state.focus) {
         return (
@@ -120,10 +85,8 @@ export default class Home extends Component {
       }
     };
     return (
-      <main style={{ backgroundImage: `url(${backgroundImg})` }}>
-        <h1 className="title text-center">{this.state.title.pathname}</h1>
-        <h1 className="title text-center">hello</h1>
-        {flashMessage()}
+      <main id="mainPhoto" style={{ backgroundImage: `url(${backgroundImg})` }}>
+        <h1 id="mainTitle" className="title text-center">{this.state.title[this.props.location.pathname]}</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="input-group input-group-lg">
             <div className="input-group-prepend">
@@ -138,12 +101,11 @@ export default class Home extends Component {
               placeholder='Enter a location'
               onFocus={this.focusHandler}
               onBlur={this.blurHandler}
-              value={this.state.value} 
               onChange={this.handleChange} />
            <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
           </div>
-          {/* <hr className="my-4" /> */}
         </form>
+        {flashMessage()}
       </main>
     );
   }
