@@ -16,10 +16,11 @@ export default class Score extends Component {
     this.state = {
       services: {},
       area: null,
-      criteriaClicked: [],
-      streetNetwork: null,
-      communityResources: null,
-      transitStops: null
+      streetNetwork: null, // count
+      communityResources: null, // count
+      transitStops: null, // count
+      showMarkers: null,
+      hideMarkers: null
     },
     // console.log('initializing MapContainer constructor');
     this.handleClick = this.handleClick.bind(this);
@@ -29,6 +30,7 @@ export default class Score extends Component {
   componentDidMount() {
     // console.log('in MapContainer componentDidMount');
     if (this.props.address) {
+      // this.initMapAndMarker(this.props.address);
       const { showMarkers, hideMarkers} = this.initMapAndMarker(this.props.address);
       this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
     };
@@ -37,7 +39,9 @@ export default class Score extends Component {
   componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
     // if (this.props.address !== nextProps.address) {
-    this.initMapAndMarker(nextProps.address);
+    // this.initMapAndMarker(nextProps.address);
+    const { showMarkers, hideMarkers} = this.initMapAndMarker(nextProps.address);
+    this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
   }
 
   handleClick(value) {
@@ -53,7 +57,6 @@ export default class Score extends Component {
   initMapAndMarker(address) {
     const googleMaps = window.google.maps;
     const MarkerClusterer = window.MarkerClusterer;
-    const criteriaClicked = this.state.criteriaClicked;
     const location = { lat: address.lat, lng: address.lng };
 
     const map = new googleMaps.Map(document.getElementById('map'), {
@@ -214,10 +217,13 @@ export default class Score extends Component {
 
     let markersList = [];
     let services = this.state.services;
-    const markerCluster = new MarkerClusterer(map, markersList,
+    const markerCluster = new MarkerClusterer(map, markersList, { ignoreHidden: false },
       { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' }
     );
     const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
+    const setMarkerMap = MarkerClusterer.prototype.setMap.bind(markerCluster);
+    console.log('markerCluster ', markerCluster);
+    console.log('setMarkerMap ', setMarkerMap);
     const service = new googleMaps.places.PlacesService(map);
 
     const showService = (type, label) => {
@@ -238,7 +244,7 @@ export default class Score extends Component {
         };
       }
       service.nearbySearch(request, callback);
-      markerCluster.redraw();
+      // markerCluster.redraw();
     }
 
     const createMarker = (place)=>{
@@ -382,7 +388,7 @@ export default class Score extends Component {
             element.tags.highway !== 'cycleway' &&
             element.tags.highway !== 'footway'
         })
-        return results;criteriaClicked.includes('street_network')
+        return results;
       })
       // remove duplicate nodes within a certain way
       // to prep data for the next step
@@ -446,34 +452,65 @@ export default class Score extends Component {
             this.setState({ streetNetwork: intersections.length });
           })
       })
+    // console.log('intersectionMarkers', intersectionMarkers);
 
-    console.log('intersectionMarkers', intersectionMarkers);
-    //intersectionMarkers -tested
-    //transitStopMarkers - tested
-    // return () => {
-    //     intersectionMarkers.forEach((marker) => {
-    //       marker.setMap(map);
-    //     });
-    // };
-      return {
-        showMarkers: (targetArray) => {
-          if (targetArray === 'street_network'){
-            console.log('in showMarkers ', targetArray)
+    return {
+      showMarkers: (targetArray) => {
+        switch (targetArray) {
+          case 'street_network':
+            // console.log('in showMarkers ', targetArray)
             intersectionMarkers.forEach((marker) => {
               marker.setMap(map);
             });
-          }
-        },
-        hideMarkers: (targetArray) => {
-          if (targetArray === 'street_network') {
-            console.log('in hideMarkers ', targetArray)
+            break;
+          case 'community_resources':
+            // console.log('in showMarkers ', markersList);
+            console.log('in showMarkers markerCluster.getMarkers()', markerCluster.getMarkers());
+            // console.log('in showMarkers markerCluster', markerCluster);
+            // markerCluster.setMap(map);
+            // markersList.forEach((marker) => {
+            //   marker.setMap(map);
+            // });
+            // markerCluster.getMarkers().setVisible(true);
+            // markerCluster.repaint();
+
+
+            break;
+          case 'transit_stops':
+            transitStopMarkers.forEach((marker) => {
+              marker.setMap(map);
+            });
+            break;
+          default: break;
+        }
+      },
+      hideMarkers: (targetArray) => {
+        switch (targetArray) {
+          case 'street_network':
+            // console.log('in showMarkers ', targetArray)
             intersectionMarkers.forEach((marker) => {
               marker.setMap(null);
             });
-          }
+            break;
+          case 'community_resources':
+            // console.log('in showMarkers markersList', markersList);
+            console.log('in showMarkers markerCluster.getMarkers()', markerCluster.getMarkers());
+            // console.log('in showMarkers markerCluster', markerCluster);
+            // markerCluster.setMap(null);
+            // markersList.forEach((marker) => {
+            //   marker.setMap(null);
+            // });
+            // markerCluster.getMarkers().setVisible(false);
+            break;
+          case 'transit_stops':
+            transitStopMarkers.forEach((marker) => {
+              marker.setMap(null);
+            });
+            break;
+          default: break;
         }
       }
-
+    }
   }
 
   render() {
@@ -484,7 +521,7 @@ export default class Score extends Component {
             <div id='map' style={{ height: `600px`, width: `100%` }} />
           </div>
           <div id="tableDiv" className="col-4 pr-0">
-            <ScoreTable showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} />
+            <ScoreTable criteriaClicked={this.state.criteriaClicked} handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} />
           </div>
         </div>
       </div>

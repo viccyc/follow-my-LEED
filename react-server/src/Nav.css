@@ -26,10 +26,14 @@
 }
 
 #tableDiv {
-  background-color: #eae7e7;
+  background-color: #f2efef;
   padding-left: 0px;
 }
 
 #scoreTable {
-  background-color: #bfc3bf;
+  background-color: #e7eae7;
+}
+
+#tableCell {
+  padding: 10px
 }
