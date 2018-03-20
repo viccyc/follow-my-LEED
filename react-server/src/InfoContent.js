@@ -1,4 +1,4 @@
-// import leedCgbc from './images/leedCgbc.png';
+import leedCgbc from './images/leedCgbc.png';
 import './InfoContent.css';
 const moment = window.moment;
 const googleMaps = window.google.maps;
@@ -21,11 +21,14 @@ const certLevel = {
   4: 'LEED Platinum'
 };
 
+// can't get this imported image to work??
+// <tr><img src={leedCgbc} class="image" height=150 width=450 />
+
 const createInfoHTML = (item) => {
   return (
     `<table class="table table-bordered" >
       <tbody>
-        <tr >
+        <tr>
           <img class="image" src="https://s3-ca-central-1.amazonaws.com/cdnarchitect/wp-content/uploads/2016/10/CaGBC-logo_new-3-e1477500943100.jpg" height=150 width=150 />
         </tr>
         <tr class="table-row">
