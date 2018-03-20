@@ -3,22 +3,22 @@ import React, { Component } from 'react';
 class ScoreTable extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(event) {
-    this.props.handleClick(event.currentTarget.value);
-  }
+  // handleClick(event) {
+  //   this.props.handleClick(event.currentTarget.value);
+  // }
 
   render() {
-    const criteriaClicked = this.props.criteriaClicked;
-    const toggleButton = (value) => {
-      if (criteriaClicked && criteriaClicked.includes(value)) {
-        return (<button type="button" className="btn btn-light" onClick={this.handleClick} value={value} >Hide</button>)
-      } else {
-        return (<button type="button" className="btn btn-light" onClick={this.handleClick} value={value} >Show</button>)
-      }
-    }
+    const transitStops = this.props.transitStops;
+    // const toggleButton = (value) => {
+    //   if (criteriaClicked && criteriaClicked.includes(value)) {
+    //     return (<button type="button" className="btn btn-light" onClick={this.props.showMarkers(value)} >Hide</button>)
+    //   } else {
+    //     return (<button type="button" className="btn btn-light" onClick={this.props.clearMarkers(value)} >Show</button>)
+    //   }
+    // }
     return (
       <table id="scoreTable" className="table table-bordered">
         <thead>
@@ -31,22 +31,22 @@ class ScoreTable extends Component {
         <tbody>
           <tr>
             <td>Street Network</td>
-            <td>...</td>
-            <td>{toggleButton('street_network')}</td>
+            <td>{this.props.streetNetwork}</td>
+            {/* <td>{toggleButton('street_network')}</td> */}
           </tr>
           <tr>
             <td>Community Resources</td>
-            <td>...</td>
-            <td>{toggleButton('community_resources')}</td>
+            <td>{this.props.communityResources}</td>
+            {/* <td>{toggleButton('community_resources')}</td> */}
           </tr>
           <tr>
             <td>Transit Stops</td>
-            <td>...</td>
-            <td>{toggleButton('transit_stops')}</td>
+            <td>{transitStops}</td>
+            {/* <td>{toggleButton('transit_stops')}</td> */}
           </tr>
           <tr>
             <td>Total</td>
-            <td>...</td>
+            <td>{this.props.streetNetwork + this.props.communityResources + this.props.transitStops}</td>
             <td></td>
           </tr>
         </tbody>
