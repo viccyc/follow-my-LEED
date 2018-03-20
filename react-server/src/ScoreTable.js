@@ -3,38 +3,51 @@ import React, { Component } from 'react';
 class ScoreTable extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e) {
-    this.props.handleTableClick(e.currentTarget.value);
-  }
+  // handleClick(event) {
+  //   this.props.handleClick(event.currentTarget.value);
+  // }
 
   render() {
+    const transitStops = this.props.transitStops;
+    // const toggleButton = (value) => {
+    //   if (criteriaClicked && criteriaClicked.includes(value)) {
+    //     return (<button type="button" className="btn btn-light" onClick={this.props.showMarkers(value)} >Hide</button>)
+    //   } else {
+    //     return (<button type="button" className="btn btn-light" onClick={this.props.clearMarkers(value)} >Show</button>)
+    //   }
+    // }
     return (
-      <table className="table table-bordered">
+      <table id="scoreTable" className="table table-bordered">
         <thead>
           <tr>
             <th scope="col">Criterion</th>
-            <th scope="col">Score</th>
+            <th scope="col">Count</th>
+            <th scope="col">Show/Hide Markers</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><button type="button" className="btn btn-light" onClick={this.handleClick} value="street_network">Street Network</button></td>
-            <td>...</td>
+            <td>Street Network</td>
+            <td>{this.props.streetNetwork}</td>
+            {/* <td>{toggleButton('street_network')}</td> */}
           </tr>
           <tr>
-            <td><button type="button" className="btn btn-light" onClick={this.handleClick} value="community_resources">Community Resources</button></td>
-            <td>...</td>
+            <td>Community Resources</td>
+            <td>{this.props.communityResources}</td>
+            {/* <td>{toggleButton('community_resources')}</td> */}
           </tr>
           <tr>
-            <td><button type="button" className="btn btn-light" onClick={this.handleClick} value="access_to_transit">Access to Transit</button></td>
-            <td>...</td>
+            <td>Transit Stops</td>
+            <td>{transitStops}</td>
+            {/* <td>{toggleButton('transit_stops')}</td> */}
           </tr>
           <tr>
             <td>Total</td>
-            <td>...</td>
+            <td>{this.props.streetNetwork + this.props.communityResources + this.props.transitStops}</td>
+            <td></td>
           </tr>
         </tbody>
       </table>

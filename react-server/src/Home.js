@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import backgroundImg from './images/calgary_cityscape.png';
+import backgroundImg from './images/calgary_tower-min.png';
 import './Home.css';
 
 export default class Home extends Component {
@@ -8,46 +8,44 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // value: '',
       autocomplete: null,
+      title: {
+        '/': 'FOLLOW MY LEED',
+        '/find_score': 'CALCULATE LEED SCORE',
+        '/projects': 'SHOW LEED PROJECTS'
+      },
+      focus: false,
+      submitButton: true
     };
-    // this.handleChange = this.handleChange.bind(this);
+    this.blurHandler = this.blurHandler.bind(this);
+    this.focusHandler = this.focusHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.initAutocomplete = this.initAutocomplete.bind(this);
-    // this.clickHandler = this.clickHandler.bind(this);
   }
 
   componentDidMount() {
     this.initAutocomplete();
   }
 
-  // handleChange(event) {
-  //   this.setState({value: event.target.value});
-  // }
+  blurHandler() {
+    this.setState({ focus: false });
+  }
+
+  focusHandler() {
+    this.setState({ focus: true });
+  }
 
   handleSubmit(event) {
     event.preventDefault();
-    // const place = this.state.autocomplete.getPlace();
-    // const address = place.formatted_address;
-    // const longitude = place.geometry.location.lng();
-    // const latitude = place.geometry.location.lat();
-    // const {location} = this.state
-    // location.address = address;
-    // location.longitude = longitude;
-    // location.latitude = latitude;
-    // console.log(`clicked GO in Home page,`, address, longitude, latitude);
-    // this.setState({location});
-    // console.log(this.props.handleSearch);
     const place = this.state.autocomplete.getPlace();
-    // console.log(place);
+    if (!place) {
+    }
     const address = {
       name: place.formatted_address,
-      latitude: parseFloat(place.geometry.location.lat().toFixed(7)),
-      longitude: parseFloat(place.geometry.location.lng().toFixed(7))
+      lat: parseFloat(place.geometry.location.lat().toFixed(7)),
+      lng: parseFloat(place.geometry.location.lng().toFixed(7))
     };
-    const pathname = this.props.location.pathname;
-    this.props.handleSearch(address, pathname);
-    // this.state.value = '';
+    this.props.handleSearch(address, this.props.location.pathname);
   }
 
   initAutocomplete() {
@@ -77,22 +75,18 @@ export default class Home extends Component {
   // }
 
   render() {
-    // console.log('in home page, state.location.address is ', this.state.location.address);
-    //when submit is clicked and state is reset, trigger rerender the page and redirect to target page
-    // if (this.state.location.address){
-    //   // console.log('in redirect if statement from home page', this.state.action);
-    //   return <Redirect to={{
-    //     pathname: this.state.action,
-    //     state: {
-    //       data: {
-    //       location: this.state.location
-    //       }
-    //     }
-    //   }} />
-    // }
+    const flashMessage = () => {
+      if (this.state.focus) {
+        return (
+          <div className="alert alert-warning" role="alert">
+            Please select from one of the drop down options.
+          </div>
+        );
+      }
+    };
     return (
-      <main style={{ backgroundImage: `url(${backgroundImg})` }}>
-        <h1 className="title text-center">Follow My LEED</h1>
+      <main id="mainPhoto" style={{ backgroundImage: `url(${backgroundImg})` }}>
+        <h1 id="mainTitle" className="title text-center">{this.state.title[this.props.location.pathname]}</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="input-group input-group-lg">
             <div className="input-group-prepend">
@@ -105,12 +99,13 @@ export default class Home extends Component {
               aria-label="Large"
               aria-describedby="inputGroup-sizing-sm"
               placeholder='Enter a location'
-              value={this.state.value}
+              onFocus={this.focusHandler}
+              onBlur={this.blurHandler}
               onChange={this.handleChange} />
+           <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
           </div>
-          {/* <hr className="my-4" /> */}
-          <button type="submit" className="btn btn-primary">Go!</button>
         </form>
+        {flashMessage()}
       </main>
     );
   }
