@@ -6,27 +6,27 @@ export default class NavForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      autocomplete: null,
       address: {},
-      autocomplete: null
+      focus: false,
+      submitButton: true
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.blurHandler = this.blurHandler.bind(this);
+    this.focusHandler = this.focusHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.initAutocomplete = this.initAutocomplete.bind(this);
-    // this.clickHandler = this.clickHandler.bind(this);
   }
 
   componentDidMount() {
     this.initAutocomplete();
   }
 
-  // focusHandler(e){
-  //   e.preventDefault();
-  //   this.initAutocomplete();
-  // }
+  blurHandler() {
+    this.setState({ focus: false });
+  }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  focusHandler() {
+    this.setState({ focus: true });
   }
 
   handleSubmit(event) {
@@ -43,16 +43,14 @@ export default class NavForm extends Component {
         return;
       }
 
+
     const place = this.state.autocomplete.getPlace();
     const address = {
       name: place.formatted_address,
       lat: parseFloat(place.geometry.location.lat().toFixed(7)),
       lng: parseFloat(place.geometry.location.lng().toFixed(7))
     };
-    const pathname = this.props.location.pathname;
-    this.props.handleSearch(address, pathname);
-    this.state.address = address;
-    this.state.value = '';
+    this.props.handleSearch(address);
   }
 
   initAutocomplete() {
@@ -63,8 +61,8 @@ export default class NavForm extends Component {
       navigator.geolocation.getCurrentPosition(function(position) {
         const circle = new googleMaps.Circle({
           center: {
-            lat: position.coords.lat,
-            lng: position.coords.lng
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
           },
           radius: position.coords.accuracy
         });
