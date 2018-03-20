@@ -14,7 +14,10 @@ export default class Score extends Component {
     this.state = {
       services: {},
       area: null,
-      criteriaClicked: []
+      criteriaClicked: [],
+      streetNetwork: null,
+      communityResources: null,
+      transitStops: null
     },
     // console.log('initializing MapContainer constructor');
     this.handleClick = this.handleClick.bind(this);
@@ -289,17 +292,19 @@ export default class Score extends Component {
     };
 
     const countService = (services, label, data) => {
+      
       if (services[label]) {
         services[label] += data.length;
-        // this.props.setMapData({ services });
-        this.setState({ services });
+        let communityResources = this.state.communityResources + data.length;
+        this.setState({ services, communityResources });
         return;
       }
       services[label] = data.length;
-      // this.props.setMapData({ services });
-      this.setState({ services });
+      let communityResources = this.state.communityResources + data.length;
+      this.setState({ services, communityResources });
     }
 
+    let transitStopMarkers = [];
     const showTransit = (type, label) => {
       const request = {
         location: location,
@@ -311,7 +316,7 @@ export default class Score extends Component {
         // countService(services, label, results);
         results.forEach((place) => {
           const marker = new googleMaps.Marker({
-            map: map,
+            // map: map,
             icon: crossroads,
             position: place.geometry.location
           });
@@ -320,17 +325,16 @@ export default class Score extends Component {
             infowindow.setContent(place.name);
             infowindow.open(map, this);
           });
+          transitStopMarkers.push(marker);
         });
-        const scoreTable = { 'transit_stops': results.length };
-        // this.props.setMapData({ scoreTable })
+        this.setState({ transitStops: results.length });
 
       };
       service.nearbySearch(request, callback);
     }
-
-    // if (criteriaClicked.includes('access_to_transit')) {
-      showTransit(['transit_station'], 'Intersections');
-    // }
+    
+    showTransit(['transit_station'], 'Intersections');
+    console.log('transitStopMarkers', transitStopMarkers);
     
     // // TODO: Food Retail
     // // TODO: Grocery with produce section
@@ -368,81 +372,82 @@ export default class Score extends Component {
     // }
 
     // get all ways around a certain address
-    if (criteriaClicked.includes('street_network')) {
-      axios.get(`http://overpass-api.de/api/interpreter?[out:json];way(around:400,${address.lat},${address.lng});out;`)
-        .then(results => {
-          results = results.data.elements.filter(element => {
-            return element.hasOwnProperty('tags') &&
-              element.tags.hasOwnProperty('highway') &&
-              !element.tags.hasOwnProperty('bridge') &&
-              !(element.tags.hasOwnProperty('service') && (element.tags.service === 'parking_aisle' || element.tags.service === 'driveway' || element.tags.service === 'alley')) &&
-              element.tags.highway !== 'cycleway' &&
-              element.tags.highway !== 'footway'
-          })
-          return results;criteriaClicked.includes('street_network')
+    let intersectionMarkers = [];
+    axios.get(`http://overpass-api.de/api/interpreter?[out:json];way(around:400,${address.lat},${address.lng});out;`)
+      .then(results => {
+        results = results.data.elements.filter(element => {
+          return element.hasOwnProperty('tags') &&
+            element.tags.hasOwnProperty('highway') &&
+            !element.tags.hasOwnProperty('bridge') &&
+            !(element.tags.hasOwnProperty('service') && (element.tags.service === 'parking_aisle' || element.tags.service === 'driveway' || element.tags.service === 'alley')) &&
+            element.tags.highway !== 'cycleway' &&
+            element.tags.highway !== 'footway'
         })
-        // remove duplicate nodes within a certain way
-        // to prep data for the next step
-        .then(elements => {
-          elements.forEach(element => {
-            element.nodes = element.nodes.sort().filter((node, pos, array) => {
-              return !pos || node !== array[pos-1];
-            })
-          });
-          return elements;
-        })
-        // put all nodes in one array
-        // filter out all nodes that only appear once
-        // output a list of unique node ids
-        .then(newElements => {
-          let nodes = {};
-
-          newElements.forEach(newElement => {
-            newElement.nodes.forEach(node => {
-              if (!nodes.hasOwnProperty(node)) {
-                nodes[node] = [newElement.tags.name? newElement.tags.name : newElement.id];
-              } else {
-                nodes[node].push(newElement.tags.name? newElement.tags.name : newElement.id);
-              }
-            })
+        return results;criteriaClicked.includes('street_network')
+      })
+      // remove duplicate nodes within a certain way
+      // to prep data for the next step
+      .then(elements => {
+        elements.forEach(element => {
+          element.nodes = element.nodes.sort().filter((node, pos, array) => {
+            return !pos || node !== array[pos-1];
           })
+        });
+        return elements;
+      })
+      // put all nodes in one array
+      // filter out all nodes that only appear once
+      // output a list of unique node ids
+      .then(newElements => {
+        let nodes = {};
 
-          let list = [];
-          for (let node in nodes) {
-            nodes[node] = nodes[node].filter((item, index, array) => {
-              return !(array.indexOf(item) === index && array.lastIndexOf(item) !== index);
-            });
-            if (nodes[node].length > 1) {
-              list.push(node);
+        newElements.forEach(newElement => {
+          newElement.nodes.forEach(node => {
+            if (!nodes.hasOwnProperty(node)) {
+              nodes[node] = [newElement.tags.name? newElement.tags.name : newElement.id];
+            } else {
+              nodes[node].push(newElement.tags.name? newElement.tags.name : newElement.id);
             }
+          })
+        })
+
+        let list = [];
+        for (let node in nodes) {
+          nodes[node] = nodes[node].filter((item, index, array) => {
+            return !(array.indexOf(item) === index && array.lastIndexOf(item) !== index);
+          });
+          if (nodes[node].length > 1) {
+            list.push(node);
           }
+        }
 
-          return list;
-        })
-        .then(nodes => {
-          let intersections = [];
+        return list;
+      })
+      .then(nodes => {
+        let intersections = [];
 
-          axios.get(`http://overpass-api.de/api/interpreter?[out:json];node(around:400,${address.lat},${address.lng});out;`)
-            .then(results => {
-              intersections = results.data.elements.filter(element => {
-                return nodes.indexOf(element.id.toString()) !== -1;
+        axios.get(`http://overpass-api.de/api/interpreter?[out:json];node(around:400,${address.lat},${address.lng});out;`)
+          .then(results => {
+            intersections = results.data.elements.filter(element => {
+              return nodes.indexOf(element.id.toString()) !== -1;
+            });
+            // console.log(intersections);
+            return intersections;
+          })
+          .then(intersections => {
+            intersections.forEach(intersection => {
+              // console.log(typeof intersection.lat);
+              const intersectionMarker = new googleMaps.Marker({
+                // map: map,
+                icon: crossroads,
+                position: { lat: intersection.lat, lng: intersection.lon }
               });
-              // console.log(intersections);
-              return intersections;
+              intersectionMarkers.push(intersectionMarker);
             })
-            .then(intersections => {
-              intersections.forEach(intersection => {
-                // console.log(typeof intersection.lat);
-                const intersectionMarker = new googleMaps.Marker({
-                  map: map,
-                  icon: crossroads,
-                  position: { lat: intersection.lat, lng: intersection.lon }
-                });
-              })
-            })
-        })
-    }
-
+            this.setState({ streetNetwork: intersections.length });
+          })
+      })
+      console.log('intersectionMarkers', intersectionMarkers);
   }
 
   render() {
@@ -453,7 +458,7 @@ export default class Score extends Component {
             <div id='map' style={{ height: `600px`, width: `100%` }} />
           </div>
           <div id="tableDiv" className="col-4 pr-0">
-            <ScoreTable handleClick={this.handleClick} />
+            <ScoreTable handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} />
           </div>
         </div>
       </div>
