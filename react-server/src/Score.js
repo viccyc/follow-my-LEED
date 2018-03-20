@@ -17,7 +17,8 @@ export default class Score extends Component {
       criteriaClicked: [],
       streetNetwork: null,
       communityResources: null,
-      transitStops: null
+      transitStops: null,
+      showMarkers: null,
     },
     // console.log('initializing MapContainer constructor');
     this.handleClick = this.handleClick.bind(this);
@@ -28,7 +29,7 @@ export default class Score extends Component {
     // console.log('in MapContainer componentDidMount');
     if (this.props.address) {
       const showMarkers = this.initMapAndMarker(this.props.address);
-      this.setState({ showMarkers});
+      this.setState({ showMarkers: showMarkers});
     };
   }
 
@@ -65,7 +66,7 @@ export default class Score extends Component {
 
     const marker = new googleMaps.Marker({
       position: location,
-      map: map,
+      // map: map,
     });
 
     const circle = new googleMaps.Circle({
@@ -447,7 +448,7 @@ export default class Score extends Component {
       })
 
     const markers = [marker];
-    return (map, markers) => {
+    return () => {
       markers.forEach((marker) => {
         marker.setMap(map);
       });
@@ -463,7 +464,7 @@ export default class Score extends Component {
             <div id='map' style={{ height: `600px`, width: `100%` }} />
           </div>
           <div id="tableDiv" className="col-4 pr-0">
-            <ScoreTable handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} />
+            <ScoreTable showMarkers={this.state.showMarkers} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} />
           </div>
         </div>
       </div>

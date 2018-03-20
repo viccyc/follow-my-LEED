@@ -12,13 +12,13 @@ class ScoreTable extends Component {
 
   render() {
     const transitStops = this.props.transitStops;
-    // const toggleButton = (value) => {
+    const toggleButton = (value) => {
     //   if (criteriaClicked && criteriaClicked.includes(value)) {
-    //     return (<button type="button" className="btn btn-light" onClick={this.props.showMarkers(value)} >Hide</button>)
+        return (<button type="button" className="btn btn-light" onClick={this.props.showMarkers} >Hide</button>)
     //   } else {
     //     return (<button type="button" className="btn btn-light" onClick={this.props.clearMarkers(value)} >Show</button>)
     //   }
-    // }
+    }
     return (
       <table id="scoreTable" className="table table-bordered">
         <thead>
@@ -32,7 +32,7 @@ class ScoreTable extends Component {
           <tr>
             <td>Street Network</td>
             <td>{this.props.streetNetwork}</td>
-            {/* <td>{toggleButton('street_network')}</td> */}
+            <td>{toggleButton('street_network')}</td>
           </tr>
           <tr>
             <td>Community Resources</td>
