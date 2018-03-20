@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './NavForm.css'
 
 export default class NavForm extends Component {
 
@@ -77,7 +76,6 @@ export default class NavForm extends Component {
     return (
         <form className="form-inline" onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label className="mr-1 text-light">Location</label>
             <input
                   id="navTextField"
                   onFocus={this.focusHandler}
@@ -86,16 +84,7 @@ export default class NavForm extends Component {
                   defaultValue={this.props.address.name}
                   value={this.state.value} />
           </div>
-          <div className="form-group mx-sm-3">
-            <label className="mr-1 text-light">Radius</label>
-            <select name="radius"
-                  onChange={this.handleInputChange}
-                  className="form-control">
-              <option value="800">800</option>
-              <option value="400">400</option>
-            </select>
-          </div>
-          <button id="sub-btn" type="submit" className="btn btn-primary">New search</button>
+          <button id="sub-btn" type="submit" className="btn btn-primary">Search</button>
         </form>
     );
   }
