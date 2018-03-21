@@ -1,0 +1,9 @@
+/* #body {
+  line-height: 4vh;
+} */
+
+#table td, 
+#table th {
+  padding-left: .5rem;
+  padding-right: .5rem;
+}

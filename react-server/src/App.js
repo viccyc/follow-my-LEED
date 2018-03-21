@@ -21,26 +21,41 @@ class App extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  // componentDidUpdate() {
-  //   this.props.history.push({
-  //     pathname: this.props.location.pathname,
-  //     search: `?address=`
-  //   });
-  // }
-
-  componentWillMount() {
+  componentDidMount() {
     // console.log(this.props.location.search);
-    if (!this.state.address) {
+    if (!this.state.address && this.props.location.search) {
+      // console.log('in componentwillmount')
       const search = this.props.location.search;
       const params = new URLSearchParams(search);
       const address_id = params.get('address_id');
+
+      // const map = new window.google.maps.Map();
+      // const placesService = new window.google.maps.places.PlacesService(map);
+      // placesService.getDetails(
+      //     { placeId: address_id },
+      //     function(results, status) {
+      //       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+      //         console.log(status);
+      //         console.log(results); 
+      //       }
+      //     }
+      // );
       // console.log(address_id);
   
       axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
         .then(results => {
-          console.log(results);
-          if (results) {
-  
+          // console.log(results);
+          const data = results.data.result;
+          // console.log(data);
+          if (data.formatted_address) {
+            const address = {
+              id: data.place_id,
+              name: data.formatted_address,
+              lat: parseFloat(data.geometry.location.lat.toFixed(7)),
+              lng: parseFloat(data.geometry.location.lng.toFixed(7))
+            }
+            // console.log(address);
+            this.setState({ address });
           }
         });
     }
@@ -86,9 +101,7 @@ class App extends Component {
             </div>
           </nav>
           <div>
-              <Route exact path='/' render={(props) => <Home {...props} handleSearch={ this.handleSearch } search={props.match.params.search} />} />
-              <Route path='/find_score' render={(props) => <Score {...props} search={props.match.params.search} />} />
-              <Route path='/projects' render={(props) => <Projects {...props} search={props.match.params.search} />} />
+              <Route path='/' render={(props) => <Home {...props} handleSearch={ this.handleSearch } search={props.match.params.search} />} />
           </div>
         </div>
       )
@@ -117,13 +130,3 @@ class App extends Component {
 }
 
 export default withRouter(App);
-
-{/* <nav class="navbar navbar-light bg-light">
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</nav> */}
-
-{/* <Link to="/find_score" id="navbar-link1" className="nav-link" style={{ textDecoration: "none" }}>CALCULATE SCORE</Link>
-<Link to="/projects" id="navbar-link2" className="nav-link" style={{ textDecoration: "none" }}>SHOW PROJECTS</Link> */}

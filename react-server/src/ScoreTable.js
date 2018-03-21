@@ -77,17 +77,17 @@ class ScoreTable extends Component {
           </thead>
           <tbody>
             <tr>
-              <td><img src={intersectionsImg} />  Intersections</td>
+              <td><img src={intersectionsImg} alt="inersectionsImg" />  Intersections</td>
               <td>{this.props.streetNetwork}</td>
               <td>{toggleButton('street_network')}</td>
             </tr>
             <tr>
-              <td><img src={communityresourcesImg}/>  Services</td>
+              <td><img src={communityresourcesImg} alt="communityresourcesImg" />  Services</td>
               <td>{this.props.communityResources}</td>
               <td>{toggleButton('community_resources')}</td>
             </tr>
             <tr>
-              <td><img src={transitstopsImg} />  Transit Stops</td>
+              <td><img src={transitstopsImg} alt="transitstopsImg" />  Transit Stops</td>
               <td>{this.props.transitStops}</td>
               <td>{toggleButton('transit_stops')}</td>
             </tr>
