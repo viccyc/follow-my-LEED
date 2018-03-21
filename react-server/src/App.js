@@ -22,9 +22,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.location.search);
+    // console.log(this.props.location.search);
     if (!this.state.address && this.props.location.search) {
-      console.log('in componentwillmount')
+      // console.log('in componentwillmount')
       const search = this.props.location.search;
       const params = new URLSearchParams(search);
       const address_id = params.get('address_id');
@@ -44,9 +44,9 @@ class App extends Component {
   
       axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
         .then(results => {
-          console.log(results);
+          // console.log(results);
           const data = results.data.result;
-          console.log(data);
+          // console.log(data);
           if (data.formatted_address) {
             const address = {
               id: data.place_id,
@@ -54,7 +54,7 @@ class App extends Component {
               lat: parseFloat(data.geometry.location.lat.toFixed(7)),
               lng: parseFloat(data.geometry.location.lng.toFixed(7))
             }
-            console.log(address);
+            // console.log(address);
             this.setState({ address });
           }
         });
@@ -130,16 +130,3 @@ class App extends Component {
 }
 
 export default withRouter(App);
-
-{/* <nav class="navbar navbar-light bg-light">
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</nav> */}
-
-{/* <Link to="/find_score" id="navbar-link1" className="nav-link" style={{ textDecoration: "none" }}>CALCULATE SCORE</Link>
-<Link to="/projects" id="navbar-link2" className="nav-link" style={{ textDecoration: "none" }}>SHOW PROJECTS</Link> */}
-
-{/* <Route path='/find_score' render={(props) => <Score {...props} search={props.match.params.search} />} />
-<Route path='/projects' render={(props) => <Projects {...props} search={props.match.params.search} />} /> */}
