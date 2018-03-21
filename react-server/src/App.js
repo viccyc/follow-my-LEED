@@ -10,7 +10,7 @@ import NoMatch from './NoMatch';
 import './Nav.css';
 
 class App extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +19,7 @@ class App extends Component {
     };
     this.handleSearch = this.handleSearch.bind(this);
   }
-            
+
   handleSearch(address, pathname) {
     if (pathname === '/') {
       this.setState({ address: address });
@@ -94,7 +94,7 @@ export default withRouter(App);
 
 <nav class="navbar navbar-light bg-light">
   <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
 </nav>
