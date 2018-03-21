@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 
@@ -8,8 +9,6 @@ import Projects from './Projects';
 import NoMatch from './NoMatch';
 
 import './Nav.css';
-import './NavForm.css';
-
 
 class App extends Component {
   
@@ -18,55 +17,50 @@ class App extends Component {
     this.state = {
       address: null,
       redirect: false,
-      // services: {},
-      // scoreTable: {
-      //   'street_network': null,
-      //   'community_resources': null,
-      //   'access_to_transit': null
-      // },
-      // area: null,
-      // criteriaClicked: []
     };
     this.handleSearch = this.handleSearch.bind(this);
-    // this.handleScoreTableClick = this.handleScoreTableClick.bind(this);
-    // this.setMapData = this.setMapData.bind(this);
+  }
+
+  // componentDidUpdate() {
+  //   this.props.history.push({
+  //     pathname: this.props.location.pathname,
+  //     search: `?address=`
+  //   });
+  // }
+
+  componentWillMount() {
+    // console.log(this.props.location.search);
+    if (!this.state.address) {
+      const search = this.props.location.search;
+      const params = new URLSearchParams(search);
+      const address_id = params.get('address_id');
+      // console.log(address_id);
+  
+      axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
+        .then(results => {
+          console.log(results);
+          if (results) {
+  
+          }
+        });
+    }
   }
             
   handleSearch(address, pathname) {
     if (pathname === '/') {
-      // this.props.history.push({
-      //   pathname: "/find_score",
-      //   search: "?address=",
-      //   state: { address: address }
-      // });
-      this.setState({ address: address, redirect: true });
+      this.setState({ address: address });
+      this.props.history.push({
+        pathname: "/find_score",
+        search: `?address_id=${address.id}`,
+      });
     } else {
       this.setState({ address: address });
+      this.props.history.push({
+        pathname: pathname,
+        search: `?address_id=${address.id}`,
+      });
     }
   }
-
-  // handleScoreTableClick(value) {
-  //   let criteriaClicked = this.state.criteriaClicked;
-  //   if (criteriaClicked.includes(value)) {
-  //     criteriaClicked = criteriaClicked.filter(criterion => criterion !== value);
-  //   } else {
-  //     criteriaClicked.push(value);
-  //   }
-  //   this.setState({ criteriaClicked: criteriaClicked });
-  // }
-
-  // setMapData(newState) {
-  //   this.setState(newState);
-  // }
-
-  // setScoreTableData(data) {
-  //   const oldScoreTable = this.state.scoreTable;
-  //   // const keys = Object.keys(oldScoreTable);
-  //   for (let keys in oldScoreTable){
-  //     if (keys === 
-  //   }
-  //   this.state.scoreTable[]
-  // }
 
   render() {
     if (this.state.redirect) {
@@ -74,8 +68,8 @@ class App extends Component {
         <div>
           <nav id="navbar" className="navbar navbar">
             <div>
-              <Link to="/find_score" id="navbar-link1" className="nav-link" style={{ textDecoration: "none" }}>CALCULATE SCORE</Link>
-              <Link to="/projects" id="navbar-link2" className="nav-link" style={{ textDecoration: "none" }}>SHOW PROJECTS</Link>
+              <Link to={{ pathname: "/find_score", search: `?address_id=${this.state.address.id}` }} style={{ textDecoration: "none" }}><button className="btn btn-outline-success">CALCULATE SCORE</button></Link>
+              <Link to={{ pathname: "/projects", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button className="btn btn-outline-success">SHOW PROJECTS</button></Link>
             </div>
             <NavForm address={this.state.address} handleSearch={this.handleSearch} />
           </nav>
@@ -85,24 +79,26 @@ class App extends Component {
     } else if (!this.state.address) {
       return (
         <div>
-          <nav id="navbar" className="navbar navbar">
+          <nav id="navbar" className="navbar">
             <div>
-              <Link to="/find_score" id="navbar-link1" className="nav-link" style={{ textDecoration: "none" }}>CALCULATE SCORE</Link>
-              <Link to="/projects" id="navbar-link2" className="nav-link" style={{ textDecoration: "none" }}>SHOW PROJECTS</Link>
+              <Link to="/find_score" style={{ textDecoration: "none" }}><button className="btn btn-outline-success">CALCULATE SCORE</button></Link>
+              <Link to="/projects" style={{ textDecoration: "none" }}><button className="btn btn-outline-success">SHOW PROJECTS</button></Link>
             </div>
           </nav>
           <div>
-              <Route path='/' render={(props) => <Home {...props} handleSearch={ this.handleSearch } />} />
+              <Route exact path='/' render={(props) => <Home {...props} handleSearch={ this.handleSearch } search={props.match.params.search} />} />
+              <Route path='/find_score' render={(props) => <Score {...props} search={props.match.params.search} />} />
+              <Route path='/projects' render={(props) => <Projects {...props} search={props.match.params.search} />} />
           </div>
         </div>
       )
     } else {
       return (
         <div>
-          <nav id="navbar" className="navbar navbar">
+          <nav id="navbar" className="navbar">
             <div>
-              <Link to="/find_score" id="navbar-link1" className="nav-link" style={{ textDecoration: "none" }}>CALCULATE SCORE</Link>
-              <Link to="/projects" id="navbar-link2" className="nav-link" style={{ textDecoration: "none" }}>SHOW PROJECTS</Link>
+              <Link to={{ pathname: "/find_score", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button className="btn btn-outline-success">CALCULATE SCORE</button></Link>
+              <Link to={{ pathname: "/projects", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button className="btn btn-outline-success">SHOW PROJECTS</button></Link>
             </div>
             <NavForm address={this.state.address} handleSearch={this.handleSearch} />
           </nav>
@@ -121,3 +117,13 @@ class App extends Component {
 }
 
 export default withRouter(App);
+
+{/* <nav class="navbar navbar-light bg-light">
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav> */}
+
+{/* <Link to="/find_score" id="navbar-link1" className="nav-link" style={{ textDecoration: "none" }}>CALCULATE SCORE</Link>
+<Link to="/projects" id="navbar-link2" className="nav-link" style={{ textDecoration: "none" }}>SHOW PROJECTS</Link> */}

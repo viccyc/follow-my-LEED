@@ -1,33 +1,61 @@
-main {
-  height: 35em;
-  background-repeat: no-repeat;
-  background-position: center;
+#alert {
+  margin-left: 17.8vw;
+  margin-right: 10vw;
+  margin-bottom: 0;
 }
 
-.title {
-  padding-top: 5em;
+main {
+  height: 90vh;
+  /* background-position: cover; */
 }
 
 #mainTitle {
-  font-weight: 800;
-  line-height: 2;
+  font-weight: 700;
+  font-size: 5vw;
+  line-height: 1.5;
   color: darkgreen;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2)
 }
 
 #mainPhoto {
   background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#padding-30vh {
+  padding-top: 30vh;
 }
 
 #go-button {
   margin-right: 30px;
   background-color: #3aa83a;
-  border-color: darkgreen;
+  border-color: #ced4da;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
   font-size: large;
   padding-left: 40px;
   padding-right: 40px;
 }
 
 #inputGroup-sizing-lg {
-  border-left-width: 30px;
-  border-left-color: #c5d9e3;
+  margin-left: 30px;
+}
+
+#homeForm {
+  padding-bottom: 4vh;
+}
+
+#searchElements {
+  margin-left: 4vh;
+  margin-right: 4vh;
+  border-radius: 15px;
+  /* border: black solid 5px; */
+  background: rgba(255, 255, 255, 0.5);
+  /* opacity: .2; */
+  /* margin-top: 30vh; */
+}
+
+#searchTextField {
+  width: 350px;
 }

@@ -4,8 +4,16 @@ import React, { Component } from 'react';
 import Home from './Home';
 import ScoreTable from './ScoreTable';
 
+import communityresourcesImg from './images/communityresources.png';
 import crossroads from './images/crossroads.png';
 import info from './images/info.png';
+import intersectionsImg from './images/intersections.png';
+// import m1 from './images/m1.png';
+// import m2 from './images/m2.png';
+// import m3 from './images/m3.png';
+// import m4 from './images/m4.png';
+// import m5 from './images/m5.png';
+import transitstopsImg from './images/transitstops3.png';
 
 export default class Score extends Component {
 
@@ -14,10 +22,11 @@ export default class Score extends Component {
     this.state = {
       services: {},
       area: null,
-      criteriaClicked: [],
-      streetNetwork: null,
-      communityResources: null,
-      transitStops: null
+      streetNetwork: null, // count
+      communityResources: null, // count
+      transitStops: null, // count
+      showMarkers: null,
+      hideMarkers: null
     },
     // console.log('initializing MapContainer constructor');
     this.handleClick = this.handleClick.bind(this);
@@ -27,14 +36,18 @@ export default class Score extends Component {
   componentDidMount() {
     // console.log('in MapContainer componentDidMount');
     if (this.props.address) {
-      this.initMapAndMarker(this.props.address);
+      // this.initMapAndMarker(this.props.address);
+      const { showMarkers, hideMarkers} = this.initMapAndMarker(this.props.address);
+      this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
     };
   }
 
   componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
     // if (this.props.address !== nextProps.address) {
-    this.initMapAndMarker(nextProps.address);
+    // this.initMapAndMarker(nextProps.address);
+    const { showMarkers, hideMarkers} = this.initMapAndMarker(nextProps.address);
+    this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
   }
 
   handleClick(value) {
@@ -50,7 +63,6 @@ export default class Score extends Component {
   initMapAndMarker(address) {
     const googleMaps = window.google.maps;
     const MarkerClusterer = window.MarkerClusterer;
-    const criteriaClicked = this.state.criteriaClicked;
     const location = { lat: address.lat, lng: address.lng };
 
     const map = new googleMaps.Map(document.getElementById('map'), {
@@ -206,12 +218,17 @@ export default class Score extends Component {
     googleMaps.event.addListener(drawingManager, 'polygoncomplete', (polygon) => {
       const area = googleMaps.geometry.spherical.computeArea(polygon.getPath());
       console.log('polygon complete, area is ', Math.ceil(area), 'square meters');
-      this.setState({ area: Math.ceil(area) });
+      if (this.state.area) {
+        const newArea = this.state.area + Math.ceil(area);
+        this.setState({ area: newArea });
+      } else {
+        this.setState({ area: Math.ceil(area) });
+      }
     });
 
     let markersList = [];
     let services = this.state.services;
-    const markerCluster = new MarkerClusterer(map, markersList,
+    const markerCluster = new MarkerClusterer(map, markersList, { ignoreHidden: false },
       { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' }
     );
     const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
@@ -235,12 +252,12 @@ export default class Score extends Component {
         };
       }
       service.nearbySearch(request, callback);
-      markerCluster.redraw();
+      // markerCluster.redraw();
     }
 
     const createMarker = (place)=>{
       const marker = new googleMaps.Marker({
-        icon: info,
+        icon: communityresourcesImg,
         position: place.geometry.location
       });
       const infowindow = new googleMaps.InfoWindow();
@@ -248,8 +265,7 @@ export default class Score extends Component {
         infowindow.setContent(place.name);
         infowindow.open(map, this);
       });
-      addNewMarker(marker, true);
-
+      addNewMarker(marker, false);
     };
 
     const filterDistance = (place)=>{
@@ -313,11 +329,9 @@ export default class Score extends Component {
       };
       const callback = (results, status) => {
         if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
-        // countService(services, label, results);
         results.forEach((place) => {
           const marker = new googleMaps.Marker({
-            // map: map,
-            icon: crossroads,
+            icon: transitstopsImg,
             position: place.geometry.location
           });
           const infowindow = new googleMaps.InfoWindow();
@@ -334,7 +348,7 @@ export default class Score extends Component {
     }
     
     showTransit(['transit_station'], 'Intersections');
-    console.log('transitStopMarkers', transitStopMarkers);
+    // console.log('transitStopMarkers', transitStopMarkers);
     
     // // TODO: Food Retail
     // // TODO: Grocery with produce section
@@ -350,25 +364,25 @@ export default class Score extends Component {
     
     // if (criteriaClicked.includes('community_resources')) {
       showService(['supermarket'], 'Supermarket');
-    //   showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
-      showService(['convenience_store'], 'Convenience Store');
-    //   showService(['hardware_store'], 'Hardware Store');
-    //   showService(['pharmacy'], 'Pharmacy');
-    //   showService(['bank'], 'Bank');
-    //   showService(['gym'], 'Gym, health club, exercise studio');
-    //   showService(['hair_care'], 'Hair care');
-    //   showService(['laundry'], 'Laundry/dry cleaner');
-    //   showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
-    //   showService(['art_gallery', 'museum'], 'Cultural arts facility');
-    //   showService(['school'], 'Education facility');
-    //   showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
-    //   showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
-    //   showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
-    //   showService(['church'], 'Place of worship');
-    //   showService(['police', 'fire_station'], 'Police or fire station');
-    //   showService(['post_office'], 'Post office');
-    //   showService(['library'], 'Public library');
-    //   showService(['park'], 'Public park');
+      // showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
+      // showService(['convenience_store'], 'Convenience Store');
+      // showService(['hardware_store'], 'Hardware Store');
+      // showService(['pharmacy'], 'Pharmacy');
+      // showService(['bank'], 'Bank');
+      // showService(['gym'], 'Gym, health club, exercise studio');
+      // showService(['hair_care'], 'Hair care');
+      // showService(['laundry'], 'Laundry/dry cleaner');
+      // showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
+      // showService(['art_gallery', 'museum'], 'Cultural arts facility');
+      // showService(['school'], 'Education facility');
+      // showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
+      // showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
+      // showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
+      // showService(['church'], 'Place of worship');
+      // showService(['police', 'fire_station'], 'Police or fire station');
+      // showService(['post_office'], 'Post office');
+      // showService(['library'], 'Public library');
+      // showService(['park'], 'Public park');
     // }
 
     // get all ways around a certain address
@@ -383,7 +397,7 @@ export default class Score extends Component {
             element.tags.highway !== 'cycleway' &&
             element.tags.highway !== 'footway'
         })
-        return results;criteriaClicked.includes('street_network')
+        return results;
       })
       // remove duplicate nodes within a certain way
       // to prep data for the next step
@@ -439,7 +453,7 @@ export default class Score extends Component {
               // console.log(typeof intersection.lat);
               const intersectionMarker = new googleMaps.Marker({
                 // map: map,
-                icon: crossroads,
+                icon: intersectionsImg,
                 position: { lat: intersection.lat, lng: intersection.lon }
               });
               intersectionMarkers.push(intersectionMarker);
@@ -447,18 +461,65 @@ export default class Score extends Component {
             this.setState({ streetNetwork: intersections.length });
           })
       })
-      console.log('intersectionMarkers', intersectionMarkers);
+    // console.log('intersectionMarkers', intersectionMarkers);
+
+    return {
+      showMarkers: (targetArray) => {
+        switch (targetArray) {
+          case 'street_network':
+            // console.log('in showMarkers ', targetArray)
+            intersectionMarkers.forEach((marker) => {
+              marker.setMap(map);
+            });
+            break;
+          case 'community_resources':
+            // console.log('in showMarkers markerCluster', markerCluster);
+            markerCluster.getMarkers().forEach((marker) => {
+              marker.setMap(map);
+            });           
+            break;
+          case 'transit_stops':
+            transitStopMarkers.forEach((marker) => {
+              marker.setMap(map);
+            });
+            break;
+          default: break;
+        }
+      },
+      hideMarkers: (targetArray) => {
+        switch (targetArray) {
+          case 'street_network':
+            // console.log('in showMarkers ', targetArray)
+            intersectionMarkers.forEach((marker) => {
+              marker.setMap(null);
+            });
+            break;
+          case 'community_resources':
+            // console.log('in showMarkers markerCluster', markerCluster);            
+            markerCluster.getMarkers().forEach((marker) => {
+              marker.setMap(null);
+            });
+            break;
+          case 'transit_stops':
+            transitStopMarkers.forEach((marker) => {
+              marker.setMap(null);
+            });
+            break;
+          default: break;
+        }
+      }
+    }
   }
 
   render() {
     return (
       <div className="container mt-2">
         <div className="row">
-          <div className="col-8 pl-0">
-            <div id='map' style={{ height: `600px`, width: `100%` }} />
+          <div className="col-lg-8 col-md-12 pl-0">
+            <div id='map' style={{ height: `88vh`, width: `100%` }} />
           </div>
-          <div id="tableDiv" className="col-4 pr-0">
-            <ScoreTable handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} />
+          <div id="tableDiv" className="col-lg-4 col-md-12 pr-0">
+            <ScoreTable area={this.state.area} criteriaClicked={this.state.criteriaClicked} handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} />
           </div>
         </div>
       </div>
