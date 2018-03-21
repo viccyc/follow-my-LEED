@@ -46,3 +46,8 @@
   border-bottom-left-radius: 0; */
   font-size: large;
 }
+
+.btn-outline-success{
+  border-bottom: 3px solid red;
+
+}
