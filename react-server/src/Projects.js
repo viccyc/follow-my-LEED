@@ -91,28 +91,28 @@ export default class Projects extends Component {
     return (  
       <div className="container mt-2">
         <div className="row">
-          <div className="col-10 pl-0">
-            <div id='map' style={{ height: `600px`, width: `100%` }} />
+          <div className="col-lg-10 col-sm-12 pl-0">
+            <div id='map' style={{ height: `88vh`, width: `100%` }} />
           </div>
-          <div id="tableDiv" className="col-2 pr-0">
-          <table id="scoreTable">
-              <tr>
-                <td><img src={platinum} /></td>
-               <td id="tableCell">LEED Platinum</td>
-              </tr>
-              <tr>
-                <td><img src={gold} /></td>
-                <td id="tableCell">LEED Gold</td>
-              </tr>
-              <tr>
-                <td><img src={silver} /></td>
-                <td id="tableCell">LEED Silver</td>
-              </tr>
-              <tr>
-                <td><img src={certified} /></td>
-                <td id="tableCell">LEED Certified</td>
-              </tr>
-            </table>
+          <div id="tableDiv" className="col-lg-2 col-sm-12 pr-0">
+            <table id="table" className="table table-bordered">
+                <tr>
+                  <td><img src={platinum} /></td>
+                <td id="tableCell">LEED Platinum</td>
+                </tr>
+                <tr>
+                  <td><img src={gold} /></td>
+                  <td id="tableCell">LEED Gold</td>
+                </tr>
+                <tr>
+                  <td><img src={silver} /></td>
+                  <td id="tableCell">LEED Silver</td>
+                </tr>
+                <tr>
+                  <td><img src={certified} /></td>
+                  <td id="tableCell">LEED Certified</td>
+                </tr>
+              </table>
          </div>
         </div>
       </div>
