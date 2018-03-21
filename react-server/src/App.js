@@ -29,14 +29,27 @@ class App extends Component {
   // }
 
   componentWillMount() {
-    // console.log(this.props.location.search);
-    if (!this.state.address) {
+    console.log(this.props.location.search);
+    if (!this.state.address && this.props.location.search) {
+      console.log('in componentwillmount')
       const search = this.props.location.search;
       const params = new URLSearchParams(search);
       const address_id = params.get('address_id');
+
+      // const map = new window.google.maps.Map();
+      // const placesService = new window.google.maps.places.PlacesService(map);
+      // placesService.getDetails(
+      //     { placeId: address_id },
+      //     function(results, status) {
+      //       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+      //         console.log(status);
+      //         console.log(results); 
+      //       }
+      //     }
+      // );
       // console.log(address_id);
   
-      axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
+      axios.get(`http://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
         .then(results => {
           console.log(results);
           if (results) {
@@ -86,9 +99,7 @@ class App extends Component {
             </div>
           </nav>
           <div>
-              <Route exact path='/' render={(props) => <Home {...props} handleSearch={ this.handleSearch } search={props.match.params.search} />} />
-              <Route path='/find_score' render={(props) => <Score {...props} search={props.match.params.search} />} />
-              <Route path='/projects' render={(props) => <Projects {...props} search={props.match.params.search} />} />
+              <Route path='/' render={(props) => <Home {...props} handleSearch={ this.handleSearch } search={props.match.params.search} />} />
           </div>
         </div>
       )
@@ -127,3 +138,6 @@ export default withRouter(App);
 
 {/* <Link to="/find_score" id="navbar-link1" className="nav-link" style={{ textDecoration: "none" }}>CALCULATE SCORE</Link>
 <Link to="/projects" id="navbar-link2" className="nav-link" style={{ textDecoration: "none" }}>SHOW PROJECTS</Link> */}
+
+{/* <Route path='/find_score' render={(props) => <Score {...props} search={props.match.params.search} />} />
+<Route path='/projects' render={(props) => <Projects {...props} search={props.match.params.search} />} /> */}
