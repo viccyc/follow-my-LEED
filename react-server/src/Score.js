@@ -392,8 +392,10 @@ export default class Score extends Component {
       const callback = (response, status) => {
         if (status === 'OK') {
           console.log(response.rows[0].elements[0].distance.value);
+          if (response.rows[0].elements[0].distance.value < 800) {
             createMarker(place);
             countService(services, label);
+          }
         }
 
       }
@@ -482,16 +484,17 @@ export default class Score extends Component {
     // // TODO: Community or recreation center
     // // TODO: Social services center
 
-      // showService(['supermarket'], 'Supermarket');
+      showService(['supermarket'], 'Supermarket');
       // showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
-      // showService(['convenience_store'], 'Convenience Store');
-      // showService(['hardware_store'], 'Hardware Store');
-      // showService(['pharmacy'], 'Pharmacy');
-      // showService(['bank'], 'Bank');
-      // showService(['gym'], 'Gym, health club, exercise studio');
-      // showService(['hair_care'], 'Hair care');
-      // // showService(['laundry'], 'Laundry/dry cleaner');
+      showService(['convenience_store'], 'Convenience Store');
+      showService(['hardware_store'], 'Hardware Store');
+      showService(['pharmacy'], 'Pharmacy');
+      showService(['bank'], 'Bank');
+      showService(['gym'], 'Gym, health club, exercise studio');
+      showService(['hair_care'], 'Hair care');
+      // showService(['laundry'], 'Laundry/dry cleaner');
       // showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
+      showService(['restaurant'], 'Restaurant/café/diner');
       // showService(['art_gallery', 'museum'], 'Cultural arts facility');
       showService(['school'], 'Education facility');
       // showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
@@ -499,9 +502,9 @@ export default class Score extends Component {
       // showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
       // showService(['church'], 'Place of worship');
       // showService(['police', 'fire_station'], 'Police or fire station');
-      // showService(['post_office'], 'Post office');
-      // showService(['library'], 'Public library');
-      // showService(['park'], 'Public park');
+      showService(['post_office'], 'Post office');
+      showService(['library'], 'Public library');
+      showService(['park'], 'Public park');
     // }
 
     // get all ways around a certain address
