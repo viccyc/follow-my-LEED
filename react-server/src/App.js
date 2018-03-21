@@ -21,14 +21,7 @@ class App extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  // componentDidUpdate() {
-  //   this.props.history.push({
-  //     pathname: this.props.location.pathname,
-  //     search: `?address=`
-  //   });
-  // }
-
-  componentWillMount() {
+  componentDidMount() {
     console.log(this.props.location.search);
     if (!this.state.address && this.props.location.search) {
       console.log('in componentwillmount')
@@ -49,11 +42,20 @@ class App extends Component {
       // );
       // console.log(address_id);
   
-      axios.get(`http://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
+      axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
         .then(results => {
           console.log(results);
-          if (results) {
-  
+          const data = results.data.result;
+          console.log(data);
+          if (data.formatted_address) {
+            const address = {
+              id: data.place_id,
+              name: data.formatted_address,
+              lat: parseFloat(data.geometry.location.lat.toFixed(7)),
+              lng: parseFloat(data.geometry.location.lng.toFixed(7))
+            }
+            console.log(address);
+            this.setState({ address });
           }
         });
     }
