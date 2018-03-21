@@ -82,7 +82,7 @@ class App extends Component {
         <div>
           <nav id="navbar" className="navbar">
             <div>
-              <Link to="/find_score" style={{ textDecoration: "none" }}><button id={this.props.location.pathname === '/find_score' || this.props.location.pathname === '/'? 'navButtonActive' : 'navButton'} className="btn btn-outline-success" >CALCULATE SCORE</button></Link>
+              <Link to="/find_score" style={{ textDecoration: "none" }}><button id={this.props.location.pathname === '/find_score' || this.props.location.pathname === '/'? 'navButtonActive' : 'navButton'} className="btn btn-outline-success" >EVALUATE LOCATION</button></Link>
               <Link to="/projects" style={{ textDecoration: "none" }}><button id={this.props.location.pathname === '/projects'? 'navButtonActive' : 'navButton'} className="btn btn-outline-success">SHOW PROJECTS</button></Link>
             </div>
           </nav>
@@ -96,7 +96,7 @@ class App extends Component {
         <div>
           <nav id="navbar" className="navbar">
             <div>
-              <Link to={{ pathname: "/find_score", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button id={this.props.location.pathname === '/find_score' || this.props.location.pathname === '/'? 'navButtonActive' : 'navButton'} className="btn btn-outline-success">CALCULATE SCORE</button></Link>
+              <Link to={{ pathname: "/find_score", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button id={this.props.location.pathname === '/find_score' || this.props.location.pathname === '/'? 'navButtonActive' : 'navButton'} className="btn btn-outline-success">EVALUATE LOCATION</button></Link>
               <Link to={{ pathname: "/projects", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button id={this.props.location.pathname === '/projects'? 'navButtonActive' : 'navButton'} className="btn btn-outline-success">SHOW PROJECTS</button></Link>
             </div>
             <NavForm address={this.state.address} handleSearch={this.handleSearch} />
