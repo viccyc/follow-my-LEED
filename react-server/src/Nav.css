@@ -87,7 +87,17 @@ button:focus {
 #sub-btn {
   /* background-color: white; */
   /* border-color: #359135; */
-  boarder: 1px solid #ced4da;
-  border-left: none;
+  border: 1px solid #eceef1;
+  /* border-left: none; */
   font-size: large;
+  /* border-radius: 20px; */
+  /* padding: 8px 8px 2px; */
+  color: #eceef1;
 }
+
+#sub-btn:hover {
+  background-color: white;
+  color: #bd5851;
+}
+
+/* ffe484 */
