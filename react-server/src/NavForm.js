@@ -80,11 +80,11 @@ export default class NavForm extends Component {
                   id="navTextField"
                   onFocus={this.focusHandler}
                   type="text"
-                  className="form-control nav-input"
+                  className="form-control nav-input mr-sm-2"
                   defaultValue={this.props.address.name}
                   value={this.state.value} />
           </div>
-          <button id="sub-btn" type="submit" className="btn btn-primary">Search</button>
+          <button id="sub-btn" className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     );
   }

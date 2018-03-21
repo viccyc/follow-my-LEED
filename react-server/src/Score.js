@@ -88,6 +88,15 @@ export default class Score extends Component {
       radius: 800
     });
 
+    const circle2 = new googleMaps.Circle({
+      strokeWeight: 0,
+      fillColor: '#87cefa',
+      fillOpacity: 0.25,
+      map: map,
+      center: location,
+      radius: 400
+    });
+
     const styledMapType = new googleMaps.StyledMapType(
       [
         {
@@ -641,7 +650,7 @@ export default class Score extends Component {
 
   render() {
     return (
-      <div className="container mt-2">
+      <div className="mapContainer container mt-2">
         <div className="row">
           <div className="col-lg-8 col-md-12 pl-0">
             <div id='map' style={{ height: `88vh`, width: `100%` }} />

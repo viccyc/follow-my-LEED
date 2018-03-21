@@ -303,6 +303,7 @@ export default class Projects extends Component {
     map.mapTypes.set('styled_map', styledMapType);
     map.setMapTypeId('styled_map');
 
+    let prevInfowindow = false; 
     axios.get('/api/projects')
     .then(res => { 
       // Create markers.
@@ -310,51 +311,51 @@ export default class Projects extends Component {
         // console.log("creating marker, item: ", item);
         const marker = new googleMaps.Marker({
           position: { lat: item.lat, lng: item.lng },
-          // icon: item.level,
           icon: icons[item.certification_level_id],
           map: map
         });
   
         const infowindow = new googleMaps.InfoWindow();
-        googleMaps.event.addListener(marker, 'click', function() {
-          // infowindow.setContent(item.name + ',  ' + certLevel[item.certification_level_id]);
-          // infowindow.setContent(InfoContent);
-          // const content = "<html><head><h1><infoContnet/h1></head><body><div><p> Hello InfoContent! </p></div></body></html>";
+          googleMaps.event.addListener(marker, 'click', function() {
           const createdHTML = InfoContent(item);
+          if (prevInfowindow) {
+           prevInfowindow.close();
+          }
           infowindow.setContent(createdHTML);
+          prevInfowindow = infowindow;
           infowindow.open(map, this);
         });
       });
     });
-
   }
 
   render() {
-    // return (<div id='map' style={{ height: `600px`, width: `100%` }} />);
     return (  
-      <div className="container mt-2">
+      <div className="mapContainer container mt-2">
         <div className="row">
           <div className="col-lg-10 col-sm-12 pl-0">
             <div id='map' style={{ height: `88vh`, width: `100%` }} />
           </div>
           <div id="tableDiv" className="col-lg-2 col-sm-12 pr-0">
             <table id="table" className="table table-bordered">
-                <tr>
-                  <td><img src={platinum} /></td>
-                <td id="tableCell">LEED Platinum</td>
-                </tr>
-                <tr>
-                  <td><img src={gold} /></td>
-                  <td id="tableCell">LEED Gold</td>
-                </tr>
-                <tr>
-                  <td><img src={silver} /></td>
-                  <td id="tableCell">LEED Silver</td>
-                </tr>
-                <tr>
-                  <td><img src={certified} /></td>
-                  <td id="tableCell">LEED Certified</td>
-                </tr>
+                <tbody>
+                    <tr>
+                    <td><img src={platinum} /></td>
+                    <td id="tableCell">LEED Platinum</td>
+                    </tr>
+                    <tr>
+                    <td><img src={gold} /></td>
+                    <td id="tableCell">LEED Gold</td>
+                    </tr>
+                    <tr>
+                    <td><img src={silver} /></td>
+                    <td id="tableCell">LEED Silver</td>
+                    </tr>
+                    <tr>
+                    <td><img src={certified} /></td>
+                    <td id="tableCell">LEED Certified</td>
+                    </tr>
+                </tbody>
               </table>
          </div>
         </div>
