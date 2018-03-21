@@ -21,14 +21,7 @@ class App extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  // componentDidUpdate() {
-  //   this.props.history.push({
-  //     pathname: this.props.location.pathname,
-  //     search: `?address=`
-  //   });
-  // }
-
-  componentWillMount() {
+  componentDidMount() {
     console.log(this.props.location.search);
     if (!this.state.address && this.props.location.search) {
       console.log('in componentwillmount')
