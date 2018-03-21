@@ -221,9 +221,6 @@ export default class Score extends Component {
       { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' }
     );
     const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
-    const setMarkerMap = MarkerClusterer.prototype.setMap.bind(markerCluster);
-    console.log('markerCluster ', markerCluster);
-    console.log('setMarkerMap ', setMarkerMap);
     const service = new googleMaps.places.PlacesService(map);
 
     const showService = (type, label) => {
@@ -353,28 +350,26 @@ export default class Score extends Component {
     // // TODO: Community or recreation center
     // // TODO: Social services center
 
-    // if (criteriaClicked.includes('community_resources')) {
       showService(['supermarket'], 'Supermarket');
-    //   showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
-      showService(['convenience_store'], 'Convenience Store');
-    //   showService(['hardware_store'], 'Hardware Store');
-    //   showService(['pharmacy'], 'Pharmacy');
-    //   showService(['bank'], 'Bank');
-    //   showService(['gym'], 'Gym, health club, exercise studio');
-    //   showService(['hair_care'], 'Hair care');
-    //   showService(['laundry'], 'Laundry/dry cleaner');
-    //   showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
-    //   showService(['art_gallery', 'museum'], 'Cultural arts facility');
-    //   showService(['school'], 'Education facility');
-    //   showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
-    //   showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
-    //   showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
-    //   showService(['church'], 'Place of worship');
-    //   showService(['police', 'fire_station'], 'Police or fire station');
-    //   showService(['post_office'], 'Post office');
-    //   showService(['library'], 'Public library');
-    //   showService(['park'], 'Public park');
-    // }
+      showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
+      // showService(['convenience_store'], 'Convenience Store');
+      // showService(['hardware_store'], 'Hardware Store');
+      // showService(['pharmacy'], 'Pharmacy');
+      // showService(['bank'], 'Bank');
+      // showService(['gym'], 'Gym, health club, exercise studio');
+      // showService(['hair_care'], 'Hair care');
+      // showService(['laundry'], 'Laundry/dry cleaner');
+      // showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
+      // showService(['art_gallery', 'museum'], 'Cultural arts facility');
+      // showService(['school'], 'Education facility');
+      // showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
+      // showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
+      // showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
+      // showService(['church'], 'Place of worship');
+      // showService(['police', 'fire_station'], 'Police or fire station');
+      // showService(['post_office'], 'Post office');
+      // showService(['library'], 'Public library');
+      // showService(['park'], 'Public park');
 
     // get all ways around a certain address
     let intersectionMarkers = [];
