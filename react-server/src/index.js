@@ -6,6 +6,8 @@ import App from './App';
 
 import registerServiceWorker from './registerServiceWorker';
 
+import './Index.css';
+
 //render different component according to the url(that user types directly into address bar)
 //TODO: support queryString/:param so users can share a link or reload page
 ReactDOM.render((

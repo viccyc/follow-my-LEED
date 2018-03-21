@@ -38,10 +38,12 @@ export default class Home extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const place = this.state.autocomplete.getPlace();
+    console.log(place);
     if (!place) {
       this.setState({ showFlashMessage: true });
     } else {
       const address = {
+        id: place.place_id,
         name: place.formatted_address,
         lat: parseFloat(place.geometry.location.lat().toFixed(7)),
         lng: parseFloat(place.geometry.location.lng().toFixed(7))
@@ -91,9 +93,10 @@ export default class Home extends Component {
     // };
     return (
       <main id="mainPhoto" style={{ backgroundImage: `url(${backgroundImg})` }}>
-        <div id="padding-30vh"></div>
+        <div id="padding-25vh"></div>
         <div id="searchElements">
           <h1 id="mainTitle" className="text-center">{this.state.title[this.props.location.pathname]}</h1>
+          <h4 id="tagline" className="text-center">A comprehensive toolkit for all your green building research</h4>
           <div id="alert" className="alert alert-warning" style={{display: this.state.showFlashMessage ? 'block' : 'none' }}
           role="alert">
             Please select from one of the drop down options.

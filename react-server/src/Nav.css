@@ -1,7 +1,7 @@
 #navbar {
-  background-color: #359135;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
+  background-color: #bd5851;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 #navbar-link1 {
@@ -15,6 +15,33 @@
   float: right;
   border-style: groove;
   margin-left: 5px;
+}
+
+#navButton {
+  border: none;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  border-radius: 0;
+  background-color: #bd5851;
+  font-weight: 600;
+  font-size: 3vh;
+
+}
+
+
+.btn-outline-success.focus, .btn-outline-success:focus {
+  box-shadow: none;
+
+}
+
+.btn.focus, .btn:focus{
+  outline: none;
+  box-shadow: none;
+
+}
+
+button:focus{
+  outline: none;
 }
 
 .form-control {
@@ -35,7 +62,7 @@
 }
 
 #navTextField {
-  width: 25vw;
+  width: 30vw;
 }
 
 #sub-btn {
@@ -47,7 +74,6 @@
   font-size: large;
 }
 
-.btn-outline-success{
-  border-bottom: 3px solid red;
 
-}
+
+
