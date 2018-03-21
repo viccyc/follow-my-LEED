@@ -322,7 +322,7 @@ export default class Score extends Component {
             ]
         }
     ],
-    { name: 'Styled Map' });
+     { name: 'Styled Map' });
 
     map.mapTypes.set('styled_map', styledMapType);
     map.setMapTypeId('styled_map');
