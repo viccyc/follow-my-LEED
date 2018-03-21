@@ -331,7 +331,7 @@ export default class Projects extends Component {
 
   render() {
     return (  
-      <div className="container mt-2">
+      <div className="mapContainer container mt-2">
         <div className="row">
           <div className="col-lg-10 col-sm-12 pl-0">
             <div id='map' style={{ height: `88vh`, width: `100%` }} />
