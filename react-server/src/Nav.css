@@ -1,7 +1,7 @@
 #navbar {
-  background-color: #359135;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
+  background-color: #32525a;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 #navbar-link1 {
@@ -15,6 +15,18 @@
   float: right;
   border-style: groove;
   margin-left: 5px;
+}
+
+#navButton {
+  border: none;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  border-radius: 0;
+}
+
+.btn-outline-success {
+  border-bottom: 3px solid white;
+  background-color: #32525a;
 }
 
 .form-control {
