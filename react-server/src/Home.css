@@ -50,10 +50,7 @@ main {
   margin-left: 4vh;
   margin-right: 4vh;
   border-radius: 15px;
-  /* border: black solid 5px; */
   background: rgba(255, 255, 255, 0.5);
-  /* opacity: .2; */
-  /* margin-top: 30vh; */
 }
 
 #searchTextField {
