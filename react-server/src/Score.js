@@ -351,9 +351,8 @@ export default class Score extends Component {
 
     let markersList = [];
     let services = this.state.services;
-    const markerCluster = new MarkerClusterer(map, markersList, { ignoreHidden: false },
-      { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' }
-    );
+    const markerCluster = new MarkerClusterer(map, markersList,
+      { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
     const service = new googleMaps.places.PlacesService(map);
 
@@ -365,10 +364,9 @@ export default class Score extends Component {
       };
       const callback = (results, status, pagination) => {
         if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
-        countService(services, label, results);
         results.forEach((place) => {
           console.log('going to run filterDistance');
-          filterDistance(place);
+          filterDistance(place, label);
         });
         if (pagination.hasNextPage) {
           pagination.nextPage();
@@ -378,20 +376,8 @@ export default class Score extends Component {
       // markerCluster.redraw();
     }
 
-    const createMarker = (place)=>{
-      const marker = new googleMaps.Marker({
-        icon: communityresourcesImg,
-        position: place.geometry.location
-      });
-      const infowindow = new googleMaps.InfoWindow();
-      googleMaps.event.addListener(marker, 'click', function () {
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-      });
-      addNewMarker(marker, false);
-    };
 
-    const filterDistance = (place)=>{
+    const filterDistance = (place, label)=>{
       //prepare data&function in search
       const origins = [`${address.lat},${address.lng}`];
       const destinations = [`${place.geometry.location.lat()},${place.geometry.location.lng()}`];
@@ -405,37 +391,44 @@ export default class Score extends Component {
       }
       const callback = (response, status) => {
         if (status === 'OK') {
-          const origins = response.originAddresses;
-          const destinations = response.destinationAddresses;
-
-          for (let i = 0; i < origins.length; i++) {
-            let results = response.rows[i].elements;
-            for (let j = 0; j < results.length; j++) {
-              let element = results[j];
-              let value = element.distance.value;
-              //if distance is qualified, create marker;
-              if (value <= 800){
-                createMarker(place);
-              }
-            }
-          }
+          console.log(response.rows[0].elements[0].distance.value);
+            createMarker(place);
+            countService(services, label);
         }
+
       }
       checkDistance(request, callback);
 
     };
 
-    const countService = (services, label, data) => {
+    const createMarker = (place, label)=>{
+      const marker = new googleMaps.Marker({
+        icon: communityresourcesImg,
+        position: place.geometry.location
+      });
+      const infowindow = new googleMaps.InfoWindow();
+      googleMaps.event.addListener(marker, 'click', function () {
+        infowindow.setContent(place.name);
+        infowindow.open(map, this);
+      });
+      addNewMarker(marker, false);
+    };
 
+    const countService = (services, label) => {
       if (services[label]) {
-        services[label] += data.length;
-        let communityResources = this.state.communityResources + data.length;
+        // services[label] += data.length;
+        services[label] += 1;
+        // let communityResources = this.state.communityResources + data.length;
+        let communityResources = this.state.communityResources + 1;
         this.setState({ services, communityResources });
         return;
       }
-      services[label] = data.length;
-      let communityResources = this.state.communityResources + data.length;
+      // services[label] = data.length;
+      services[label] = 1;
+      // let communityResources = this.state.communityResources + data.length;
+      let communityResources = this.state.communityResources + 1;
       this.setState({ services, communityResources });
+      return;
     }
 
     let transitStopMarkers = [];
@@ -481,12 +474,12 @@ export default class Score extends Component {
     // // TODO: Social services center
 
       showService(['supermarket'], 'Supermarket');
-      // showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
-      // showService(['convenience_store'], 'Convenience Store');
-      // showService(['hardware_store'], 'Hardware Store');
-      // showService(['pharmacy'], 'Pharmacy');
-      // showService(['bank'], 'Bank');
-      // showService(['gym'], 'Gym, health club, exercise studio');
+      showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
+      showService(['convenience_store'], 'Convenience Store');
+      showService(['hardware_store'], 'Hardware Store');
+      showService(['pharmacy'], 'Pharmacy');
+      showService(['bank'], 'Bank');
+      showService(['gym'], 'Gym, health club, exercise studio');
       // showService(['hair_care'], 'Hair care');
       // showService(['laundry'], 'Laundry/dry cleaner');
       // showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
