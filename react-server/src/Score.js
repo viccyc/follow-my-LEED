@@ -68,10 +68,10 @@ export default class Score extends Component {
     const map = new googleMaps.Map(document.getElementById('map'), {
       zoom: 15,
       center: location,
-      // mapTypeControlOptions: {
-      //   mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
-      //     'styled_map']
-      // }
+      mapTypeControlOptions: {
+        mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+          'styled_map']
+      }
     });
 
     const marker = new googleMaps.Marker({
@@ -88,121 +88,82 @@ export default class Score extends Component {
       radius: 800
     });
 
-    // const styledMapType = new googleMaps.StyledMapType(
-    //   [
-    //     { elementType: 'geometry', stylers: [{ color: '#ebe3cd' }] },
-    //     { elementType: 'labels.text.fill', stylers: [{ color: '#523735' }] },
-    //     { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f1e6' }] },
-    //     {
-    //       featureType: 'administrative',
-    //       elementType: 'geometry.stroke',
-    //       stylers: [{ color: '#c9b2a6' }]
-    //     },
-    //     {
-    //       featureType: 'administrative.land_parcel',
-    //       elementType: 'geometry.stroke',
-    //       stylers: [{ color: '#dcd2be' }]
-    //     },
-    //     {
-    //       featureType: 'administrative.land_parcel',
-    //       elementType: 'labels.text.fill',
-    //       stylers: [{ color: '#ae9e90' }]
-    //     },
-    //     {
-    //       featureType: 'landscape.natural',
-    //       elementType: 'geometry',
-    //       stylers: [{ color: '#dfd2ae' }]
-    //     },
-    //     {
-    //       featureType: 'poi',
-    //       elementType: 'geometry',
-    //       stylers: [{ color: '#dfd2ae' }]
-    //     },
-    //     {
-    //       featureType: 'poi',
-    //       elementType: 'labels.text.fill',
-    //       stylers: [{ color: '#93817c' }]
-    //     },
-    //     {
-    //       featureType: 'poi.park',
-    //       elementType: 'geometry.fill',
-    //       stylers: [{ color: '#a5b076' }]
-    //     },
-    //     {
-    //       featureType: 'poi.park',
-    //       elementType: 'labels.text.fill',
-    //       stylers: [{ color: '#447530' }]
-    //     },
-    //     {
-    //       featureType: 'road',
-    //       elementType: 'geometry',
-    //       stylers: [{ color: '#f5f1e6' }]
-    //     },
-    //     {
-    //       featureType: 'road.arterial',
-    //       elementType: 'geometry',
-    //       stylers: [{ color: '#fdfcf8' }]
-    //     },
-    //     {
-    //       featureType: 'road.highway',
-    //       elementType: 'geometry',
-    //       stylers: [{ color: '#f8c967' }]
-    //     },
-    //     {
-    //       featureType: 'road.highway',
-    //       elementType: 'geometry.stroke',
-    //       stylers: [{ color: '#e9bc62' }]
-    //     },
-    //     {
-    //       featureType: 'road.highway.controlled_access',
-    //       elementType: 'geometry',
-    //       stylers: [{ color: '#e98d58' }]
-    //     },
-    //     {
-    //       featureType: 'road.highway.controlled_access',
-    //       elementType: 'geometry.stroke',
-    //       stylers: [{ color: '#db8555' }]
-    //     },
-    //     {
-    //       featureType: 'road.local',
-    //       elementType: 'labels.text.fill',
-    //       stylers: [{ color: '#806b63' }]
-    //     },
-    //     {
-    //       featureType: 'transit.line',
-    //       elementType: 'geometry',
-    //       stylers: [{ color: '#dfd2ae' }]
-    //     },
-    //     {
-    //       featureType: 'transit.line',
-    //       elementType: 'labels.text.fill',
-    //       stylers: [{ color: '#8f7d77' }]
-    //     },
-    //     {
-    //       featureType: 'transit.line',
-    //       elementType: 'labels.text.stroke',
-    //       stylers: [{ color: '#ebe3cd' }]
-    //     },
-    //     {
-    //       featureType: 'transit.station',
-    //       elementType: 'geometry',
-    //       stylers: [{ color: '#dfd2ae' }]
-    //     },
-    //     {
-    //       featureType: 'water',
-    //       elementType: 'geometry.fill',
-    //       stylers: [{ color: '#b9d3c2' }]
-    //     },
-    //     {
-    //       featureType: 'water',
-    //       elementType: 'labels.text.fill',
-    //       stylers: [{ color: '#92998d' }]
-    //     }
-    //   ],
-    //   { name: 'Styled Map' });
+    const styledMapType = new googleMaps.StyledMapType(
+      [
+        {
+            "featureType": "landscape.natural",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "visibility": "on"
+                },
+                {
+                    "color": "#e0efef"
+                }
+            ]
+        },
+        {
+            "featureType": "poi",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "visibility": "on"
+                },
+                {
+                    "hue": "#1900ff"
+                },
+                {
+                    "color": "#c0e8e8"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "lightness": 100
+                },
+                {
+                    "visibility": "simplified"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "labels",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "transit.line",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "visibility": "on"
+                },
+                {
+                    "lightness": 700
+                }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "all",
+            "stylers": [
+                {
+                    "color": "#7dcdcd"
+                }
+            ]
+        }
+    ],
+    { name: 'Styled Map' });
 
-    // map.mapTypes.set('styled_map', styledMapType);
-    // map.setMapTypeId('styled_map');
+    map.mapTypes.set('styled_map', styledMapType);
+    map.setMapTypeId('styled_map');
 
     const drawingManager = new googleMaps.drawing.DrawingManager({
       drawingMode: googleMaps.drawing.OverlayType.MARKER,
