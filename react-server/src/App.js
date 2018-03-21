@@ -11,7 +11,7 @@ import NoMatch from './NoMatch';
 import './Nav.css';
 
 class App extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -35,12 +35,12 @@ class App extends Component {
       //     function(results, status) {
       //       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
       //         console.log(status);
-      //         console.log(results); 
+      //         console.log(results);
       //       }
       //     }
       // );
       // console.log(address_id);
-  
+
       axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
         .then(results => {
           // console.log(results);
@@ -59,7 +59,7 @@ class App extends Component {
         });
     }
   }
-            
+
   handleSearch(address, pathname) {
     if (pathname === '/') {
       this.setState({ address: address });

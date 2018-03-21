@@ -393,8 +393,6 @@ export default class Score extends Component {
 
     const filterDistance = (place)=>{
       //prepare data&function in search
-      console.log('in filterDistance');
-      
       const origins = [`${address.lat},${address.lng}`];
       const destinations = [`${place.geometry.location.lat()},${place.geometry.location.lng()}`];
       const distanceService = new googleMaps.DistanceMatrixService();
@@ -405,10 +403,8 @@ export default class Score extends Component {
         travelMode: 'WALKING',
         unitSystem: googleMaps.UnitSystem.METRIC
       }
-      console.log('request in filterDistance', request);
       const callback = (response, status) => {
         if (status === 'OK') {
-          console.log('callback in filterDistance', response);
           const origins = response.originAddresses;
           const destinations = response.destinationAddresses;
 
@@ -417,7 +413,6 @@ export default class Score extends Component {
             for (let j = 0; j < results.length; j++) {
               let element = results[j];
               let value = element.distance.value;
-              console.log(value);
               //if distance is qualified, create marker;
               if (value <= 800){
                 createMarker(place);
@@ -431,7 +426,7 @@ export default class Score extends Component {
     };
 
     const countService = (services, label, data) => {
-      
+
       if (services[label]) {
         services[label] += data.length;
         let communityResources = this.state.communityResources + data.length;
@@ -469,10 +464,10 @@ export default class Score extends Component {
       };
       service.nearbySearch(request, callback);
     }
-    
+
     showTransit(['transit_station'], 'Intersections');
-    // console.log('transitStopMarkers', transitStopMarkers);
-    
+    console.log('transitStopMarkers', transitStopMarkers);
+
     // // TODO: Food Retail
     // // TODO: Grocery with produce section
     // // TODO: Community - Serving Retail
@@ -484,8 +479,7 @@ export default class Score extends Component {
     // // TODO: Child care(licensed)
     // // TODO: Community or recreation center
     // // TODO: Social services center
-    
-    // if (criteriaClicked.includes('community_resources')) {
+
       showService(['supermarket'], 'Supermarket');
       // showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
       // showService(['convenience_store'], 'Convenience Store');
@@ -599,7 +593,7 @@ export default class Score extends Component {
             // console.log('in showMarkers markerCluster', markerCluster);
             markerCluster.getMarkers().forEach((marker) => {
               marker.setMap(map);
-            });           
+            });
             break;
           case 'transit_stops':
             transitStopMarkers.forEach((marker) => {
@@ -618,7 +612,7 @@ export default class Score extends Component {
             });
             break;
           case 'community_resources':
-            // console.log('in showMarkers markerCluster', markerCluster);            
+            // console.log('in showMarkers markerCluster', markerCluster);
             markerCluster.getMarkers().forEach((marker) => {
               marker.setMap(null);
             });
