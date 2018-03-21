@@ -8,8 +8,6 @@ import Projects from './Projects';
 import NoMatch from './NoMatch';
 
 import './Nav.css';
-import './NavForm.css';
-
 
 class App extends Component {
   
@@ -57,7 +55,7 @@ class App extends Component {
     } else if (!this.state.address) {
       return (
         <div>
-          <nav id="navbar" className="navbar navbar">
+          <nav id="navbar" className="navbar">
             <div>
               <Link to="/find_score" id="navbar-link1" className="nav-link" style={{ textDecoration: "none" }}>CALCULATE SCORE</Link>
               <Link to="/projects" id="navbar-link2" className="nav-link" style={{ textDecoration: "none" }}>SHOW PROJECTS</Link>
@@ -71,7 +69,7 @@ class App extends Component {
     } else {
       return (
         <div>
-          <nav id="navbar" className="navbar navbar">
+          <nav id="navbar" className="navbar">
             <div>
               <Link to="/find_score" id="navbar-link1" className="nav-link" style={{ textDecoration: "none" }}>CALCULATE SCORE</Link>
               <Link to="/projects" id="navbar-link2" className="nav-link" style={{ textDecoration: "none" }}>SHOW PROJECTS</Link>
@@ -93,3 +91,10 @@ class App extends Component {
 }
 
 export default withRouter(App);
+
+<nav class="navbar navbar-light bg-light">
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav>

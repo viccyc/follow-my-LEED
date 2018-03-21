@@ -1,7 +1,7 @@
 #navbar {
   background-color: #359135;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
 }
 
 #navbar-link1 {
@@ -17,23 +17,32 @@
   margin-left: 5px;
 }
 
-#navTextField {
-  width: 250px;
-}
-
 .form-control {
   width: 350px;
 }
 
 #tableDiv {
-  background-color: #f2efef;
+  /* background-color: #f2efef; */
   padding-left: 0px;
 }
 
-#scoreTable {
-  background-color: #e7eae7;
+#table {
+  background-color: whitesmoke;
 }
 
 #tableCell {
   padding: 10px
+}
+
+#navTextField {
+  width: 25vw;
+}
+
+#sub-btn {
+  background-color: #3aa83a;
+  border-color: #359135;
+  border-left: none;
+  /* border-top-left-radius: 0;
+  border-bottom-left-radius: 0; */
+  font-size: large;
 }

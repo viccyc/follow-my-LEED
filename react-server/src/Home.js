@@ -10,15 +10,15 @@ export default class Home extends Component {
     this.state = {
       autocomplete: null,
       title: {
-        '/': 'FOLLOW MY LEED',
-        '/find_score': 'CALCULATE LEED SCORE',
-        '/projects': 'SHOW LEED PROJECTS'
+        '/': 'Follow My LEED',
+        '/find_score': 'Calculate LEED Score',
+        '/projects': 'Show LEED Projects'
       },
-      focus: false,
-      submitButton: true
+      submitButton: true,
+      showFlashMessage: false
     };
-    this.blurHandler = this.blurHandler.bind(this);
-    this.focusHandler = this.focusHandler.bind(this);
+    // this.blurHandler = this.blurHandler.bind(this);
+    // this.focusHandler = this.focusHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.initAutocomplete = this.initAutocomplete.bind(this);
   }
@@ -27,25 +27,27 @@ export default class Home extends Component {
     this.initAutocomplete();
   }
 
-  blurHandler() {
-    this.setState({ focus: false });
-  }
+  // blurHandler() {
+  //   this.setState({ showFlashMessage: false });
+  // }
 
-  focusHandler() {
-    this.setState({ focus: true });
-  }
+  // focusHandler() {
+  //   this.setState({ showFlashMessage: true });
+  // }
 
   handleSubmit(event) {
     event.preventDefault();
     const place = this.state.autocomplete.getPlace();
     if (!place) {
+      this.setState({ showFlashMessage: true });
+    } else {
+      const address = {
+        name: place.formatted_address,
+        lat: parseFloat(place.geometry.location.lat().toFixed(7)),
+        lng: parseFloat(place.geometry.location.lng().toFixed(7))
+      };
+      this.props.handleSearch(address, this.props.location.pathname);
     }
-    const address = {
-      name: place.formatted_address,
-      lat: parseFloat(place.geometry.location.lat().toFixed(7)),
-      lng: parseFloat(place.geometry.location.lng().toFixed(7))
-    };
-    this.props.handleSearch(address, this.props.location.pathname);
   }
 
   initAutocomplete() {
@@ -75,37 +77,46 @@ export default class Home extends Component {
   // }
 
   render() {
-    const flashMessage = () => {
-      if (this.state.focus) {
-        return (
-          <div className="alert alert-warning" role="alert">
-            Please select from one of the drop down options.
-          </div>
-        );
-      }
-    };
+    // const flashMessage = () => {
+    //   if (this.state.focus) {
+    //     return (
+    //       <div id="alert" className="alert alert-warning" style={{display: this.state.showFlashMessage ? 'block' : 'none' }}
+    //       role="alert">
+    //         Please select from one of the drop down options.
+    //       </div>
+    //     );
+    //   } else {
+    //     return (<div className="alert alert-warning" role="alert">test</div>)
+    //   }
+    // };
     return (
       <main id="mainPhoto" style={{ backgroundImage: `url(${backgroundImg})` }}>
-        <h1 id="mainTitle" className="title text-center">{this.state.title[this.props.location.pathname]}</h1>
-        <form onSubmit={this.handleSubmit}>
-          <div className="input-group input-group-lg">
-            <div className="input-group-prepend">
-              <span className="input-group-text" id="inputGroup-sizing-lg">Location</span>
-            </div>
-            <input name="location"
-              id="searchTextField"
-              type="text"
-              className="form-control"
-              aria-label="Large"
-              aria-describedby="inputGroup-sizing-sm"
-              placeholder='Enter a location'
-              onFocus={this.focusHandler}
-              onBlur={this.blurHandler}
-              onChange={this.handleChange} />
-           <button id="go-button" type="submit" className="btn btn-primary">Go!</button>
+        <div id="padding-30vh"></div>
+        <div id="searchElements">
+          <h1 id="mainTitle" className="text-center">{this.state.title[this.props.location.pathname]}</h1>
+          <div id="alert" className="alert alert-warning" style={{display: this.state.showFlashMessage ? 'block' : 'none' }}
+          role="alert">
+            Please select from one of the drop down options.
           </div>
-        </form>
-        {flashMessage()}
+          <form id="homeForm"onSubmit={this.handleSubmit}>
+            <div className="input-group input-group-lg">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="inputGroup-sizing-lg">Location</span>
+              </div>
+              <input name="location"
+                id="searchTextField"
+                type="text"
+                className="form-control"
+                aria-label="Large"
+                aria-describedby="inputGroup-sizing-sm"
+                placeholder='Enter a location'
+                onFocus={this.focusHandler}
+                onBlur={this.blurHandler}
+                onChange={this.handleChange} />
+            <button id="go-button" type="submit" className="btn btn-primary">Search</button>
+            </div>
+          </form>
+        </div>
       </main>
     );
   }

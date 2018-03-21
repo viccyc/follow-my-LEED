@@ -4,10 +4,22 @@ import React, { Component } from 'react';
 import Home from './Home';
 import ScoreTable from './ScoreTable';
 
+<<<<<<< HEAD
 import intersectionIcon from './images/intersection.png';
 import transportation from './images/transportation.png';
 
+=======
+import communityresourcesImg from './images/communityresources.png';
+import crossroads from './images/crossroads.png';
+>>>>>>> upstream/master
 import info from './images/info.png';
+import intersectionsImg from './images/intersections.png';
+// import m1 from './images/m1.png';
+// import m2 from './images/m2.png';
+// import m3 from './images/m3.png';
+// import m4 from './images/m4.png';
+// import m5 from './images/m5.png';
+import transitstopsImg from './images/transitstops3.png';
 
 export default class Score extends Component {
 
@@ -212,7 +224,12 @@ export default class Score extends Component {
     googleMaps.event.addListener(drawingManager, 'polygoncomplete', (polygon) => {
       const area = googleMaps.geometry.spherical.computeArea(polygon.getPath());
       console.log('polygon complete, area is ', Math.ceil(area), 'square meters');
-      this.setState({ area: Math.ceil(area) });
+      if (this.state.area) {
+        const newArea = this.state.area + Math.ceil(area);
+        this.setState({ area: newArea });
+      } else {
+        this.setState({ area: Math.ceil(area) });
+      }
     });
 
     let markersList = [];
@@ -246,7 +263,7 @@ export default class Score extends Component {
 
     const createMarker = (place)=>{
       const marker = new googleMaps.Marker({
-        icon: info,
+        icon: communityresourcesImg,
         position: place.geometry.location
       });
       const infowindow = new googleMaps.InfoWindow();
@@ -254,9 +271,7 @@ export default class Score extends Component {
         infowindow.setContent(place.name);
         infowindow.open(map, this);
       });
-      // addNewMarker(marker, true);
-      addNewMarker(marker);
-
+      addNewMarker(marker, false);
     };
 
     const filterDistance = (place)=>{
@@ -315,11 +330,9 @@ export default class Score extends Component {
       };
       const callback = (results, status) => {
         if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
-        // countService(services, label, results);
         results.forEach((place) => {
           const marker = new googleMaps.Marker({
-            // map: map,
-            icon: transportation,
+            icon: transitstopsImg,
             position: place.geometry.location
           });
           const infowindow = new googleMaps.InfoWindow();
@@ -351,7 +364,7 @@ export default class Score extends Component {
     // // TODO: Social services center
 
       showService(['supermarket'], 'Supermarket');
-      showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
+      // showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
       // showService(['convenience_store'], 'Convenience Store');
       // showService(['hardware_store'], 'Hardware Store');
       // showService(['pharmacy'], 'Pharmacy');
@@ -370,6 +383,7 @@ export default class Score extends Component {
       // showService(['post_office'], 'Post office');
       // showService(['library'], 'Public library');
       // showService(['park'], 'Public park');
+    // }
 
     // get all ways around a certain address
     let intersectionMarkers = [];
@@ -439,7 +453,7 @@ export default class Score extends Component {
               // console.log(typeof intersection.lat);
               const intersectionMarker = new googleMaps.Marker({
                 // map: map,
-                icon: intersectionIcon,
+                icon: intersectionsImg,
                 position: { lat: intersection.lat, lng: intersection.lon }
               });
               intersectionMarkers.push(intersectionMarker);
@@ -459,17 +473,10 @@ export default class Score extends Component {
             });
             break;
           case 'community_resources':
-            // console.log('in showMarkers ', markersList);
-            console.log('in showMarkers markerCluster.getMarkers()', markerCluster.getMarkers());
             // console.log('in showMarkers markerCluster', markerCluster);
-            // markerCluster.setMap(map);
-            // markersList.forEach((marker) => {
-            //   marker.setMap(map);
-            // });
-            // markerCluster.getMarkers().setVisible(true);
-            // markerCluster.repaint();
-
-
+            markerCluster.getMarkers().forEach((marker) => {
+              marker.setMap(map);
+            });
             break;
           case 'transit_stops':
             transitStopMarkers.forEach((marker) => {
@@ -488,14 +495,10 @@ export default class Score extends Component {
             });
             break;
           case 'community_resources':
-            // console.log('in showMarkers markersList', markersList);
-            console.log('in showMarkers markerCluster.getMarkers()', markerCluster.getMarkers());
             // console.log('in showMarkers markerCluster', markerCluster);
-            // markerCluster.setMap(null);
-            // markersList.forEach((marker) => {
-            //   marker.setMap(null);
-            // });
-            // markerCluster.getMarkers().setVisible(false);
+            markerCluster.getMarkers().forEach((marker) => {
+              marker.setMap(null);
+            });
             break;
           case 'transit_stops':
             transitStopMarkers.forEach((marker) => {
@@ -512,11 +515,11 @@ export default class Score extends Component {
     return (
       <div className="container mt-2">
         <div className="row">
-          <div className="col-8 pl-0">
-            <div id='map' style={{ height: `600px`, width: `100%` }} />
+          <div className="col-lg-8 col-md-12 pl-0">
+            <div id='map' style={{ height: `88vh`, width: `100%` }} />
           </div>
-          <div id="tableDiv" className="col-4 pr-0">
-            <ScoreTable criteriaClicked={this.state.criteriaClicked} handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} />
+          <div id="tableDiv" className="col-lg-4 col-md-12 pr-0">
+            <ScoreTable area={this.state.area} criteriaClicked={this.state.criteriaClicked} handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} />
           </div>
         </div>
       </div>
