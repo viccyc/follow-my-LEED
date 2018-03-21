@@ -349,13 +349,13 @@ export default class Score extends Component {
       }
     });
 
-    let markersList = [];
     let services = this.state.services;
-    const markerCluster = new MarkerClusterer(map, markersList,
-      { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-    const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
+    // const markerCluster = new MarkerClusterer(map, markersList,
+    // { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+    // const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
     const service = new googleMaps.places.PlacesService(map);
 
+    let serviceList = [];
     const showService = (type, label) => {
       const request = {
         location: location,
@@ -411,7 +411,8 @@ export default class Score extends Component {
         infowindow.setContent(place.name);
         infowindow.open(map, this);
       });
-      addNewMarker(marker, false);
+      serviceList.push(marker);
+      // addNewMarker(marker, false);
     };
 
     const countService = (services, label) => {
@@ -438,7 +439,7 @@ export default class Score extends Component {
         radius: '400',
         type: type
       };
-      const callback = (results, status) => {
+      const callback = (results, status, pagination) => {
         if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
         results.forEach((place) => {
           const marker = new googleMaps.Marker({
@@ -452,7 +453,15 @@ export default class Score extends Component {
           });
           transitStopMarkers.push(marker);
         });
-        this.setState({ transitStops: results.length });
+        if (pagination.hasNextPage) {
+          pagination.nextPage();
+        };
+        if (!this.state.transitStops){
+          this.setState({ transitStops: results.length });
+        } else {
+          const newStopsNum = this.state.transitStops + results.length;
+          this.setState({ transitStops: newStopsNum});
+        }
 
       };
       service.nearbySearch(request, callback);
@@ -473,18 +482,18 @@ export default class Score extends Component {
     // // TODO: Community or recreation center
     // // TODO: Social services center
 
-      showService(['supermarket'], 'Supermarket');
-      showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
-      showService(['convenience_store'], 'Convenience Store');
-      showService(['hardware_store'], 'Hardware Store');
-      showService(['pharmacy'], 'Pharmacy');
-      showService(['bank'], 'Bank');
-      showService(['gym'], 'Gym, health club, exercise studio');
+      // showService(['supermarket'], 'Supermarket');
+      // showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
+      // showService(['convenience_store'], 'Convenience Store');
+      // showService(['hardware_store'], 'Hardware Store');
+      // showService(['pharmacy'], 'Pharmacy');
+      // showService(['bank'], 'Bank');
+      // showService(['gym'], 'Gym, health club, exercise studio');
       // showService(['hair_care'], 'Hair care');
-      // showService(['laundry'], 'Laundry/dry cleaner');
+      // // showService(['laundry'], 'Laundry/dry cleaner');
       // showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
       // showService(['art_gallery', 'museum'], 'Cultural arts facility');
-      // showService(['school'], 'Education facility');
+      showService(['school'], 'Education facility');
       // showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
       // showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
       // showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
@@ -583,8 +592,11 @@ export default class Score extends Component {
             });
             break;
           case 'community_resources':
-            // console.log('in showMarkers markerCluster', markerCluster);
-            markerCluster.getMarkers().forEach((marker) => {
+            console.log('in showMarkers markerCluster', serviceList);
+            // markerCluster.getMarkers().forEach((marker) => {
+            //   marker.setMap(map);
+            // });
+            serviceList.forEach((marker) => {
               marker.setMap(map);
             });
             break;
@@ -605,8 +617,11 @@ export default class Score extends Component {
             });
             break;
           case 'community_resources':
-            // console.log('in showMarkers markerCluster', markerCluster);
-            markerCluster.getMarkers().forEach((marker) => {
+            console.log('in showMarkers markerCluster', serviceList);
+            // markerCluster.getMarkers().forEach((marker) => {
+            //   marker.setMap(null);
+            // });
+            serviceList.forEach((marker) => {
               marker.setMap(null);
             });
             break;
