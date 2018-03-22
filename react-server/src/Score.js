@@ -41,10 +41,10 @@ export default class Score extends Component {
       this.setState({ 
         showMarkers: showMarkers, 
         hideMarkers: hideMarkers,
-        area: null,
-        streetNetwork: null, // count
-        communityResources: null, // count
-        transitStops: null, // count
+        // area: null,
+        // streetNetwork: null, // count
+        // communityResources: null, // count
+        // transitStops: null, // count
       });
     };
   }
