@@ -38,16 +38,28 @@ export default class Score extends Component {
     if (this.props.address) {
       // this.initMapAndMarker(this.props.address);
       const { showMarkers, hideMarkers} = this.initMapAndMarker(this.props.address);
-      this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
+      this.setState({ 
+        showMarkers: showMarkers, 
+        hideMarkers: hideMarkers,
+        area: null,
+        streetNetwork: null, // count
+        communityResources: null, // count
+        transitStops: null, // count
+      });
     };
   }
 
   componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
-    // if (this.props.address !== nextProps.address) {
+    if (this.props.address.id !== nextProps.address.id) {
     // this.initMapAndMarker(nextProps.address);
-    const { showMarkers, hideMarkers} = this.initMapAndMarker(nextProps.address);
-    this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
+      const { showMarkers, hideMarkers} = this.initMapAndMarker(nextProps.address);
+      this.setState({ 
+        showMarkers: showMarkers, 
+        hideMarkers: hideMarkers,
+        communityResources: null, // count
+      });
+    }
   }
 
   handleClick(value) {
@@ -656,7 +668,7 @@ export default class Score extends Component {
             <div id='map' style={{ height: `88vh`, width: `100%` }} />
           </div>
           <div id="tableDiv" className="col-lg-4 col-md-12 pr-0">
-            <ScoreTable area={this.state.area} criteriaClicked={this.state.criteriaClicked} handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} />
+            <ScoreTable address={this.props.address} area={this.state.area} criteriaClicked={this.state.criteriaClicked} handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} />
           </div>
         </div>
       </div>
