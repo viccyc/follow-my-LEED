@@ -17,7 +17,13 @@ class ScoreTable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.address !)
+    if (this.props.address.id !== nextProps.address.id) {
+      this.setState({
+        'street_network': false,
+        'community_resources': false,
+        'transit_stops': false
+      });
+    }
   }
 
   handleHideClick(event) {
