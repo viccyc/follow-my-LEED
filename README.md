@@ -13,8 +13,8 @@ This file cannot be run with `knex seed:run` because it makes http requests.
 !["Landing Page"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Landing%20page.png)
 !["Auto-complete"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Auto-complete.png)
 !["LEED Buildings"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/LEED%20buildings.png)
-!["Services Transit"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Services%20and%20transit.png)
 !["Intersections"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Intersections.png)
+!["Services Transit"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Services%20and%20transit.png)
 !["Polygon"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Polygon.png)
 !["Tech stack"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Tech%20Stack.pdf)
 
