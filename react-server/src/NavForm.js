@@ -45,6 +45,7 @@ export default class NavForm extends Component {
 
     const place = this.state.autocomplete.getPlace();
     const address = {
+      id: place.place_id,
       name: place.formatted_address,
       lat: parseFloat(place.geometry.location.lat().toFixed(7)),
       lng: parseFloat(place.geometry.location.lng().toFixed(7))
