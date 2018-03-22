@@ -1,7 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+A single-page full-stack app which evaluates the surroundings of a location based on a rating system, and maps other LEED certified buildings in the area. 
 
-Below you will find some information on how to perform common tasks.<br>
-You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+Node.js | Express | PostgreSQL | Knex | React | Map APIs | Bootstrap | CSS | HTML
 
 ## Seed Files
 
@@ -11,4 +10,11 @@ This file cannot be run with `knex seed:run` because it makes http requests.
 
 ## Screenshots - In Progress, more to be added
 
-!["show Projects"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/showProjects.png)
+!["Landing Page"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Landing%20page.png)
+!["Auto-complete"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Auto-complete.png)
+!["LEED Buildings"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/LEED%20buildings.png)
+!["Services Transit"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Services%20and%20transit.png)
+!["Intersections"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Intersections.png)
+!["Polygon"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Polygon.png)
+!["Tech stack"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Tech%20Stack.pdf)
+
