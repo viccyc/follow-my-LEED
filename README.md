@@ -16,4 +16,4 @@ This file cannot be run with `knex seed:run` because it makes http requests.
 !["Intersections"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Intersections.png)
 !["Services Transit"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Services%20and%20transit.png)
 !["Polygon"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Polygon.png)
-![embed]https://github.com/viccyc/follow-my-LEED/blob/master/docs/Tech%20Stack.pdf[/embed]
+!["Tech stack"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Tech%20stack.png)
