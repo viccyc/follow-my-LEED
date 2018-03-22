@@ -22,7 +22,11 @@ class App extends Component {
 
   componentDidMount() {
     // console.log(this.props.location.search);
-    if (!this.state.address && this.props.location.search) {
+    if (!this.state.address && !this.props.location.search) {
+      this.props.history.push({
+        pathname: this.props.location.pathname
+      });
+    } else if (!this.state.address && this.props.location.search) {
       // console.log('in componentwillmount')
       const search = this.props.location.search;
       const params = new URLSearchParams(search);
