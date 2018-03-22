@@ -38,16 +38,28 @@ export default class Score extends Component {
     if (this.props.address) {
       // this.initMapAndMarker(this.props.address);
       const { showMarkers, hideMarkers} = this.initMapAndMarker(this.props.address);
-      this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
+      this.setState({ 
+        showMarkers: showMarkers, 
+        hideMarkers: hideMarkers,
+        // area: null,
+        // streetNetwork: null, // count
+        // communityResources: null, // count
+        // transitStops: null, // count
+      });
     };
   }
 
   componentWillReceiveProps(nextProps) {
     // console.log('in MapContainer componentWillReceiveProps', nextProps);
-    // if (this.props.address !== nextProps.address) {
+    if (this.props.address.id !== nextProps.address.id) {
     // this.initMapAndMarker(nextProps.address);
-    const { showMarkers, hideMarkers} = this.initMapAndMarker(nextProps.address);
-    this.setState({ showMarkers: showMarkers, hideMarkers: hideMarkers});
+      const { showMarkers, hideMarkers} = this.initMapAndMarker(nextProps.address);
+      this.setState({ 
+        showMarkers: showMarkers, 
+        hideMarkers: hideMarkers,
+        communityResources: null, // count
+      });
+    }
   }
 
   handleClick(value) {
@@ -86,6 +98,15 @@ export default class Score extends Component {
       map: map,
       center: location,
       radius: 800
+    });
+
+    const circle2 = new googleMaps.Circle({
+      strokeWeight: 0,
+      fillColor: '#87cefa',
+      fillOpacity: 0.25,
+      map: map,
+      center: location,
+      radius: 400
     });
 
     const styledMapType = new googleMaps.StyledMapType(
@@ -349,14 +370,13 @@ export default class Score extends Component {
       }
     });
 
-    let markersList = [];
     let services = this.state.services;
-    const markerCluster = new MarkerClusterer(map, markersList, { ignoreHidden: false },
-      { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' }
-    );
-    const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
+    // const markerCluster = new MarkerClusterer(map, markersList,
+    // { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+    // const addNewMarker = MarkerClusterer.prototype.addMarker.bind(markerCluster);
     const service = new googleMaps.places.PlacesService(map);
 
+    let serviceList = [];
     const showService = (type, label) => {
       const request = {
         location: location,
@@ -365,10 +385,9 @@ export default class Score extends Component {
       };
       const callback = (results, status, pagination) => {
         if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
-        countService(services, label, results);
         results.forEach((place) => {
           console.log('going to run filterDistance');
-          filterDistance(place);
+          filterDistance(place, label);
         });
         if (pagination.hasNextPage) {
           pagination.nextPage();
@@ -378,23 +397,9 @@ export default class Score extends Component {
       // markerCluster.redraw();
     }
 
-    const createMarker = (place)=>{
-      const marker = new googleMaps.Marker({
-        icon: communityresourcesImg,
-        position: place.geometry.location
-      });
-      const infowindow = new googleMaps.InfoWindow();
-      googleMaps.event.addListener(marker, 'click', function () {
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-      });
-      addNewMarker(marker, false);
-    };
 
-    const filterDistance = (place)=>{
+    const filterDistance = (place, label)=>{
       //prepare data&function in search
-      console.log('in filterDistance');
-      
       const origins = [`${address.lat},${address.lng}`];
       const destinations = [`${place.geometry.location.lat()},${place.geometry.location.lng()}`];
       const distanceService = new googleMaps.DistanceMatrixService();
@@ -405,42 +410,49 @@ export default class Score extends Component {
         travelMode: 'WALKING',
         unitSystem: googleMaps.UnitSystem.METRIC
       }
-      console.log('request in filterDistance', request);
       const callback = (response, status) => {
         if (status === 'OK') {
-          console.log('callback in filterDistance', response);
-          const origins = response.originAddresses;
-          const destinations = response.destinationAddresses;
-
-          for (let i = 0; i < origins.length; i++) {
-            let results = response.rows[i].elements;
-            for (let j = 0; j < results.length; j++) {
-              let element = results[j];
-              let value = element.distance.value;
-              console.log(value);
-              //if distance is qualified, create marker;
-              if (value <= 800){
-                createMarker(place);
-              }
-            }
+          console.log(response.rows[0].elements[0].distance.value);
+          if (response.rows[0].elements[0].distance.value < 800) {
+            createMarker(place);
+            countService(services, label);
           }
         }
+
       }
       checkDistance(request, callback);
 
     };
 
-    const countService = (services, label, data) => {
-      
+    const createMarker = (place, label)=>{
+      const marker = new googleMaps.Marker({
+        icon: communityresourcesImg,
+        position: place.geometry.location
+      });
+      const infowindow = new googleMaps.InfoWindow();
+      googleMaps.event.addListener(marker, 'click', function () {
+        infowindow.setContent(place.name);
+        infowindow.open(map, this);
+      });
+      serviceList.push(marker);
+      // addNewMarker(marker, false);
+    };
+
+    const countService = (services, label) => {
       if (services[label]) {
-        services[label] += data.length;
-        let communityResources = this.state.communityResources + data.length;
+        // services[label] += data.length;
+        services[label] += 1;
+        // let communityResources = this.state.communityResources + data.length;
+        let communityResources = this.state.communityResources + 1;
         this.setState({ services, communityResources });
         return;
       }
-      services[label] = data.length;
-      let communityResources = this.state.communityResources + data.length;
+      // services[label] = data.length;
+      services[label] = 1;
+      // let communityResources = this.state.communityResources + data.length;
+      let communityResources = this.state.communityResources + 1;
       this.setState({ services, communityResources });
+      return;
     }
 
     let transitStopMarkers = [];
@@ -450,7 +462,7 @@ export default class Score extends Component {
         radius: '400',
         type: type
       };
-      const callback = (results, status) => {
+      const callback = (results, status, pagination) => {
         if (status !== googleMaps.places.PlacesServiceStatus.OK) return;
         results.forEach((place) => {
           const marker = new googleMaps.Marker({
@@ -464,15 +476,23 @@ export default class Score extends Component {
           });
           transitStopMarkers.push(marker);
         });
-        this.setState({ transitStops: results.length });
+        if (pagination.hasNextPage) {
+          pagination.nextPage();
+        };
+        if (!this.state.transitStops){
+          this.setState({ transitStops: results.length });
+        } else {
+          const newStopsNum = this.state.transitStops + results.length;
+          this.setState({ transitStops: newStopsNum});
+        }
 
       };
       service.nearbySearch(request, callback);
     }
-    
+
     showTransit(['transit_station'], 'Intersections');
-    // console.log('transitStopMarkers', transitStopMarkers);
-    
+    console.log('transitStopMarkers', transitStopMarkers);
+
     // // TODO: Food Retail
     // // TODO: Grocery with produce section
     // // TODO: Community - Serving Retail
@@ -484,28 +504,28 @@ export default class Score extends Component {
     // // TODO: Child care(licensed)
     // // TODO: Community or recreation center
     // // TODO: Social services center
-    
-    // if (criteriaClicked.includes('community_resources')) {
+
       showService(['supermarket'], 'Supermarket');
       // showService(['department_store', 'clothing_store'], 'Clothing store/department store selling clothes');
-      // showService(['convenience_store'], 'Convenience Store');
-      // showService(['hardware_store'], 'Hardware Store');
-      // showService(['pharmacy'], 'Pharmacy');
-      // showService(['bank'], 'Bank');
-      // showService(['gym'], 'Gym, health club, exercise studio');
-      // showService(['hair_care'], 'Hair care');
+      showService(['convenience_store'], 'Convenience Store');
+      showService(['hardware_store'], 'Hardware Store');
+      showService(['pharmacy'], 'Pharmacy');
+      showService(['bank'], 'Bank');
+      showService(['gym'], 'Gym, health club, exercise studio');
+      showService(['hair_care'], 'Hair care');
       // showService(['laundry'], 'Laundry/dry cleaner');
       // showService(['bar', 'cafe', 'restaurant'], 'Restaurant/café/diner');
+      showService(['restaurant'], 'Restaurant/café/diner');
       // showService(['art_gallery', 'museum'], 'Cultural arts facility');
-      // showService(['school'], 'Education facility');
+      showService(['school'], 'Education facility');
       // showService(['bowling_alley', 'movie_theater'], 'Family entertainment venue');
       // showService(['local_government_office', 'city_hall'], 'Government office serving public on-site');
       // showService(['hospital', 'physiotherapist', 'dentist', 'doctor',], 'Medical clinic/office');
       // showService(['church'], 'Place of worship');
       // showService(['police', 'fire_station'], 'Police or fire station');
-      // showService(['post_office'], 'Post office');
-      // showService(['library'], 'Public library');
-      // showService(['park'], 'Public park');
+      showService(['post_office'], 'Post office');
+      showService(['library'], 'Public library');
+      showService(['park'], 'Public park');
     // }
 
     // get all ways around a certain address
@@ -596,10 +616,13 @@ export default class Score extends Component {
             });
             break;
           case 'community_resources':
-            // console.log('in showMarkers markerCluster', markerCluster);
-            markerCluster.getMarkers().forEach((marker) => {
+            console.log('in showMarkers markerCluster', serviceList);
+            // markerCluster.getMarkers().forEach((marker) => {
+            //   marker.setMap(map);
+            // });
+            serviceList.forEach((marker) => {
               marker.setMap(map);
-            });           
+            });
             break;
           case 'transit_stops':
             transitStopMarkers.forEach((marker) => {
@@ -618,8 +641,11 @@ export default class Score extends Component {
             });
             break;
           case 'community_resources':
-            // console.log('in showMarkers markerCluster', markerCluster);            
-            markerCluster.getMarkers().forEach((marker) => {
+            console.log('in showMarkers markerCluster', serviceList);
+            // markerCluster.getMarkers().forEach((marker) => {
+            //   marker.setMap(null);
+            // });
+            serviceList.forEach((marker) => {
               marker.setMap(null);
             });
             break;
@@ -636,13 +662,13 @@ export default class Score extends Component {
 
   render() {
     return (
-      <div className="container mt-2">
+      <div className="mapContainer container mt-2">
         <div className="row">
           <div className="col-lg-8 col-md-12 pl-0">
             <div id='map' style={{ height: `88vh`, width: `100%` }} />
           </div>
           <div id="tableDiv" className="col-lg-4 col-md-12 pr-0">
-            <ScoreTable area={this.state.area} criteriaClicked={this.state.criteriaClicked} handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} />
+            <ScoreTable address={this.props.address} area={this.state.area} criteriaClicked={this.state.criteriaClicked} handleClick={this.handleClick} streetNetwork={this.state.streetNetwork} communityResources={this.state.communityResources} transitStops={this.state.transitStops} showMarkers={this.state.showMarkers} hideMarkers={this.state.hideMarkers} />
           </div>
         </div>
       </div>

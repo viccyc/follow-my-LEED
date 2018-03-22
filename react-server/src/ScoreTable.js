@@ -16,6 +16,16 @@ class ScoreTable extends Component {
     this.handleShowClick = this.handleShowClick.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.address.id !== nextProps.address.id) {
+      this.setState({
+        'street_network': false,
+        'community_resources': false,
+        'transit_stops': false
+      });
+    }
+  }
+
   handleHideClick(event) {
     this.props.hideMarkers(event.currentTarget.value);
     switch (event.currentTarget.value) {
@@ -82,14 +92,14 @@ class ScoreTable extends Component {
               <td>{toggleButton('street_network')}</td>
             </tr>
             <tr>
-              <td><img src={communityresourcesImg} alt="communityresourcesImg" />  Services</td>
-              <td>{this.props.communityResources}</td>
-              <td>{toggleButton('community_resources')}</td>
-            </tr>
-            <tr>
               <td><img src={transitstopsImg} alt="transitstopsImg" />  Transit Stops</td>
               <td>{this.props.transitStops}</td>
               <td>{toggleButton('transit_stops')}</td>
+            </tr>
+            <tr>
+              <td><img src={communityresourcesImg} alt="communityresourcesImg" />  Services</td>
+              <td>{this.props.communityResources}</td>
+              <td>{toggleButton('community_resources')}</td>
             </tr>
             <tr>
               <th scope="row">Total</th>

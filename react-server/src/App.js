@@ -11,12 +11,11 @@ import NoMatch from './NoMatch';
 import './Nav.css';
 
 class App extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
-      address: null,
-      redirect: false,
+      address: null
     };
     this.handleSearch = this.handleSearch.bind(this);
   }
@@ -36,31 +35,37 @@ class App extends Component {
       //     function(results, status) {
       //       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
       //         console.log(status);
-      //         console.log(results); 
+      //         console.log(results);
       //       }
       //     }
       // );
       // console.log(address_id);
-  
-      axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
-        .then(results => {
-          // console.log(results);
-          const data = results.data.result;
-          // console.log(data);
-          if (data.formatted_address) {
-            const address = {
-              id: data.place_id,
-              name: data.formatted_address,
-              lat: parseFloat(data.geometry.location.lat.toFixed(7)),
-              lng: parseFloat(data.geometry.location.lng.toFixed(7))
+      if (address_id) {
+        axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
+          .then(results => {
+            // console.log(results);
+            const data = results.data.result;
+            // console.log(data);
+            if (data && data.formatted_address) {
+              const address = {
+                id: data.place_id,
+                name: data.formatted_address,
+                lat: parseFloat(data.geometry.location.lat.toFixed(7)),
+                lng: parseFloat(data.geometry.location.lng.toFixed(7))
+              }
+              // console.log(address);
+              this.setState({ address });
+            } else {
+              console.log(this.props.location.pathname);
+              this.props.history.push({
+                pathname: this.props.location.pathname
+              });
             }
-            // console.log(address);
-            this.setState({ address });
-          }
-        });
+          });
+      } 
     }
   }
-            
+
   handleSearch(address, pathname) {
     if (pathname === '/') {
       this.setState({ address: address });
@@ -78,26 +83,13 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.redirect) {
-      return (
-        <div>
-          <nav id="navbar" className="navbar navbar">
-            <div>
-              <Link to={{ pathname: "/find_score", search: `?address_id=${this.state.address.id}` }} style={{ textDecoration: "none" }}><button className="btn btn-outline-success">CALCULATE SCORE</button></Link>
-              <Link to={{ pathname: "/projects", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button className="btn btn-outline-success">SHOW PROJECTS</button></Link>
-            </div>
-            <NavForm address={this.state.address} handleSearch={this.handleSearch} />
-          </nav>
-          <Score state={this.state} address={this.state.address} />
-        </div>
-      )
-    } else if (!this.state.address) {
+   if (!this.state.address) {
       return (
         <div>
           <nav id="navbar" className="navbar">
             <div>
-              <Link to="/find_score" style={{ textDecoration: "none" }}><button id="navButton" className="btn btn-outline-success">CALCULATE SCORE</button></Link>
-              <Link to="/projects" style={{ textDecoration: "none" }}><button id="navButton" className="btn btn-outline-success">SHOW PROJECTS</button></Link>
+              <Link to="/find_score" style={{ textDecoration: "none" }}><button id={this.props.location.pathname === '/find_score' || this.props.location.pathname === '/'? 'navButtonActive' : 'navButton'} className="btn btn-outline-success" >EVALUATE LOCATION</button></Link>
+              <Link to="/projects" style={{ textDecoration: "none" }}><button id={this.props.location.pathname === '/projects'? 'navButtonActive' : 'navButton'} className="btn btn-outline-success">SHOW BUILDINGS</button></Link>
             </div>
           </nav>
           <div>
@@ -110,8 +102,8 @@ class App extends Component {
         <div>
           <nav id="navbar" className="navbar">
             <div>
-              <Link to={{ pathname: "/find_score", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button id="navButton" className="btn btn-outline-success">CALCULATE SCORE</button></Link>
-              <Link to={{ pathname: "/projects", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button id="navButton" className="btn btn-outline-success">SHOW PROJECTS</button></Link>
+              <Link to={{ pathname: "/find_score", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button id={this.props.location.pathname === '/find_score' || this.props.location.pathname === '/'? 'navButtonActive' : 'navButton'} className="btn btn-outline-success">EVALUATE LOCATION</button></Link>
+              <Link to={{ pathname: "/projects", search: `?address_id=${this.state.address.id}`}} style={{ textDecoration: "none" }}><button id={this.props.location.pathname === '/projects'? 'navButtonActive' : 'navButton'} className="btn btn-outline-success">SHOW BUILDINGS</button></Link>
             </div>
             <NavForm address={this.state.address} handleSearch={this.handleSearch} />
           </nav>

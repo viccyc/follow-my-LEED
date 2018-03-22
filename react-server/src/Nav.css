@@ -2,6 +2,7 @@
   background-color: #bd5851;
   padding-top: 0;
   padding-bottom: 0;
+  padding-left: 0;
 }
 
 #navbar-link1 {
@@ -18,15 +19,48 @@
 }
 
 #navButton {
+  background-color: transparent;
   border: none;
+  border-radius: 0;
+  color: #eceef1;
   padding-top: 3vh;
   padding-bottom: 3vh;
-  border-radius: 0;
 }
 
-.btn-outline-success {
-  border-bottom: 3px solid white;
-  background-color: #32525a;
+#navButton:hover {
+  background-color: rgba(218, 204, 204, 0.2);
+  border-bottom: 0.7vh solid #f2d5d5;
+  color: white;
+  padding-bottom: 2.3vh;
+}
+
+#navButtonActive {
+  border: none;
+  background-color: transparent;
+  border-radius: 0;
+  border-bottom: 0.7vh solid #f2d5d5;
+  color: white;
+  padding-top: 3vh;
+  padding-bottom: 2.3vh;
+
+}
+
+#navButtonActive:hover {
+  background-color: rgba(218, 204, 204, 0.2);
+}
+
+.btn-outline-success.focus, .btn-outline-success:focus {
+  box-shadow: none;
+
+}
+
+.btn.focus, .btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+button:focus {
+  outline: none;
 }
 
 .form-control {
@@ -51,10 +85,19 @@
 }
 
 #sub-btn {
-  background-color: #3aa83a;
-  border-color: #359135;
-  border-left: none;
-  /* border-top-left-radius: 0;
-  border-bottom-left-radius: 0; */
+  /* background-color: white; */
+  /* border-color: #359135; */
+  border: 1px solid #eceef1;
+  /* border-left: none; */
   font-size: large;
+  /* border-radius: 20px; */
+  /* padding: 8px 8px 2px; */
+  color: #eceef1;
 }
+
+#sub-btn:hover {
+  background-color: white;
+  color: #bd5851;
+}
+
+/* ffe484 */
