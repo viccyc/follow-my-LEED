@@ -8,7 +8,7 @@ On top of running `knex seed:run`, please also manually run this file: *./db/see
 
 This file cannot be run with `knex seed:run` because it makes http requests. 
 
-## Screenshots - In Progress, more to be added
+## Screenshots
 
 !["Landing Page"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Landing%20page.png)
 !["Auto-complete"](https://github.com/viccyc/follow-my-LEED/blob/master/docs/Auto-complete.png)
