@@ -46,7 +46,7 @@ class App extends Component {
           // console.log(results);
           const data = results.data.result;
           // console.log(data);
-          if (data.formatted_address) {
+          if (data && data.formatted_address) {
             const address = {
               id: data.place_id,
               name: data.formatted_address,
