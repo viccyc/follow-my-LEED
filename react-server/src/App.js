@@ -22,11 +22,7 @@ class App extends Component {
 
   componentDidMount() {
     // console.log(this.props.location.search);
-    if (!this.state.address && !this.props.location.search) {
-      this.props.history.push({
-        pathname: this.props.location.pathname
-      });
-    } else if (!this.state.address && this.props.location.search) {
+    if (!this.state.address && this.props.location.search) {
       // console.log('in componentwillmount')
       const search = this.props.location.search;
       const params = new URLSearchParams(search);
@@ -44,23 +40,29 @@ class App extends Component {
       //     }
       // );
       // console.log(address_id);
-
-      axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
-        .then(results => {
-          // console.log(results);
-          const data = results.data.result;
-          // console.log(data);
-          if (data && data.formatted_address) {
-            const address = {
-              id: data.place_id,
-              name: data.formatted_address,
-              lat: parseFloat(data.geometry.location.lat.toFixed(7)),
-              lng: parseFloat(data.geometry.location.lng.toFixed(7))
+      if (address_id) {
+        axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${address_id}&key=AIzaSyCVUNahj_Lx06vet-sGaPLHBs0svgXwX98`)
+          .then(results => {
+            // console.log(results);
+            const data = results.data.result;
+            // console.log(data);
+            if (data && data.formatted_address) {
+              const address = {
+                id: data.place_id,
+                name: data.formatted_address,
+                lat: parseFloat(data.geometry.location.lat.toFixed(7)),
+                lng: parseFloat(data.geometry.location.lng.toFixed(7))
+              }
+              // console.log(address);
+              this.setState({ address });
+            } else {
+              console.log(this.props.location.pathname);
+              this.props.history.push({
+                pathname: this.props.location.pathname
+              });
             }
-            // console.log(address);
-            this.setState({ address });
-          }
-        });
+          });
+      } 
     }
   }
 
